@@ -1,0 +1,168 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Analyzing Process</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+img_whs1 { border:none; width:372px; height:273px; }
+img_whs2 { border:none; width:321px; height:331px; }
+p.whs3 { text-align:center; }
+img_whs4 { border:none; width:488px; height:656px; float:none; }
+img_whs5 { border:none; float:none; width:421px; height:389px; }
+p.whs6 { margin-left:0px; }
+-->
+</style><script type="text/javascript" language="JavaScript">
+<!--
+if ((navigator.appName == "Netscape") && (parseInt(navigator.appVersion) == 4))
+{
+  var strNSS = "<style type='text/css'>";
+  strNSS += "p.whs6 {margin-left:1pt; }";
+  strNSS +="</style>";
+  document.write(strNSS);
+}
+//-->
+</script>
+<script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("Analyzing Process");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("Analyzing Process</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1><a name=Top></a>Analyzing Process</h1>
+<p>To get valid results from SMC GSA extension tools, you have to prepare 
+ the BIM model for calculations. This page tells you shortly about the 
+ basic steps to do before running the analyzes.</p>
+<h3>Import IFC model</h3>
+<p>The model has to be saved as IFC before it can be read to SMC. Detailed 
+ instructions about IFC import can be found from common SMC Help, <a href="../../../Help/html/importing_model.htm">Importing 
+ an IFC file</a>.</p>
+<p>Take an overview of the model in 3D to gain and overall understanding 
+ about it.</p>
+<h3>DEFINE EXTERNAL WALLS</h3>
+<p><a href="ANSI_BOMA_View.htm#Top">Calculation of polygon areas</a> of 
+ spaces requires information about <a href="../../../Help/html/Compartments.htm#External_Walls">external 
+ walls</a>. You can define external walls in the &nbsp;<a href="../../../Help/html/Compartmentation.htm">Compartmentation 
+ View</a> (Window -&gt; Add View -&gt; Compartmentation). Go through the 
+ external walls in every floor, and modify them manually if needed by adding 
+ and removing walls. If the model includes mezzanines in separate floors, 
+ remove external walls from those floors.</p>
+<p>GSA BIM Guide Validation rule set includes external walls validation 
+ rule. You can also use its <a href="../../../Help/html/Tools">Tools View</a> 
+ in <a href="../../../Help/mergedProjects/constraint_help/html/sol_212.htm">External 
+ Wall Validation rule</a>.</p>
+<h3>Check ANSI/BOMA Classification</h3>
+<p>Open <a href="file:///C:/Programs/GSA/Solibri/SMC3.1/plugins/GSA/doc/BOMA_Categories.htm">ANSI/BOMA 
+ View</a> (GSA Layout -&gt; ANSI/BOMA) and check that ANSI/BOMA categories 
+ are correct. You can visualize spaces by occupant organizations, by locations 
+ (floors), or by ANSI/BOMA categories. You can <a href="ANSI_BOMA_View.htm#ANSI_BOMACategoryHandling">manually 
+ change</a> categorizing, if needed.</p>
+<p><img src="image64.jpg" width="372px" height="273px" border="0" class="img_whs1"></p>
+<h3>Check the model</h3>
+<p>Select the GSA BIM Guide Validation rule set and check the model.</p>
+<p><img src="image34.gif" width="321px" height="331px" border="0" class="img_whs2"></p>
+<p>Results of the first two sub rule sets, Spaces and Zones and Building 
+ Elements, gives you some general information about the model. If there 
+ are lot of errors, e.g. duplicate or overlapping spaces, the results of 
+ the rest of the analysis is likely to be incorrect.</p>
+<p>Spatial Program Analysis sub rule checks, that the spaces has all required 
+ properties. Visualization and Reporting sub sets allows you to analyze 
+ model.</p>
+<h3>Investigate Checking Results</h3>
+<p>Investigate results of Program Analysis rule set. Most of the rules 
+ have an own report, which can be very informative.</p>
+<h3>Visualize the Model</h3>
+<p>Visualize the model from different views:</p>
+<ul class=whs4 style="list-style: disc;" type=disc>
+	<li class=p><p>Polygon areas from ANSI/BOMA View</p></li>
+</ul>
+<p align="center" class="whs3"><img src="usableAreas.png" x-maintain-ratio="TRUE" width="488px" height="656px" border="0" class="img_whs4"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stacking plans from tools 
+ panels of the Stacking Plan rules</p>
+<p align="center" class="whs3"><img src="sp.png" x-maintain-ratio="TRUE" width="421px" height="389px" border="0" class="img_whs5"></p>
+<h3>Create Report</h3>
+<p>At the end you can create <a href="ANSI_BOMA_View.htm#GSA_Spatial_Report">GSA 
+ Spatial Program BIM Report</a> from ANSI/BOMA View.</p>
+<p class="whs6"><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a></p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("Analyzing Process</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

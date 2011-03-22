@@ -1,0 +1,199 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Space Properties</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+img_whs1 { border:none; width:405px; height:296px; float:none; }
+img_whs2 { border:none; width:396px; height:168px; float:none; border-style:none; }
+img_whs3 { border:none; width:397px; height:168px; float:none; border-style:none; }
+img_whs4 { border:none; width:416px; height:199px; float:none; border-style:none; }
+img_whs5 { border:none; width:419px; height:232px; float:none; border-style:none; }
+img_whs6 { border:none; width:418px; height:202px; float:none; border-style:none; }
+p.whs7 { margin-left:0px; }
+-->
+</style><script type="text/javascript" language="JavaScript">
+<!--
+if ((navigator.appName == "Netscape") && (parseInt(navigator.appVersion) == 4))
+{
+  var strNSS = "<style type='text/css'>";
+  strNSS += "p.whs7 {margin-left:1pt; }";
+  strNSS +="</style>";
+  document.write(strNSS);
+}
+//-->
+</script>
+<script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("ANSI/BOMA Plugin\nSpace Properties");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"Space_Properties.htm\">ANSI/BOMA Plugin</a> > Space Properties</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1><a name=Top></a>Space Properties</h1>
+<h3>ANSI/BOMA Properties</h3>
+<p>These properties are calculated or determinate by SMC.</p>
+<p><img src="infospace.png" x-maintain-ratio="TRUE" width="405px" height="296px" border="0" class="img_whs1"></p>
+<h4><a name=Basic_Rentable_Area></a>Basic Rentable Area</h4>
+<p>Calculation rule: <a href="Floor_Properties.htm#Floor_RU_Ratio">Floor 
+ RU Ratio</a> * <a href="#Polygon_Area">Space Polygon Area</a>. If the 
+ <a href="ANSI_BOMA_View.htm#Settings">GSA Calculation method</a> is in 
+ use, the value is the same as Usable Area.</p>
+<h4><a name=Category></a>Category</h4>
+<p>ANSI/BOMA Space Category. Same as <a href="#ANSI_BOMA_Space_Classification">ANSI/BOMA 
+ Space Category in GSA Space Categories</a>. If this is empty, the value 
+ is determined by the <a href="#GSA_STAR_Type">GSA STAR Space Type</a> 
+ according the Assignment Data Matrix No. 2 in PBS Business Assignment 
+ Guide (Office of Real Property Asset Management, May 1005). You can also 
+ set the category <a href="ANSI_BOMA_View.htm#ANSI_BOMACategoryHandling">manually</a>.</p>
+<h4>External Wall Status</h4>
+<p>If you the user has set external wall status to the external walls (it 
+ is done when <a href="ANSI_BOMA_View.htm#Top">ANSI/BOMA View</a> is opened, 
+ or you can set it from the <a href="../../../Help/html/Compartmentation.htm">Compartmentation 
+ View</a>), the value is 'Defined'. If external walls are not set, the 
+ value is 'Please, define'. That means that you should set the external 
+ walls, because usable areas cannot been reliable calculated if they are 
+ not set.</p>
+<h4>GSA BIM Area</h4>
+<p>The area calculated from the geometry of a space component by removing 
+ areas of intersecting columns and walls.</p>
+<h4>Non-assignable Area</h4>
+<p>The area is the value of <a href="#Polygon_Area">Polygon Area</a> of 
+ all Major Vertical Penetration and PBS Specific spaces.</p>
+<h4>Office Rentable Area</h4>
+<p>Calculation rule: <a href="Building_Properties.htm#Building_RU_Ratio">Building 
+ RU Ratio</a> * <a href="#Basic_Rentable_Area">Space Basic Rentable Area</a></p>
+<h4><a name=Polygon_Area></a>Polygon Area</h4>
+<p>The Polygon Area is base for the all other properties. It includes the 
+ space area and bottom area of walls around itself. The amount of wall 
+ bottom area depends on the ANSI/BOMA Space Category of the space. Ref. 
+ <a href="Area_Calculation.htm#Top">Area Calculation</a>.</p>
+<h4>Rentable &nbsp;Area</h4>
+<p>The area is the value of <a href="#Polygon_Area">Polygon Area</a> of 
+ all Building Common and Floor Common spaces.</p>
+<h4>Usable &nbsp;Area</h4>
+<p>The area is the value of <a href="#Polygon_Area">Polygon Area</a> of 
+ all Office (and Store) spaces.</p>
+<h3>GSA Space Areas</h3>
+<p>This property set is read from IFC file. For 'full floor spaces' it 
+ should have at least property <span style="font-style: italic;"><I>GSA Design 
+ Gross Area</I></span>.</p>
+<p><img src="infogsaareadg.png" x-maintain-ratio="TRUE" width="396px" height="168px" border="0" class="img_whs2"></p>
+<p>For 'normal' spaces the property set should have <span style="font-style: italic;"><I>GSA 
+ BIM Area</I></span> (used to be <span style="font-style: italic;"><I>GSA Net 
+ Area</I></span>). There can be also two optional properties <span style="font-style: italic;"><I>GSA 
+ Usable Area</I></span> and <span style="font-style: italic;"><I>GSA Rentable 
+ Area</I></span>.</p>
+<p><img src="infogsaareas.png" x-maintain-ratio="TRUE" width="397px" height="168px" border="0" class="img_whs3"></p>
+<h3>GSA Space Categories</h3>
+<p>This property set is read from IFC file. </p>
+<p>&nbsp;</p>
+<p>VAIHDA KUVA</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img src="infocats.png" x-maintain-ratio="TRUE" width="416px" height="199px" border="0" class="img_whs4"></p>
+<h4><a name=ANSI_BOMA_Space_Classification></a>ANSI/BOMA Space Category</h4>
+<p>An optional property. Value is a code representing one category (e.g. 
+ 01 = Office). Categories are listed in Section 5: Space Types in PBS Business 
+ Assignment Guide (Office of Real Property Asset Management, May 1005).</p>
+<h4>GSA STAR Space Category</h4>
+<p>An optional property. Value is a code representing one category (e.g. 
+ 01 = Assigned). Categories are listed in Assignment Data Matrix No. 1 
+ in PBS Business Assignment Guide (Office of Real Property Asset Management, 
+ May 1005)</p>
+<h4><a name=GSA_STAR_Type></a>GSA STAR Space Type</h4>
+<p>A required property. Value is a code representing one STAR Type. Types 
+ are listed in Assignment Data Matrix No. 2 in PBS Business Assignment 
+ Guide (Office of Real Property Asset Management, May 1005)</p>
+<h3>Space Occupant Properties</h3>
+<p>This property set is read from IFC file. </p>
+<p><img src="infoOccupants.png" x-maintain-ratio="TRUE" width="419px" height="232px" border="0" class="img_whs5"></p>
+<p>Value for <span style="font-style: italic;"><I>Occupant Organization Name</I></span> 
+ is required. Other properties are optional.</p>
+<h3>Space Zones</h3>
+<p>This property set is read from IFC file. </p>
+<p><img src="infozones.png" x-maintain-ratio="TRUE" width="418px" height="202px" border="0" class="img_whs6"></p>
+<p>All properties are optional.</p>
+<p class="whs7"><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a></p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"Space_Properties.htm\">ANSI/BOMA Plugin</a> > Space Properties</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Space Value Check</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+table.whs1 { x-cell-content-align:top; float:aligncenter; width:90%; border-spacing:0px; }
+col.whs2 { width:100%; }
+tr.whs3 { x-cell-content-align:top; }
+td.whs4 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-top-style:none; border-right-style:none; background-color:#003366; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; }
+td.whs5 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-right-style:none; border-bottom-color:#ffffff; border-bottom-style:Solid; border-bottom-width:2px; background-color:#D9D9D9; }
+td.whs6 { width:100%; padding-right:10px; padding-left:10px; background-color:#003366; border-left-style:none; border-right-style:none; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; }
+td.whs7 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-right-style:none; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; background-color:#D9D9D9; }
+td.whs8 { width:100%; padding-right:10px; padding-left:10px; background-color:#003366; border-left-style:none; border-right-style:none; border-bottom-color:#ffffff; border-bottom-style:Solid; border-bottom-width:2px; }
+hr.whs9 { float:aligncenter; color:#D9D9D9; }
+-->
+</style><script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("Rules\nSpace Value Check");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"SOL_205.htm\">Rules</a> > Space Value Check</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1><a name=Top></a>Space Value Check</h1>
+<h2>&nbsp;</h2>
+<div align=center>
+<table x-use-null-cells cellspacing="0" width="90%" class="whs1">
+<col class="whs2">
+
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs4">
+<h2>Overview</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs5">
+<p>The purpose of this rule is to check that values in the model are the 
+ same as the given ones. The rules is made for check the testing model 
+ (1800 F model) and it shouldn't be used if the required data is not available.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs6">
+<h2>Configuring the Constraint</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule have the following parameters:</p>
+<h4>Required Values</h4>
+<p>A table for the values. The key for the spaces is the space number. 
+ Columns of the table are</p>
+<ul class=whs9 style="list-style: disc;" type=disc>
+	<li class=p><p>Space Number</p></li>
+	<li class=p><p>Space Name</p></li>
+	<li class=p><p>GSA STAR Type</p></li>
+	<li class=p><p>GSA STAR Category</p></li>
+	<li class=p><p>ANSI/BOMA Space Category</p></li>
+	<li class=p><p>Occupant Organization Name</p></li>
+	<li class=p><p>Occupant Organization Code</p></li>
+	<li class=p><p>Occupant Organization Abbreviation</p></li>
+	<li class=p><p>Occupant Sub-Organization Name</p></li>
+	<li class=p><p>Occupant Billing ID</p></li>
+	<li class=p><p>Security Zone</p></li>
+	<li class=p><p>Preservation Zone</p></li>
+	<li class=p><p>Privacy Zone</p></li>
+</ul>
+<p>Values can be read from Excel spreadsheet.</p>
+<h4>GSA Space Categories</h4>
+<p>Name of the property set in the model. In some cases the property set 
+ names are not correct in the model. You can specify the used current property 
+ set name by using this parameter.</p>
+<h4>GSA STAR Space Type</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>GSA STAR Space Category</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>ANSI/BOMA Space Category</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Space Occupant Properties</h4>
+<p>Name of the property set in the model. In some cases the property set 
+ names are not correct in the model. You can specify the used current property 
+ set name by using this parameter.</p>
+<h4>Occupant Organization Name</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Occupant Organization Code</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Occupant Organization Abbreviation</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Occupant Sub-organization Name</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Occupant Billing ID</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Space Zones</h4>
+<p>Name of the property set in the model. In some cases the property set 
+ names are not correct in the model. You can specify the used current property 
+ set name by using this parameter.</p>
+<h4>Security Zone</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Preservation Zone</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<h4>Privacy Zone</h4>
+<p>Name of the property in the model. In some cases the property names 
+ are not correct in the model. You can specify the used current property 
+ name by using this parameter.</p>
+<p>&nbsp;</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs8">
+<h2>Analyzing the Results</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule creates issues for missing spaces based on space numbers. The 
+ model should include all spaces listed in the table. The rule creates 
+ issues for extra spaces (spaces not listed in the table). The model shouldn't 
+ include any extra spaces. Note that space groups are not taken into account 
+ in this rule at all.</p>
+<p>The rule creates issues for each wrong values (value which differ from 
+ the value in the table), Spaces with the same name are collected to same 
+ sub category.</p>
+<p>If the model doesn't have required property sets or properties, issues 
+ are created. This helps you to identify correct property set and property 
+ names (used in the model),</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs8">
+<h2>Reported Data</td></tr>
+<tr valign="top" class="whs3">
+<td colspan="1" rowspan="1" bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule does not have a report.</td></tr>
+<tr valign="top" class="whs3">
+<td colspan="1" rowspan="1" bgcolor="#003366" width="100%" class="whs8">
+<h2>Constraint Tools</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule does not have any tools.</td></tr>
+</table>
+</div>
+<p>&nbsp;</p>
+<p><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a> <a href="html/index.htm">New Search</a></p>
+
+<hr align="center" color="#D9D9D9" class="whs9">
+
+<p>&nbsp;</p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"SOL_205.htm\">Rules</a> > Space Value Check</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

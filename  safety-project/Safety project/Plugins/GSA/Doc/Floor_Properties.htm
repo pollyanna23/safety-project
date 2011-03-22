@@ -1,0 +1,161 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Floor Properties</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+img_whs1 { border:none; width:402px; height:312px; float:none; }
+p.whs2 { margin-left:0px; }
+-->
+</style><script type="text/javascript" language="JavaScript">
+<!--
+if ((navigator.appName == "Netscape") && (parseInt(navigator.appVersion) == 4))
+{
+  var strNSS = "<style type='text/css'>";
+  strNSS += "p.whs2 {margin-left:1pt; }";
+  strNSS +="</style>";
+  document.write(strNSS);
+}
+//-->
+</script>
+<script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("ANSI/BOMA Plugin\nFloor Properties");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"Space_Properties.htm\">ANSI/BOMA Plugin</a> > Floor Properties</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1><a name=Top></a>Floor Properties</h1>
+<h3>ANSI/BOMA Properties</h3>
+<p>These properties are calculated or determinate by SMC.</p>
+<p><img src="infofloor.png" x-maintain-ratio="TRUE" width="402px" height="312px" border="0" class="img_whs1"></p>
+<h4>Floor Common Area</h4>
+<p>Calculation rule: <a href="#Floor_Rentable_Area">Floor Rentable Area</a> 
+ - <a href="#Floor_Usable_Area">Floor Usable Area</a></p>
+<h4><a name=Gross_Building_Area></a>Floor Gross Area</h4>
+<p>Total area of the floor including all walls, columns and spaces. If 
+ the floor has a Gross Area Compartment (ref. SMC Help, <a href="../../html/Compartmentation.htm">Compartmentation 
+ View</a>), it's area is used. Otherwise, it is the sum of bottom areas 
+ of all walls, columns and spaces in the floor.</p>
+<h4><a name=Floor_Vertival_Penetration_Area></a>Floor Major Vertical Penetration 
+ Polygon Area</h4>
+<p>Sum of all Vertical Penetration spaces' Usable areas in the floor.</p>
+<h4><a name=Measured_Gross_Area></a>Floor Measured Gross Area</h4>
+<p>Sum of <a href="Space_Properties.htm#Polygon_Area">Polygon Areas</a> 
+ of all spaces in the floor.</p>
+<h4><a name=Floor_Usable_Area></a>Floor Office and Rentable Area</h4>
+<p>Calculation rule: <a href="#Floor_Usable_Office_Area">Office polygon 
+ Area</a> + <a href="#Floor_Usable_Store_Area">Store Polygon Area</a> + 
+ <a href="#Floor_Usable_Building_Common_Area">Floor Rentable - Building 
+ Common Area.</a> If <a href="ANSI_BOMA_View.htm#Settings">GSA Calculation 
+ method</a> is used, <a href="#Floor_Usable_Floor_Common_Area">Floor Rentable 
+ - Floor Common</a> area is also added.</p>
+<h4><a name=Floor_RU_Ratio></a>Floor R/U Ratio</h4>
+<p>Calculation rule:<a href="#Floor_Rentable_Area"> Floor Rentable and 
+ Usable Area</a> / <a href="#Floor_Usable_Area">Floor Office and Rentable 
+ &nbsp;Area</a>. If the <a href="ANSI_BOMA_View.htm#Settings">GSA 
+ Calculation method</a> is in use, the value is always 1.</p>
+<h4><a name=Floor_Usable_Building_Common_Area></a>Floor Rentable - Building 
+ Common Area</h4>
+<p>Sum of all Building Common spaces' Polygon Areas in the floor.</p>
+<h4><a name=Floor_Usable_Floor_Common_Area></a>Floor Rentable - Floor Common 
+ Area</h4>
+<p>Sum of all Floor Common spaces' Polygon Areas in the floor.</p>
+<h4>Gross Building Area w/o Parking</h4>
+<p>Parking spaces are removed from Gross Building Area. A space is a parking 
+ space, if its <a href="Space_Properties.htm#GSA_STAR_Type">GSA STAR Space 
+ Type</a> is STP.</p>
+<h4><a name=Floor_Usable_Office_Area></a>Office Polygon Area</h4>
+<p>Sum of all Office spaces' Polygon Areas in the floor.</p>
+<h4><a name=Floor_PBS_Specific_Area></a>Floor PBS Specific Polygon Area</h4>
+<p>Sum of all PBS Specific spaces' Polygon Areas in the floor.</p>
+<h4><a name=Floor_Rentable_Area></a>Rentable and Usable Area</h4>
+<p>Calculation rule: <a href="#Measured_Gross_Area">Floor Measured Gross 
+ Area</a> - (<a href="#Floor_Vertival_Penetration_Area">Floor Major Vertical 
+ Penetration Polygon Area</a> + <a href="#Floor_PBS_Specific_Area">Floor 
+ PBS Specific Polygon Area</a>)</p>
+<h4><a name=Floor_Usable_Store_Area></a>Store Polygon Area</h4>
+<p>Sum of all Store spaces' Polygon Areas in the floor.</p>
+<p class="whs2"><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a></p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"Space_Properties.htm\">ANSI/BOMA Plugin</a> > Floor Properties</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

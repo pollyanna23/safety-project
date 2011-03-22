@@ -1,0 +1,206 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Efficiency Ratios</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+table.whs1 { x-cell-content-align:top; float:aligncenter; width:90%; border-spacing:0px; }
+col.whs2 { width:100%; }
+tr.whs3 { x-cell-content-align:top; }
+td.whs4 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-top-style:none; border-right-style:none; background-color:#003366; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; }
+td.whs5 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-right-style:none; border-bottom-color:#ffffff; border-bottom-style:Solid; border-bottom-width:2px; background-color:#D9D9D9; }
+td.whs6 { width:100%; padding-right:10px; padding-left:10px; background-color:#003366; border-left-style:none; border-right-style:none; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; }
+td.whs7 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-right-style:none; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; background-color:#D9D9D9; }
+td.whs8 { width:100%; padding-right:10px; padding-left:10px; background-color:#003366; border-left-style:none; border-right-style:none; border-bottom-color:#ffffff; border-bottom-style:Solid; border-bottom-width:2px; }
+hr.whs9 { float:aligncenter; color:#D9D9D9; }
+-->
+</style><script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("Rules\nEfficiency Ratios");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"SOL_205.htm\">Rules</a> > Efficiency Ratios</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1>&nbsp;</h1>
+<h1><a name=Top></a>Efficiency Ratios</h1>
+<div align=center>
+<table x-use-null-cells cellspacing="0" width="90%" class="whs1">
+<col class="whs2">
+
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs4">
+<h2>Overview</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs5">
+<p>This rule checks that specific efficiency ratios are inside given limits. 
+ It also creates a report including all area and efficiency values.</p>
+<p class=whs6 style="font-style: italic;">Running this rule requires definition 
+ of Gross Area Compartments and defining glazed wall types. It can also 
+ require settings of glazed wall components from its tools panel.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs6">
+<h2>Configuring the Rule</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule has the following limit values:</p>
+<ul class=whs9 style="list-style: disc;" type=disc>
+	<li class=p><p>Minimum USF/GSF Ratio (Usable Office Area divided by 
+ Gross Building Area)</p></li>
+	<li class=p><p>Minimum and Maximum Skin Ratio (Skin Area divided by 
+ Gross Building Area)</p></li>
+	<li class=p><p>Minimum and Maximum Fenestration Ratio (Window Area 
+ divided by Skin Area)</p></li>
+	<li class=p><p>Maximum Public Space/GSF Ratio (Public Space Area divided 
+ by Gross Building Area)</p></li>
+</ul>
+<p>The rule has also a table parameter for glazed wall types. If a wall's 
+ construction type is set to be glazed wall in this table, the wall area 
+ is totally included in window area.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs8">
+<h2>Analyzing the Results</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule calculates all ratios mentioned above, and creates issues if 
+ they are out of limits.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs8">
+<h2>Reported Data</td></tr>
+<tr valign="top" class="whs3">
+<td colspan="1" rowspan="1" bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule creates a report containing the following values for each floor 
+ and for to whole building:</p>
+<ul class=whs9 style="list-style: disc;" type=disc>
+	<li class=p><p>Gross Building Area</p></li>
+	<li class=p><p>Gross Building Area w/o Parking</p></li>
+	<li class=p><p>Gross Measured Area</p></li>
+	<li class=p><p>Vertical Penetration Polygon Area</p></li>
+	<li class=p><p>PBS Specific polygon Area</p></li>
+	<li class=p><p>Rentable and Usable Area</p></li>
+	<li class=p><p>Usable Area</p></li>
+	<li class=p><p>Rentable - Building Common Area</p></li>
+	<li class=p><p>Rentable - Floor Common Area</p></li>
+	<li class=p><p>Floor Office and Rentable Area</p></li>
+	<li class=p><p>USF/GSF (<a href="ANSI_BOMA_View.htm#CalculationMethod">ANSIBOMA 
+ calculation method</a>: Usable Office Area / Gross Building Area, <a href="ANSI_BOMA_View.htm#CalculationMethod">GSA 
+ calculation method</a>:Usable Office Area / Gross Building Area w/o Parking)</p></li>
+	<li class=p><p>Floor Common Area</p></li>
+	<li class=p><p>Floor R/U</p></li>
+	<li class=p><p>Basic Rentable Office Area</p></li>
+	<li class=p><p>Basic Rentable Building Common Area</p></li>
+	<li class=p><p>Building Rentable Area</p></li>
+	<li class=p><p>Building R/U</p></li>
+	<li class=p><p>Office Rentable Area</p></li>
+	<li class=p><p>Public Space Area</p></li>
+	<li class=p><p><a href="ANSI_BOMA_View.htm#CalculationMethod">ANSIBOMA 
+ calculation method</a>: Public Space Area / Gross Building Area, <a href="ANSI_BOMA_View.htm#CalculationMethod">GSA 
+ calculation method</a>: Public Space Area / Gross Building Area w/o Parking</p></li>
+	<li class=p><p>Skin Area</p></li>
+	<li class=p><p>Skin Ratio (<a href="ANSI_BOMA_View.htm#CalculationMethod">ANSIBOMA 
+ calculation method</a>: Skin Area / Gross Building Area, <a href="ANSI_BOMA_View.htm#CalculationMethod">GSA 
+ calculation method</a>: Skin Area / Gross Building Area w/o Parking)</p></li>
+	<li class=p><p>Fenestration Area</p></li>
+	<li class=p><p>Fenestration Ratio (Fenestration Area / Skin Ratio)</p></li>
+</ul>
+<p>Usable and rentable areas are calculated according to the ANSI/BOMA 
+ standard. They are shortly described in <a href="file:///C:/users/aaa/Help%20files/GSA/BOMA_View.htm">Area 
+ Calculation</a>.</td></tr>
+<tr valign="top" class="whs3">
+<td colspan="1" rowspan="1" bgcolor="#003366" width="100%" class="whs8">
+<h2>Rule Tools</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>Tools panel of the rule allows you to set walls to be glazed walls. 
+ You can either set type of the selected walls to be glazed wall types, 
+ or set an individual wall to be a glazed one. You can also highlight all 
+ glazed walls in 3D view.</td></tr>
+</table>
+</div>
+<p>&nbsp;</p>
+<p><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a></p>
+
+<hr align="center" color="#D9D9D9" class="whs9">
+
+<p>&nbsp;</p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"SOL_205.htm\">Rules</a> > Efficiency Ratios</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

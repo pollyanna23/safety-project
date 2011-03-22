@@ -1,0 +1,125 @@
+﻿/*Created with Adobe RoboHelp.*/
+BODY {
+	font-family: Arial;
+	background-color: #ffffff;
+}
+H1 {
+	font-weight: bold;
+	font-size: 14pt;
+	color: #003366;
+}
+LI.H1 {
+	font-weight: bold;
+	font-size: 14pt;
+	color: #003366;
+}
+H2 {
+	font-weight: bold;
+	color: #ffffff;
+	margin-left: 4pt;
+	font-size: 11pt;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+}
+LI.H2 {
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 11pt;
+}
+H3 {
+	font-weight: bold;
+	font-size: 14.0pt;
+}
+LI.H3 {
+	font-weight: bold;
+	font-size: 14.0pt;
+}
+H4 {
+	font-weight: bold;
+	font-size: 12.0pt;
+}
+LI.H4 {
+	font-weight: bold;
+	font-size: 12.0pt;
+}
+H5 {
+	font-weight: bold;
+	font-size: 10.0pt;
+}
+LI.H5 {
+	font-weight: bold;
+	font-size: 10.0pt;
+}
+H6 {
+	font-weight: bold;
+	font-size: 8.0pt;
+}
+LI.H6 {
+	font-weight: bold;
+	font-size: 8.0pt;
+}
+P {
+	margin-left: 4pt;
+	margin-right: 4pt;
+	font-size: 10pt;
+	margin-top: 6.5pt;
+	margin-bottom: 6.5pt;
+}
+LI.P {
+	font-size: 10pt;
+}
+A.expandspot {
+	cursor: hand;
+	font-style: italic;
+	font-size: 10pt;
+	color: #800080;text-decoration: none;
+}
+SPAN.expandtext {
+	font-style: italic;
+	font-weight: normal;
+	color: #ff0000;
+}
+A.dropspot {
+	cursor: hand;
+	font-style: italic;
+	font-size: 10pt;
+	color: #003366;text-decoration: none;
+}
+A.glossterm {
+	color: #800000;
+	cursor: hand;
+	font-style: italic;
+	text-decoration: none;
+}
+SPAN.glosstext {
+	font-style: italic;
+	font-weight: normal;
+	color: #0000ff;
+}
+OL,
+UL {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+A:link {
+	color: #003366;
+	font-size: 10pt;
+}
+A:visited {
+	color: #003366;
+	font-size: 10pt;
+}
+P.Note {
+	font-size: 9pt;
+	margin-left: 18pt;
+	margin-right: 0pt;
+	margin-top: 4.5pt;
+	margin-bottom: 4.5pt;
+}
+LI.P-Note {
+	font-size: 9pt;
+}
+A.popupspot {
+	font-size: 10pt;
+	color: #003366;
+}

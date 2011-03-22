@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/lib/smc.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/lib/ext/AccessibilityRules.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/lib/ext/solibriConstructionRules.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/lib/ext/solibriLegacyRules.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/CalendarBean.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/derby.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/DistLib.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/dnsns.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/itext.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/j3dcore.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/j3dfly-utils.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/j3dutils.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/jdom.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/jgrapht-0.6.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/jh.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/jlfgr-1_0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/LMX.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/localedata.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/poi.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/sunjce_provider.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/swingx.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/vecmath.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Solibri/SMCv6.1/.install4j/i4jruntime.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
