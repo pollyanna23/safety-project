@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<ftswdata>
+<key name="visualization"> 0,1,2,11,16, </key>
+<key name="w"> 1,2,6,4, </key>
+<key name="wal"> 0,1,2,6,4,5,15,7,16, </key>
+<key name="wall"> 0,1,2,6,9,5,15,7, </key>
+<key name="wall'"> 2,6,9, </key>
+<key name="want"> 1,9, </key>
+<key name="warn"> 1, </key>
+<key name="welcom"> 16, </key>
+<key name="what"> 1,9,8,11, </key>
+<key name="whol"> 6, </key>
+<key name="whos"> 1,2,10,7, </key>
+<key name="wihtout"> 10, </key>
+<key name="will"> 1, </key>
+<key name="window"> 0,1,2,6,9, </key>
+<key name="within"> 8, </key>
+<key name="without"> 1, </key>
+<key name="wrong"> 2,14,12, </key>
+<key name="yourself"> 16, </key>
+<key name="z65.1"> 2,16, </key>
+<key name="zon"> 0,15,12,11, </key>
+
+</ftswdata>  

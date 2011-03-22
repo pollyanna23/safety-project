@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin name="GSA" id="gov.gsa" version="1.0"
+	provider-name="Solibri, Inc.">
+	<runtime>
+		<library name="MeasurementPlugins.jar"></library>
+		<library name="gsaPlugins.jar">
+			<plugin name="gov.gsa.smc.plugins.BomaPlugin" />
+		</library>
+	</runtime>
+	<doc url="doc/Welcome_to_GSA_Extension_Help.htm" />
+</plugin>

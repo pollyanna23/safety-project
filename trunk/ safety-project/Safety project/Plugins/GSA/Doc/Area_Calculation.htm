@@ -1,0 +1,221 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Area Calculation</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+p.whs1 { text-align:center; }
+img_whs2 { border:none; width:499px; height:722px; float:none; }
+img_whs3 { border:none; width:916px; height:457px; float:none; }
+img_whs4 { border:none; width:299px; height:551px; float:none; }
+img_whs5 { border:none; width:240px; height:365px; float:none; }
+img_whs6 { border:none; width:240px; height:296px; float:none; }
+img_whs7 { border:none; width:202px; height:348px; float:none; }
+img_whs8 { border:none; width:225px; height:374px; float:none; }
+img_whs9 { border:none; width:267px; height:424px; float:none; }
+p.whs10 { margin-left:0px; }
+-->
+</style><script type="text/javascript" language="JavaScript">
+<!--
+if ((navigator.appName == "Netscape") && (parseInt(navigator.appVersion) == 4))
+{
+  var strNSS = "<style type='text/css'>";
+  strNSS += "p.whs10 {margin-left:1pt; }";
+  strNSS +="</style>";
+  document.write(strNSS);
+}
+//-->
+</script>
+<script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("ANSI/BOMA Plugin\nArea Calculation");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"Space_Properties.htm\">ANSI/BOMA Plugin</a> > Area Calculation</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1><a name=Top></a>Area Calculation</h1>
+<h3>Introduction</h3>
+<p>Area calculation complies with the American National Standard method 
+ for measuring floor area in office buildings (ANSI/BOMA Z65.1-1996). The 
+ calculation is based on the geometries of the building components in the 
+ building information models. To get the best result the walls and spaces 
+ should be modeled carefully. Low quality modeling such as missing spaces 
+ can lead to wrong calculation results. Before areas can be reliable calculated, 
+ external walls have to be defined. This can be done in <a href="../../../Help/html/Compartmentation.htm">Compartmentation 
+ View</a>. The results of the calculations are seen in the <a href="../../../Help/html/Info.htm">Info 
+ View</a>, <a href="../../../Help/html/3D.htm">3D View</a> (<a href="file:///C:/Programs/GSA/Solibri/SMC3.1/plugins/GSA/doc/BOMA_Categories.htm#Area_Visualization">visualizations</a>), 
+ and reports of <a href="ANSI_BOMA_View.htm#Top">ANSI/BOMA View</a>. </p>
+<p>There are two possible calculation methods, ANSI/BOMA or GSA. The used 
+ method is set in the <a href="ANSI_BOMA_View.htm#Settings">ANSI/BOMA View 
+ Settings</a>. All properties used in the calculations, and their calculation 
+ principles are listed below.</p>
+<h3>Space</h3>
+<h4>GSA BIM Area</h4>
+<p>The area calculated from the geometry of a space component by removing 
+ areas of intersecting columns and walls. This quantity is visualized in 
+ the 3D view with black text.</p>
+<h4>Polygon Area</h4>
+<p>The polygon area is base for the all other properties. It includes the 
+ space area and bottom area of walls around itself. The amount of wall 
+ bottom area depends on the ANSI/BOMA Space Category of the space. The 
+ space category is either get from the <a href="Space_Properties.htm#ANSI_BOMA_Space_Classification">ANSI/BOMA 
+ Space Category</a> or it is based on the <a href="Space_Properties.htm#GSA_STAR_Type">GSA 
+ Space STAR Type</a>. You can also set the category <a href="ANSI_BOMA_View.htm#ANSI_BOMACategoryHandling">manually</a>.</p>
+<p>For <span style="font-weight: bold;"><B><b>Office area </B></span><span style="font-weight: normal;">and</span></b><span 
+ style="font-weight: bold;"><B><b> Store area</b></B></span>: area + half of the 
+ wall bottom area of walls between another Office, or Store areas. If the 
+ exterior wall contains windows, whose height is at least half of the space 
+ height, the area from space boundary to window (DOMINANT PORTION) is included.</p>
+<p align="center" class="whs1"><img src="polygon.png" x-maintain-ratio="TRUE" width="499px" height="722px" border="0" class="img_whs2"></p>
+<p align="center" class="whs1">&nbsp;</p>
+<p>For <span style="font-weight: bold;"><B><b>Building Common</b></B></span> and 
+ <span style="font-weight: bold;"><B><b>Floor Common</b></B></span>: area + wall 
+ bottom area, when a space in other side of the wall is not Vertical Penetration. 
+ If the space on the other side of the wall is also Building Common (or 
+ Floor Common), half other wall's bottom area is included.</p>
+<p align="center" class="whs1"><img src="polygon2.png" x-maintain-ratio="TRUE" width="916px" height="457px" border="0" class="img_whs3"></p>
+<p class=whs2>For <span style="font-weight: bold;"><B><b>Vertical Penetration 
+ and PBS Specific areas</b></B></span>: area + wall bottom area. If the space 
+ on the other side of the wall is also Vertical Penetration or PBS Specific 
+ Area, half other wall's bottom area is included.</p>
+<p class=whs2 style="text-align: center;" align=center><img src="polygon3.png" x-maintain-ratio="TRUE" width="299px" height="551px" border="0" class="img_whs4"></p>
+<h4>Basic Rentable Area</h4>
+<p>Floor RU Ratio * Space Polygon Area</p>
+<h4>Office Rentable Area</h4>
+<p>Building RU Ratio * Space Basic Rentable Area</p>
+<h3>Floor </h3>
+<h4>Floor Gross Area</h4>
+<p>Total area of the floor including all walls, columns and spaces. If 
+ the floor has a Gross Area Compartment (ref. SMC Help, <a href="../../../Help/html/Compartmentation.htm">Compartmentation 
+ View</a>), it's area is used. Otherwise, it is the sum of bottom areas 
+ of all walls, columns and spaces in the floor. The area is visualized 
+ with green dotted line.</p>
+<p><img src="gross.png" x-maintain-ratio="TRUE" width="240px" height="365px" border="0" class="img_whs5"></p>
+<h4>Gross Building Area w/o Parking</h4>
+<p>Parking spaces are removed from Gross Building Area. A space is a parking 
+ space, if its <a href="Space_Properties.htm#GSA_STAR_Type">GSA STAR Space 
+ Type</a> is STP.</p>
+<h4><a name=MeasuredGrossArea></a>Floor Measured Gross Area</h4>
+<p>Sum of usage areas of all spaces in one floor. Exterior walls are not 
+ included in this area. The area is visualized with blue dotted line.</p>
+<p><img src="measuredgross.png" x-maintain-ratio="TRUE" width="240px" height="296px" border="0" class="img_whs6"></p>
+<h4>Floor Major Vertical Penetration Polygon Area</h4>
+<p>Sum of all Vertical Penetration spaces' Polygon Areas in one floor.</p>
+<p><img src="vertpen.png" x-maintain-ratio="TRUE" width="202px" height="348px" border="0" class="img_whs7"></p>
+<h4>Floor PBS Specific Polygon Area</h4>
+<p>Sum of all PBS Specific spaces' Polygon Areas in one floor.</p>
+<h4>Floor Rentable - &nbsp;Building Common Area</h4>
+<p>Sum of all Building Common spaces' Polygon Areas in one floor.</p>
+<h4>Floor Rentable - Floor Common Area</h4>
+<p>Sum of all Floor Common spaces' Polygon Areas in one floor.</p>
+<p><img src="common.png" x-maintain-ratio="TRUE" width="225px" height="374px" border="0" class="img_whs8"></p>
+<h4>Office Polygon Area</h4>
+<p>Sum of all Office spaces' Polygon Areas in one floor.</p>
+<p><img src="office.png" x-maintain-ratio="TRUE" width="267px" height="424px" border="0" class="img_whs9"></p>
+<h4>Store Polygon Area</h4>
+<p>Sum of all Store spaces' Polygon Areas in one floor.</p>
+<h4>Floor Office and Rentable Area</h4>
+<p>Office Polygon Area + Store Polygon Area + Floor Rentable - &nbsp;Building 
+ Common Area. If <a href="ANSI_BOMA_View.htm#Settings">GSA Calculation 
+ Method</a> is used, Floor rentable - Floor Common area is also added.</p>
+<h4>Rentable and Usable Area</h4>
+<p>Floor Measured Gross Area - (Floor Major Vertical Penetration Polygon 
+ Area + PBS Specific Polygon Area)</p>
+<h4>Floor Common Area</h4>
+<p>Rentable and Usable Area - Floor Office and Rentable Area</p>
+<h4>Floor RU Ratio</h4>
+<p>Rentable and Usable Area / Floor Office and Rentable &nbsp;Area. 
+ <a href="ANSI_BOMA_View.htm#Settings">If GSA Calculation Method</a> is 
+ used, value is always 1.</p>
+<h3>Building</h3>
+<h4>Office Rentable Area</h4>
+<p>Sum of all Office, Store, and Building Common spaces' Polygon Areas 
+ in the building.<a href="ANSI_BOMA_View.htm#Settings"> If GSA Calculation 
+ Method</a> is used, Floor Common polygon areas are also added.</p>
+<h4>Building RU Ratio</h4>
+<p>Office Rentable Area / (Office Rentable Area - sum of all Building Common 
+ spaces'&nbsp;Polygon Area). If <a href="ANSI_BOMA_View.htm#Settings">GSA 
+ Calculation Method</a> is used, Floor Common areas are also added.</p>
+<p class="whs10"><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a><span style="margin-left: 0px;"> </span></p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"Space_Properties.htm\">ANSI/BOMA Plugin</a> > Area Calculation</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

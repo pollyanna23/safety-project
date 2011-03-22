@@ -1,0 +1,191 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="Adobe RoboHelp - www.adobe.com">
+<title>Sound Transmission Between Spaces</title>
+<link rel="stylesheet" href="smc_ns.css"><script type="text/javascript" language="JavaScript" title="WebHelpSplitCss">
+<!--
+if (navigator.appName !="Netscape")
+{   document.write("<link rel='stylesheet' href='smc.css'>");}
+//-->
+</script>
+<style type="text/css">
+<!--
+table.whs1 { x-cell-content-align:top; float:aligncenter; width:90%; border-spacing:0px; }
+col.whs2 { width:100%; }
+tr.whs3 { x-cell-content-align:top; }
+td.whs4 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-top-style:none; border-right-style:none; background-color:#003366; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; }
+td.whs5 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-right-style:none; border-bottom-color:#ffffff; border-bottom-style:Solid; border-bottom-width:2px; background-color:#D9D9D9; }
+td.whs6 { width:100%; padding-right:10px; padding-left:10px; background-color:#003366; border-left-style:none; border-right-style:none; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; }
+td.whs7 { width:100%; padding-right:10px; padding-left:10px; border-left-style:none; border-right-style:none; border-bottom-style:Solid; border-bottom-color:#ffffff; border-bottom-width:2px; background-color:#D9D9D9; }
+td.whs8 { width:100%; padding-right:10px; padding-left:10px; background-color:#003366; border-left-style:none; border-right-style:none; border-bottom-color:#ffffff; border-bottom-style:Solid; border-bottom-width:2px; }
+hr.whs9 { float:aligncenter; color:#D9D9D9; }
+-->
+</style><script type="text/javascript" language="JavaScript" title="WebHelpInlineScript">
+<!--
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//-->
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute; left:0px; top:0px; z-index:4; visibility:hidden; }
+-->
+</style><script type="text/javascript" language="javascript1.2" src="whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js"></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">
+<!--
+if (window.gbWhTopic)
+{
+	if (window.addTocInfo)
+	{
+	addTocInfo("Rules\nSound Transmission Between Spaces");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	if(1)
+	{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"SOL_205.htm\">Rules</a> > Sound Transmission Between Spaces</p>");
+
+	}
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("Welcome_to_GSA_Extension_Help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+</script>
+<h1><a name=Top></a>Sound Transmission Between Spaces</h1>
+<div align=center>
+<table x-use-null-cells cellspacing="0" width="90%" class="whs1">
+<col class="whs2">
+
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs4">
+<h2>Overview</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs5">
+<p>This rule checks that walls and doors around spaces have STC rating 
+ high enough. Required STC rating depends on the privacy level of the space.</p>
+<p class=whs6 style="font-style: italic;">Running this rule with the default 
+ values does not give useful results; this rule has to be configured before 
+ use.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs6">
+<h2>Configuring the Rule</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule has the following parameters:</p>
+<h4>Privacy Levels</h4>
+<p>A table for privacy levels spaces with specified type and name. Privacy 
+ level is one of:</p>
+<ul class=whs9 style="list-style: disc;" type=disc>
+	<li class=p><p>Inaudible (required STC rating is 55)</p></li>
+	<li class=p><p>Confidential (required STC rating is 50)</p></li>
+	<li class=p><p>Normal (required STC rating is 45)</p></li>
+	<li class=p><p>Minimal (required STC rating is 40)</p></li>
+	<li class=p><p>None</p></li>
+</ul>
+<h4>Wall STC Ratings</h4>
+<p>A table about wall types' STC ratings.'</p>
+<h4>Door STC Ratings</h4>
+<p>A table about door types' STC ratings.</p>
+<h4>Wall Offset Tolerance</h4>
+<p>A tolerance for searching walls around spaces. Walls, which are nearer 
+ than the tolerance, are taken into account.</p>
+<h4>Acceptable Gap</h4>
+<p>An acceptable gap between walls around a space.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs8">
+<h2>Analyzing the Results</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>If a space is not totally surrounded by walls, an issue is created and 
+ the space is attached to it. If there are some surrounding walls, they 
+ are attached to the issue as information components.</p>
+<p>If a space isn't found in the Privacy Levels table, an issue is created 
+ and the space is attached to it.</p>
+<p>If STC ratings of surrounding &nbsp;walls and doors is smaller than 
+ required, an issue is created and the space and walls and doors with too 
+ small STC rating are attached to the issue.</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#003366" width="100%" class="whs8">
+<h2>Reported Data</td></tr>
+<tr valign="top" class="whs3">
+<td colspan="1" rowspan="1" bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The rule does not have a report.</td></tr>
+<tr valign="top" class="whs3">
+<td colspan="1" rowspan="1" bgcolor="#003366" width="100%" class="whs8">
+<h2>Rule Tools</td></tr>
+<tr valign="top" class="whs3">
+<td bgcolor="#D9D9D9" width="100%" class="whs7">
+<p>The tools panel of the rule contains tools to help you to fill parameter 
+ tables.</p>
+<h4>Add All Space Names and Types</h4>
+<p>Adds all space name and type combinations in the model to Privacy Levels 
+ table. You have to select the privacy level for them.</p>
+<h4>Add All Wall Types</h4>
+<p>Adds all wall types in the model to Wall STC Ratings table. You have 
+ to select STC rating to them. If 'Allow Automatic STC Rating Determination' 
+ is checked, the system tries to search string 'STC' from the type name 
+ and tries to determinate the STC rating of the type.</p>
+<h4>Add All Door Types</h4>
+<p>Adds all door types in the model to Door STC Ratings table. You have 
+ to select STC rating to them. If 'Allow Automatic STC Rating Determination' 
+ is checked, the system tries to search string 'STC' from the type name 
+ and tries to determinate the STC rating of the type.</td></tr>
+</table>
+</div>
+<p><a href="#Top">Back to Top</a> <a href="mailto:support@solibri.com">Contact 
+ Support</a></p>
+
+<hr align="center" color="#D9D9D9" class="whs9">
+
+<p>&nbsp;</p>
+<script type="text/javascript" language="javascript1.2">
+<!--
+highlightSearch();
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+if(0)
+{
+document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("Welcome_to_GSA_Extension_Help.htm", "", ">", "Home", "Welcome_to_GSA_Extension_Help_1.htm");
+document.write("<a href=\"SOL_205.htm\">Rules</a> > Sound Transmission Between Spaces</p>");
+
+}
+//-->
+</script>
+</body>
+</html>

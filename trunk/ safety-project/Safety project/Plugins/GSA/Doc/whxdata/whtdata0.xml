@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<tocdata>
+<item name="Welcome to GSA Extension Help" url="Welcome_to_GSA_Extension_Help_1.htm" />
+<item name="Analyzing Process" url="Analyzing_Process.htm" />
+<book name="ANSI/BOMA Plugin" >
+  <item name="Space Properties" url="Space_Properties.htm" />
+  <item name="Floor Properties" url="Floor_Properties.htm" />
+  <item name="Building Properties" url="Building_Properties.htm" />
+  <item name="Area Calculation" url="Area_Calculation.htm" />
+  <item name="ANSI/BOMA View" url="ANSI_BOMA_View.htm" />
+</book>
+<book name="Rules" >
+  <item name="Area Comparison Rule" url="SOL_205.htm" />
+  <item name="Efficiency Ratios" url="SOL_180.htm" />
+  <item name="Housing Plan" url="SOL_192.htm" />
+  <item name="Program Reconciliation" url="SOL_183.htm" />
+  <item name="Sound Transmission Between Spaces" url="SOL_178.htm" />
+  <item name="Mandatory Space Data Check" url="SOL_193.htm" />
+  <item name="Space Value Check" url="SOL_204.htm" />
+  <item name="Stacking Plan Report and Visualization" url="SOL_194.htm" />
+  <item name="Walls Between Public, Restricted, and Secure Spaces" url="SOL_181.htm" />
+  <item name="Space Category Consistency" url="SOL_219.htm" />
+</book>
+
+</tocdata>
