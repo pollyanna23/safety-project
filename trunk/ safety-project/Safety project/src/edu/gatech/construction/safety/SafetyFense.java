@@ -11,6 +11,7 @@ import java.util.ListIterator;
 import java.util.SortedSet;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 
@@ -40,22 +41,24 @@ import com.solibri.saf.plugins.visualizationplugin.entities.LineArrayEntity;
 import com.solibri.saf.plugins.visualizationplugin.entities.PointArrayEntity;
 import com.solibri.sai.pmi.IComponent;
 
+import edu.gatech.construction.safety.utils.Utils;
+
 /**
  * This is for visualizing building skins and fenses
  * 
  * @author Jin-Kook Lee
  */
 
-public class SafetyFense extends VisualizationTask {
+public class SafetyFense {
 
 	double skinArea = 0.0;
 
 	SModel model;
 	SSpace[] spaces;
 	SBuildingStorey[] stories;
-	// SSlab[] slabs;
-	// SWall[] walls;
-	// SRoof[] roofs;
+	SSlab[] slabs;
+	SWall[] walls;
+	SRoof[] roofs;
 
 	private final VisualizationTask task = new FenseVisulizationTask();
 
@@ -76,6 +79,9 @@ public class SafetyFense extends VisualizationTask {
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
 			ArrayList<Point> pointsHoles = new ArrayList<Point>();
 			double fenseHeight = 400.0; // 1m height of fense
+			double fenseLength = 0.0;
+			double holeLength = 0.0;
+			String holeNums = "";
 
 			SModel model = (SModel) ProductModelHandlingPlugin.getInstance()
 					.getCurrentModel();
@@ -99,7 +105,7 @@ public class SafetyFense extends VisualizationTask {
 					LayoutPlugin.areaToPolygons(aa, polygons, null);
 
 					ArrayList polygons2 = new ArrayList();
-					LayoutPlugin.areaToPolygons(bb, polygons2, null);
+					LayoutPlugin.areaToPolygons(bb, polygons2, polygons2);
 
 					for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
 						Point[] polygon = (Point[]) iter2.next();
@@ -113,6 +119,8 @@ public class SafetyFense extends VisualizationTask {
 							pointsBoundary.add(p1);
 							pointsBoundary.add(p2);
 
+							fenseLength += GeomUtils2D.length(p1, p2) * 0.001;
+
 							Point p3 = new Point(polygon[j]);
 							Point p4 = new Point(polygon[(j + 1)
 									% polygon.length]);
@@ -125,7 +133,14 @@ public class SafetyFense extends VisualizationTask {
 
 					for (Iterator iter2 = polygons2.iterator(); iter2.hasNext();) {
 						Point[] polygon = (Point[]) iter2.next();
+						// Vector<Point> vector = new
+						// Vector<Point>(Arrays.asList(polygon));
+						// double angleEpsilon = Math.toRadians(15);
+						// Point3d[] polygonFiltered =
+						// GeomUtils.filterPolyline(vector.toArray(new
+						// Point[vector.size()]), 100, angleEpsilon);
 						int pointCount = 0;
+
 						for (int j = 0; j < polygon.length; j++) {
 							Point p1 = new Point(polygon[j]);
 							Point p2 = new Point(polygon[(j + 1)
@@ -134,6 +149,12 @@ public class SafetyFense extends VisualizationTask {
 									.getDoubleValue() + fenseHeight;
 							pointsHoles.add(p1);
 							pointsHoles.add(p2);
+
+							holeLength += GeomUtils2D.length(p1, p2) * 0.001;
+							holeNums += ", "
+									+ Utils.round(
+											GeomUtils2D.length(p1, p2) * 0.001,
+											2);
 
 							Point p3 = new Point(polygon[j]);
 							Point p4 = new Point(polygon[(j + 1)
@@ -152,19 +173,34 @@ public class SafetyFense extends VisualizationTask {
 						Color.black), 0.0f, 2.0f));
 				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 						Color.blue), 0.0f, 2.0f));
+				// v.visualize(new PointArrayEntity(pointsBoundary, new
+				// Color3f(Color.red), 0.0f, 6.0f));
 				// v.visualize(new PointArrayEntity(pointsHoles, new
 				// Color3f(Color.red), 0.0f, 6.0f));
 
 			}
 
+			// String str = "Fense length is total = " +
+			// Utils.round(fenseLength, 2) + " M\n"
+			// + "Holes length is total = " + Utils.round(holeLength, 2) + " M";
+			// JOptionPane.showMessageDialog(null,
+			// str,
+			// "Message",
+			// JOptionPane.INFORMATION_MESSAGE,
+			// null);
+
+			System.out.println("Fense length is total = "
+					+ Utils.round(fenseLength, 2) + " M");
+			System.out.println("Holes length is total = "
+					+ Utils.round(holeLength, 2) + " M");
+			System.out.println("Holes length is = " + holeNums);
+
 		}
 	}
 
-	@Override
-	public void visualize(VisualizationInterface arg0) {
-
-	}
-
+	/*
+	 * FenseCalculator
+	 */
 	public class FenseCalculator {
 		private final SBuildingStorey storey;
 		private Point[][] perimeter;
@@ -213,10 +249,10 @@ public class SafetyFense extends VisualizationTask {
 						// gaps:
 						LayoutPlugin.resizeArea(componentArea, 200);
 					} else if (component instanceof SColumn) {
-						// componentArea = LayoutPlugin.getAreaCopy(component);
+						componentArea = LayoutPlugin.getAreaCopy(component);
 						// Increase the space area by 10cm to fill possible
 						// gaps:
-						// LayoutPlugin.resizeArea(componentArea, 200);
+						LayoutPlugin.resizeArea(componentArea, 200);
 					} else if (component instanceof SSlab) {
 						componentArea = LayoutPlugin.getAreaCopy(component);
 						// Increase the space area by 10cm to fill possible
