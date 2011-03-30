@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin name="GT_Safety_Plugin" id="edu.gatech.safety" version="1.0" 
+provider-name="Jin kook Lee and Sijie Zhang, Georgia Institute of Technology">
+	<runtime>
+		<library name="SafetyPlugin.jar">
+			<plugin name="edu.gatech.safety.construction.ConstructionSafetyPlugin" />
+		</library>
+	</runtime>
+	<doc url="doc/forward.htm" />
+</plugin>
