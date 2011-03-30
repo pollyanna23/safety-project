@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin name="Construction Safety" id="edu.gatech.safety" version="1.0"
+	provider-name="Georgia Tech">
+	<runtime>
+		<library name="constructionSafety.jar">
+			<plugin name="edu.gatech.safety.construction.ConstructionSafetyPlugin" />
+				<layout name="Construction Safety Plugin">
+    			<split orientation="horizontal">
+      			<split orientation="vertical" weight="0.41346153846153844">
+        		<view uniqueId="MODEL_VIEW" weight="1.0" />
+        		<view uniqueId="COMPONENT_VIEWER_PLUGIN_VIEW" weight="1.0" />
+     		 	</split>
+      			<view uniqueId="3D_VIEW" weight="1.5865384615384617" />
+    			</split>
+  				</layout>
+		</library>
+	</runtime>
+	<doc url="help/index.htm" />
+</plugin>
