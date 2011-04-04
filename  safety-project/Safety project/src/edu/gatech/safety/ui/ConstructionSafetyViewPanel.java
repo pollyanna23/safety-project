@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileFilter;
 
+import com.solibri.sae.solibri.construction.SBuildingStorey;
 import com.solibri.sae.solibri.construction.SModel;
 import com.solibri.sae.ui.Ui;
 import com.solibri.saf.core.Application;
@@ -44,13 +46,15 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	
 	SModel model = (SModel)ProductModelHandlingPlugin.getInstance().getCurrentModel();
 	
+	
 	static private final String newline = "\n";
-    JButton S_open, S_run, S_test, S_slab, Btn_others;
+    JButton S_open, S_run, S_run2, S_slab, Btn_others;
     
     //JTextArea statusView = SpaceProgramReview_Data.statusView;
     public static JTextArea statusView = new JTextArea();
     
-    JFileChooser fc;
+    JFileChooser fc;    
+    JComboBox floorList;
 
     Font font = new Font("Arial", Font.PLAIN, 11);
 	
@@ -104,39 +108,55 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
         fc = new JFileChooser(); // Create a file chooser
         fc.addChoosableFileFilter(new RequirementFileFilter()); // Filter for the appropriate file chooser
         fc.setAcceptAllFileFilterUsed(false);
+        
+        
+        // Selection - Floors
+        String[] floorStrings = { "All Floors ---", "under dev" };
+        
+        floorList = new JComboBox(floorStrings);
+        floorList.setSelectedIndex(1);
+        floorList.addActionListener(this);
+        
 
         S_open = new JButton("Open Safety Data", 
                 createImageIcon("/edu/gatech/safety/res/images/table.gif")); // images update later, or just use JButtons
 		S_open.addActionListener(this);
 		S_open.setToolTipText("Open safety data test.");
-		
-		S_run = new JButton("Safety Fense", 
-                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_run.addActionListener(this);
-		S_run.setToolTipText("Safety Fense Test");
-		
-		S_test = new JButton("Test", 
-                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_test.addActionListener(this);
-		S_test.setToolTipText("Test");
+			
 		
 		S_slab = new JButton("Slabs", 
                 createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_slab.addActionListener(this);
 		S_slab.setToolTipText("Collect all slabs and more +");
+		
+		
+		S_run = new JButton("Safety Fense: Perimeter", 
+                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_run.addActionListener(this);
+		S_run.setToolTipText("Safety Fense for Perimeter");
+		
+		
+		S_run2 = new JButton("Safety Fense: Holes", 
+                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_run2.addActionListener(this);
+		S_run2.setToolTipText("Safety Fense for Holes");
+		
 
 		JPanel panelTop = new JPanel(); // button panel
 		panelTop.add(S_open);
-		panelTop.add(S_run);
-		panelTop.add(S_test);
+		
+		panelTop.add(floorList);
+		
 		panelTop.add(S_slab);
-		panelTop.setPreferredSize(new Dimension(320, 30));
+		panelTop.add(S_run);
+		panelTop.add(S_run2);
+//		panelTop.setPreferredSize(new Dimension(320, 30));
 
 		//Add the buttons and the status view to the panel.
 		JPanel panelSPR = new JPanel(); // main panel
-		panelSPR.setLayout(new BorderLayout()); // border layout
-		panelSPR.add(panelTop, BorderLayout.PAGE_START);
-		panelSPR.add(statusScrollPane, BorderLayout.PAGE_END);
+		panelSPR.setLayout(new FlowLayout()); // border layout
+		panelSPR.add(panelTop);
+		panelSPR.add(statusScrollPane);
 
 		return panelSPR;
 	}
@@ -210,28 +230,34 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
             }
             statusView.setCaretPosition(statusView.getDocument().getLength());
         	
+        
+                
+        //  ----------------------------------------- 
+        } else if (e.getSource() == S_slab) { 
+          SlabRules sr = new SlabRules();
+          sr.getSlabs();
+
+          
+      //  ----------------------------------------- 
+        } else if (e.getSource() == floorList) { 
+        	JComboBox cb = (JComboBox)e.getSource();
+            String floorName = (String)cb.getSelectedItem();
+            System.out.println(floorName);
+
+
+          
         //  ----------------------------------------- 
         } else if (e.getSource() == S_run) { 
         	
         	SafetyFense sf = new SafetyFense();
         	sf.run();
 
-        
         //  ----------------------------------------- 
-        } else if (e.getSource() == S_test) { 
-          JOptionPane.showMessageDialog(null, 
-			"This is a test button.", 
-			"Message",
-		    JOptionPane.INFORMATION_MESSAGE,
-		    null);
+        } else if (e.getSource() == S_run2) { 
+        	
+
         
-        
-      //  ----------------------------------------- 
-        } else if (e.getSource() == S_slab) { 
-          SlabRules sr = new SlabRules();
-          sr.getSlabs();
-         
-        
+          
         //  ----------------------------------------- 
         } else if (e.getSource() == Btn_others) { 
           JOptionPane.showMessageDialog(null, 
