@@ -32,6 +32,11 @@ public class Visualizer {
 	
 	
 	
+	public static void visualizeNothing() {
+		VisualizationTask task = new NothingVisulizationTask();
+		VisualizationPlugin.getInstance().getVisualizer().visualize(task);
+	}
+	
 	public static void visualizeCol(Collection col) {
 		VisualizationPlugin.getInstance().getVisualizer().visualize(new ComponentVisualizationTask(col));
 	}
@@ -43,6 +48,13 @@ public class Visualizer {
 		VisualizationPlugin.getInstance().getVisualizer().visualize(task);
 	}
 	
+	
+	
+	private static class NothingVisulizationTask extends VisualizationTask {
+		public void visualize(VisualizationInterface v) {
+			v.setVisible(false);
+		}
+	}
 	
 	
 	/**
@@ -88,8 +100,8 @@ public class Visualizer {
             v.setVisible(false);
             v.resetColors(okComponents);
             v.setVisible(okComponents, false); // door objects invisible
-            v.setColors(badComponents, new Color3f(Color.RED));
-            v.setColors(badSpaces, new Color3f(Color.RED), 0.8f);
+//            v.setColors(badComponents, new Color3f(Color.white));
+//            v.setColors(badSpaces, new Color3f(Color.white), 0.8f);
             v.setFootprintsVisible(okComponents);
         }
     }
