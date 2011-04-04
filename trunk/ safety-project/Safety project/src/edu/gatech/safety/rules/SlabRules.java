@@ -35,6 +35,9 @@ public class SlabRules {
 	
 	public void getSlabs(){
 		
+		// clear ArrayList first then collect again
+		visualizeObject.clear();
+		
 		model = (SModel)ProductModelHandlingPlugin.getInstance().getCurrentModel();
 		slabs = (SSlab[]) model.findAll(SSlab.class);
 		
@@ -47,7 +50,9 @@ public class SlabRules {
 		}
 		System.out.println("Slabs end *****");
 		
-		Visualizer.visualizeCol(visualizeObject);
+		
+		Visualizer.visualizeNothing(); // clear current model view
+		Visualizer.visualizeCol(visualizeObject); // visualize collected objects
 		
 	}
 	
