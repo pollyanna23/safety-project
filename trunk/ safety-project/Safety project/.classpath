@@ -25,6 +25,5 @@
 	<classpathentry exported="true" kind="lib" path="C:/Program Files/Solibri/SMCv6.1/jre/lib/ext/vecmath.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Program Files/Solibri/SMCv6.1/.install4j/i4jruntime.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre6/lib/ext/dns_sd.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
