@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import javax.swing.Action;
 import javax.swing.JToolBar;
 
+import com.solibri.sae.redox.Model;
+import com.solibri.sae.solibri.construction.SModel;
 import com.solibri.saf.core.DefaultPlugIn;
 import com.solibri.saf.core.DefaultView;
 import com.solibri.saf.core.DefaultViewToolBar;
@@ -50,6 +52,23 @@ public class ConstructionSafetyPlugin extends DefaultPlugIn {
 
 	public static ConstructionSafetyPlugin getInstance() {
 		return INSTANCE;
+	}
+	
+	/**
+	 * Returns the model containing the architectural concept
+	 * @return the concept model
+	 */
+	public Model getConceptModel() {
+		Model model = (Model) ProductModelHandlingPlugin.getInstance()
+		.getCurrentModel();
+		if (model != null) {
+			// Find all sub models
+			Model[] submodels = (Model[]) model.findAll(SModel.class);
+			// Assume that the first sub model contains the concept
+			Model conceptModel = submodels[0];
+			return conceptModel;
+		}
+		return null;
 	}
 
 	public void exit() throws PlugInExitException {
