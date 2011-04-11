@@ -72,34 +72,28 @@ import edu.gatech.safety.rules.SlabRules;
  * @author Jin-Kook Lee
  */
 public class ConstructionSafetyViewPanel extends ViewPanel implements ActionListener, ListSelectionListener {	
+	
 	private static final long serialVersionUID = 1L;
 	
-	private JTabbedPane tabbedPane = new JTabbedPane();
+	private JTabbedPane tabbedPane;
+	private JPanel safetyPanel, topPanel, bottomPanel;
 	
-	private final JPanel topPanel = new JPanel();
-	private JPanel bottomPanel;
-	
-	static private final String newline = "\n";
-    JButton S_open, S_run, S_run2, S_slab, Btn_others;
-    
-    //JTextArea statusView = SpaceProgramReview_Data.statusView;
+    private JButton S_open, S_run, S_run2, S_slab, Btn_others;
     public static JTextArea statusView = new JTextArea();
     
-    JFileChooser fc;    
-    JComboBox floorList;
+    private JFileChooser fc;    
+    private JComboBox floorList;
 
-    Font font = new Font("Arial", Font.PLAIN, 11);
-	
+    static private final String newline = "\n";
+    private Font font = new Font("Arial", Font.PLAIN, 11);
 	
 	private final Point3d MAX_NEGATIVE = new Point3d(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
 	private final Point3d MAX_POSITIVE = new Point3d(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-
 	
 	private JScrollPane safetyTreeScrollPane;
 	private IObjectTreeTable treeTable;
 	private IObjectTreeTableModel treeTableModel;
 	private RootNode root = new RootNode(null);
-	
 	
 	
 		
@@ -115,6 +109,254 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 //		setLayout(new BorderLayout());
 //		add(getSafetyTreeScrollPane(), BorderLayout.CENTER);
 	}
+		
+	
+	/**
+	 * initialize UI: build a tabbed pane and add them
+	 */
+	private void initializeGUI() {
+		// Add Tabs
+		tabbedPane = new JTabbedPane();
+		tabbedPane.addTab("Construction Safety", null, drawTab1(), null);
+		tabbedPane.addTab("Monitoring", null, drawTab2(), null);
+        tabbedPane.addTab("Others", null, drawTab3(), null);
+        
+        tabbedPane.setSelectedIndex(0);
+        tabbedPane.setToolTipTextAt(0, new String("<html>Construction Safety Plugin</html>"));
+        tabbedPane.setToolTipTextAt(1, new String("<html>Construction Safety Plugin</html>"));
+        tabbedPane.setToolTipTextAt(2, new String("<html>This module is under development.</html>"));
+        
+        // Disable tabs
+//        tabbedPane.setEnabledAt(1, false);
+        
+        this.add(tabbedPane);
+	}
+	
+	private JPanel drawTab1() {
+		if (safetyPanel == null) {
+			safetyPanel = new JPanel(new BorderLayout());
+			safetyPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			safetyPanel.add(getTopPanel(), BorderLayout.NORTH);
+			safetyPanel.add(getBottomPanel(), BorderLayout.CENTER);
+		}
+		return safetyPanel;
+	}
+	
+	private JPanel getTopPanel() {
+		if (topPanel == null) {
+			topPanel = new JPanel(new BorderLayout());
+			topPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+			topPanel.add(drawSafetyButtons(), BorderLayout.CENTER);
+		}
+		return topPanel;
+	}
+	
+	private JPanel getBottomPanel() {
+		if (bottomPanel == null) {
+			bottomPanel = new JPanel(new BorderLayout());
+			bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+			bottomPanel.add(getSafetyTreeScrollPane(), BorderLayout.CENTER);
+		}
+		return bottomPanel;
+	}
+	
+	
+	/**
+	 * JPanel for the first tab
+	 * @return JPanel
+	 */
+	private JPanel drawSafetyButtons() {
+	    
+        fc = new JFileChooser(); // Create a file chooser
+        fc.addChoosableFileFilter(new RequirementFileFilter()); // Filter for the appropriate file chooser
+        fc.setAcceptAllFileFilterUsed(false);
+        
+        
+        // Selection - Floors
+        String[] floorStrings = { "All Floors ---", "under dev" };
+        
+        floorList = new JComboBox(floorStrings);
+        floorList.setSelectedIndex(1);
+        floorList.addActionListener(this);
+        
+
+        S_open = new JButton("Open Safety Data", 
+                createImageIcon("/edu/gatech/safety/res/images/table.gif")); // images update later, or just use JButtons
+		S_open.addActionListener(this);
+		S_open.setToolTipText("Open safety data test.");
+			
+		
+		S_slab = new JButton("Safety Objects", 
+                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_slab.addActionListener(this);
+		S_slab.setToolTipText("Collect all slabs and more +");
+		
+		
+		S_run = new JButton("Safety Fenses", 
+                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_run.addActionListener(this);
+		S_run.setToolTipText("Safety Fense for Perimeter");
+		
+		
+		S_run2 = new JButton("Safety Fense: Holes", 
+                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_run2.addActionListener(this);
+		S_run2.setToolTipText("Safety Fense for Holes");
+		
+
+		JPanel panelTop = new JPanel(); // button panel
+		panelTop.add(S_open);
+		
+//		panelTop.add(floorList);
+		
+		panelTop.add(S_slab);
+		panelTop.add(S_run);
+//		panelTop.add(S_run2);
+//		panelTop.setPreferredSize(new Dimension(320, 30));
+
+		//Add the buttons and the status view to the panel.
+		JPanel panelSafetyTab = new JPanel(); // main panel
+		panelSafetyTab.setLayout(new FlowLayout()); // border layout
+		panelSafetyTab.add(panelTop);
+
+		return panelSafetyTab;
+	}
+	
+	
+	
+	// status tab
+	private JPanel drawTab2() {
+		JPanel statusPanel = new JPanel();
+		//Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
+		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);		
+		
+		statusView = new JTextArea(8,30);
+	    statusView.setMargin(new Insets(5,5,5,5));
+	    statusView.setEditable(false);
+	    statusView.setOpaque(false); // transparent textarea
+	    statusView.setFont(font);
+	    JScrollPane statusScrollPane = new JScrollPane(statusView); // status view panel  
+	    
+	    statusView.append("Status view is ready..\n" +
+	    		"----------------------------------------------" + newline);
+
+	    statusScrollPane.setPreferredSize(new Dimension(400, 200));
+	    statusScrollPane.setOpaque(false); //transparent
+	    statusScrollPane.setBorder(loweredetched);
+	    statusPanel.add(statusScrollPane);
+	    return statusPanel;
+	    
+	}
+	
+	// others tab
+	private JPanel drawTab3() {
+		
+		Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
+		//Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+		
+		Btn_others = new JButton("Test", 
+                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		Btn_others.addActionListener(this);
+		Btn_others.setToolTipText("Test.");
+		
+		JPanel panelButtons = new JPanel(); // button panel
+		panelButtons.add(Btn_others);
+		panelButtons.setLayout(new FlowLayout());
+		
+				
+		JTextArea co = new JTextArea(5,20);
+		co.setMargin(new Insets(5,5,5,5));
+		co.setEditable(false);		
+		co.setFont(font);
+		co.setPreferredSize(new Dimension(320, 130));
+		co.setOpaque(false);
+		co.setBorder(empty);
+		
+		co.append("This is an additional panel for others." + newline);
+		
+		JPanel panelOthers = new JPanel(); //use FlowLayout
+		panelOthers.add(panelButtons, BorderLayout.PAGE_START);
+		panelOthers.add(co, BorderLayout.PAGE_END);			
+		panelOthers.setOpaque(true);	
+
+		return panelOthers;
+	}
+	
+
+	
+	
+	
+	/**
+	 * Actions
+	 */
+    @Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+	public void actionPerformed(ActionEvent e) {
+
+		
+		//  ----------------------------------------- 
+        if (e.getSource() == S_open) { 
+        	int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+            	File file = fc.getSelectedFile();
+            	
+            	statusView.append("Opening: " + file.getName().replace("%20", " ") + " " + newline);
+            
+            } else {
+            	
+            	statusView.append("Open file cancelled." + newline);
+            	
+            }
+            statusView.setCaretPosition(statusView.getDocument().getLength());
+        	
+        
+                
+        //  ----------------------------------------- 
+        } else if (e.getSource() == S_slab) { 
+          SlabRules sr = new SlabRules();
+          sr.getSlabs();
+          
+          update();
+
+          
+      
+          
+        //  ----------------------------------------- 
+        } else if (e.getSource() == S_run) { 
+        	
+        	SafetyFense sf = new SafetyFense();
+        	sf.run();
+        	
+
+        
+        
+          
+        //  ----------------------------------------- 
+        } else if (e.getSource() == Btn_others) { 
+          JOptionPane.showMessageDialog(null, 
+			"This is another test tab for different category.", 
+			"Message",
+		    JOptionPane.INFORMATION_MESSAGE,
+		    null);
+       
+        }
+        
+	}
+	
+	
+	
+	
+	
+	
+	
+	// =====================================================================
+	/**
+	 * update repaint UI
+	 */
 	
 	public void update() {
 		Model model = ConstructionSafetyPlugin.getInstance().getConceptModel();
@@ -255,171 +497,12 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	
 	
 	
-	/**
-	 * initialize UI: build a tabbed pane and add them
-	 */
-	private void initializeGUI() {
-		// Add Tabs
-		tabbedPane.addTab("Construction Safety", null, drawTab1(), null);
-		tabbedPane.addTab("Monitoring", null, drawTab2(), null);
-        tabbedPane.addTab("Others", null, drawTab3(), null);
-        
-        tabbedPane.setSelectedIndex(0);
-        tabbedPane.setToolTipTextAt(0, new String("<html>Construction Safety Plugin</html>"));
-        tabbedPane.setToolTipTextAt(1, new String("<html>Construction Safety Plugin</html>"));
-        tabbedPane.setToolTipTextAt(2, new String("<html>This module is under development.</html>"));
-        
-        // Disable tabs
-//        tabbedPane.setEnabledAt(1, false);
-        
-        add(tabbedPane);
-	}
-	
-	private JPanel drawTab1() {
-		JPanel jp = new JPanel();
-		topPanel.setLayout(new BorderLayout());
-		topPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-		topPanel.add(drawSafetyPanel1(), BorderLayout.NORTH);
-		topPanel.add(new JPanel(), BorderLayout.CENTER); // to take empty space
-		jp.add(topPanel, BorderLayout.NORTH);
-		jp.add(getBottomPanel(), BorderLayout.CENTER);
-		return jp;
-	}
-	
-	private JPanel drawTab2() {
-		JPanel statusPanel = new JPanel();
-		//Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);		
-		
-		statusView = new JTextArea(8,30);
-	    statusView.setMargin(new Insets(5,5,5,5));
-	    statusView.setEditable(false);
-	    statusView.setOpaque(false); // transparent textarea
-	    statusView.setFont(font);
-	    JScrollPane statusScrollPane = new JScrollPane(statusView); // status view panel  
-	    
-	    statusView.append("Status view is ready..\n" +
-	    		"----------------------------------------------" + newline);
-
-	    statusScrollPane.setPreferredSize(new Dimension(400, 200));
-	    statusScrollPane.setOpaque(false); //transparent
-	    statusScrollPane.setBorder(loweredetched);
-	    statusPanel.add(statusScrollPane);
-	    return statusPanel;
-	    
-	}
-	
-	private JPanel getBottomPanel() {
-		if (bottomPanel == null) {
-			bottomPanel = new JPanel(new BorderLayout());
-			bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-			bottomPanel.add(getSafetyTreeScrollPane(), BorderLayout.CENTER);
-		}
-		return bottomPanel;
-	}
 	
 	
 	
 	
-	/**
-	 * JPanel for the first tab
-	 * @return JPanel
-	 */
-	private JPanel drawSafetyPanel1() {
-	    
-        fc = new JFileChooser(); // Create a file chooser
-        fc.addChoosableFileFilter(new RequirementFileFilter()); // Filter for the appropriate file chooser
-        fc.setAcceptAllFileFilterUsed(false);
-        
-        
-        // Selection - Floors
-        String[] floorStrings = { "All Floors ---", "under dev" };
-        
-        floorList = new JComboBox(floorStrings);
-        floorList.setSelectedIndex(1);
-        floorList.addActionListener(this);
-        
-
-        S_open = new JButton("Open Safety Data", 
-                createImageIcon("/edu/gatech/safety/res/images/table.gif")); // images update later, or just use JButtons
-		S_open.addActionListener(this);
-		S_open.setToolTipText("Open safety data test.");
-			
-		
-		S_slab = new JButton("Safety Objects", 
-                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_slab.addActionListener(this);
-		S_slab.setToolTipText("Collect all slabs and more +");
-		
-		
-		S_run = new JButton("Safety Fenses", 
-                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_run.addActionListener(this);
-		S_run.setToolTipText("Safety Fense for Perimeter");
-		
-		
-		S_run2 = new JButton("Safety Fense: Holes", 
-                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_run2.addActionListener(this);
-		S_run2.setToolTipText("Safety Fense for Holes");
-		
-
-		JPanel panelTop = new JPanel(); // button panel
-		panelTop.add(S_open);
-		
-//		panelTop.add(floorList);
-		
-		panelTop.add(S_slab);
-		panelTop.add(S_run);
-//		panelTop.add(S_run2);
-//		panelTop.setPreferredSize(new Dimension(320, 30));
-
-		//Add the buttons and the status view to the panel.
-		JPanel panelSafetyTab = new JPanel(); // main panel
-		panelSafetyTab.setLayout(new FlowLayout()); // border layout
-		panelSafetyTab.add(panelTop);
-
-		return panelSafetyTab;
-	}
-	
-		
-	
-	/* panel for Cost */
-	private JPanel drawTab3() {
-		
-		Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-		//Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		
-		Btn_others = new JButton("Test", 
-                createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		Btn_others.addActionListener(this);
-		Btn_others.setToolTipText("Test.");
-		
-		JPanel panelButtons = new JPanel(); // button panel
-		panelButtons.add(Btn_others);
-		panelButtons.setLayout(new FlowLayout());
-		
-				
-		JTextArea co = new JTextArea(5,20);
-		co.setMargin(new Insets(5,5,5,5));
-		co.setEditable(false);		
-		co.setFont(font);
-		co.setPreferredSize(new Dimension(320, 130));
-		co.setOpaque(false);
-		co.setBorder(empty);
-		
-		co.append("This is an additional panel for others." + newline);
-		
-		JPanel panelOthers = new JPanel(); //use FlowLayout
-		panelOthers.add(panelButtons, BorderLayout.PAGE_START);
-		panelOthers.add(co, BorderLayout.PAGE_END);			
-		panelOthers.setOpaque(true);	
-
-		return panelOthers;
-	}
-	
-	
-	/**
+	// =====================================================================
+	/** 
 	 * Utility
 	 * @param path
 	 * @return
@@ -433,67 +516,6 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
             return null;
         }
     }
-
-
-
-	
-	/**
-	 * Actions
-	 */
-	public void actionPerformed(ActionEvent e) {
-
-		
-		//  ----------------------------------------- 
-        if (e.getSource() == S_open) { 
-        	int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-            	File file = fc.getSelectedFile();
-            	
-            	statusView.append("Opening: " + file.getName().replace("%20", " ") + " " + newline);
-            
-            } else {
-            	
-            	statusView.append("Open file cancelled." + newline);
-            	
-            }
-            statusView.setCaretPosition(statusView.getDocument().getLength());
-        	
-        
-                
-        //  ----------------------------------------- 
-        } else if (e.getSource() == S_slab) { 
-          SlabRules sr = new SlabRules();
-          sr.getSlabs();
-          
-          update();
-
-          
-      
-          
-        //  ----------------------------------------- 
-        } else if (e.getSource() == S_run) { 
-        	
-        	SafetyFense sf = new SafetyFense();
-        	sf.run();
-        	
-
-        
-        
-          
-        //  ----------------------------------------- 
-        } else if (e.getSource() == Btn_others) { 
-          JOptionPane.showMessageDialog(null, 
-			"This is another test tab for different category.", 
-			"Message",
-		    JOptionPane.INFORMATION_MESSAGE,
-		    null);
-       
-        }
-        
-	}
-	
-	
-	
 	
 	/**
 	 * only requirement doc files - XML or Excel files allowed
@@ -547,21 +569,6 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	        }
 	        return ext;
 	    }
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
