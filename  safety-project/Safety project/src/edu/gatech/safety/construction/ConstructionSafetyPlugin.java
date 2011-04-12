@@ -58,15 +58,14 @@ public class ConstructionSafetyPlugin extends DefaultPlugIn {
 	 * Returns the model containing the architectural concept
 	 * @return the concept model
 	 */
-	public Model getConceptModel() {
-		Model model = (Model) ProductModelHandlingPlugin.getInstance()
-		.getCurrentModel();
+	public Model getThisModel() {
+		Model model = (Model) ProductModelHandlingPlugin.getInstance().getCurrentModel();
 		if (model != null) {
 			// Find all sub models
 			Model[] submodels = (Model[]) model.findAll(SModel.class);
 			// Assume that the first sub model contains the concept
-			Model conceptModel = submodels[0];
-			return conceptModel;
+			Model thisModel = submodels[0];
+			return thisModel;
 		}
 		return null;
 	}
@@ -111,7 +110,7 @@ public class ConstructionSafetyPlugin extends DefaultPlugIn {
 			ModelHandlingPluginStateChangedEvent mhpsce = (ModelHandlingPluginStateChangedEvent) event;
 			if (mhpsce.getType() == ModelHandlingPluginStateEventTypes.MODEL_MODIFIED
 					|| mhpsce.getType() == ModelHandlingPluginStateEventTypes.MODEL_OPENED) {
-				// panel.updateGraphics();
+				panel.update();
 			}
 		}
 	}

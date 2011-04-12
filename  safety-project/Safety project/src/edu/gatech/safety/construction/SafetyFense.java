@@ -90,7 +90,7 @@ public class SafetyFense {
 
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
-
+				
 				if (storeys[i].bottomElevation.getDoubleValue() > 2000) { // 2m
 																			// height
 					FenseCalculator calculator = new FenseCalculator(storeys[i]);
@@ -183,6 +183,8 @@ public class SafetyFense {
 					}
 
 				}
+				
+				
 
 				// visualize perimeter polygon
 				v.visualize(new LineArrayEntity(pointsBoundary, new Color3f(
@@ -194,6 +196,7 @@ public class SafetyFense {
 				// v.visualize(new PointArrayEntity(pointsHoles, new
 				// Color3f(Color.red), 0.0f, 6.0f));
 
+				
 			}
 
 			// String str = "Fense length is total = " +
@@ -204,7 +207,8 @@ public class SafetyFense {
 			// "Message",
 			// JOptionPane.INFORMATION_MESSAGE,
 			// null);
-
+			
+			// print ==========
 			System.out.println("Fense length is total = "
 					+ Utils.round(fenseLength, 2) + " M");
 			System.out.println("Holes length is total = "

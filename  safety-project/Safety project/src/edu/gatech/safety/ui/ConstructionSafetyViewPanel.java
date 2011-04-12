@@ -45,11 +45,14 @@ import javax.vecmath.Point3d;
 import org.jdesktop.swingx.treetable.TreeTableNode;
 
 import com.solibri.sae.redox.Entity;
+import com.solibri.sae.redox.ItemFilter;
 import com.solibri.sae.redox.Model;
 import com.solibri.sae.solibri.SContains;
 import com.solibri.sae.solibri.construction.SBuilding;
 import com.solibri.sae.solibri.construction.SBuildingStorey;
 import com.solibri.sae.solibri.construction.SModel;
+import com.solibri.sae.solibri.construction.SOpening;
+import com.solibri.sae.solibri.construction.SSlab;
 import com.solibri.sae.solibri.construction.SSpace;
 import com.solibri.sae.solibri.construction.ui.ItemTreeCellRenderer;
 import com.solibri.sae.ui.IObjectTreeTable;
@@ -117,8 +120,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	private void initializeGUI() {
 		// Add Tabs
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("Construction Safety", null, drawTab1(), null);
-		tabbedPane.addTab("Monitoring", null, drawTab2(), null);
+		tabbedPane.addTab("Construction Objects", null, drawTab1(), null);
+		tabbedPane.addTab("Construction Process", null, drawTab2(), null);
         tabbedPane.addTab("Others", null, drawTab3(), null);
         
         tabbedPane.setSelectedIndex(0);
@@ -272,7 +275,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 		co.setOpaque(false);
 		co.setBorder(empty);
 		
-		co.append("This is an additional panel for others." + newline);
+		co.append("This is a test panel for others." + newline);
 		
 		JPanel panelOthers = new JPanel(); //use FlowLayout
 		panelOthers.add(panelButtons, BorderLayout.PAGE_START);
@@ -303,36 +306,23 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
         	int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
             	File file = fc.getSelectedFile();
-            	
             	statusView.append("Opening: " + file.getName().replace("%20", " ") + " " + newline);
-            
             } else {
-            	
             	statusView.append("Open file cancelled." + newline);
-            	
             }
             statusView.setCaretPosition(statusView.getDocument().getLength());
-        	
         
                 
         //  ----------------------------------------- 
-        } else if (e.getSource() == S_slab) { 
+        } else if (e.getSource() == S_slab) {
           SlabRules sr = new SlabRules();
           sr.getSlabs();
-          
-          update();
-
-          
       
           
         //  ----------------------------------------- 
-        } else if (e.getSource() == S_run) { 
-        	
+        } else if (e.getSource() == S_run) {
         	SafetyFense sf = new SafetyFense();
         	sf.run();
-        	
-
-        
         
           
         //  ----------------------------------------- 
@@ -342,7 +332,6 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 			"Message",
 		    JOptionPane.INFORMATION_MESSAGE,
 		    null);
-       
         }
         
 	}
@@ -359,7 +348,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	 */
 	
 	public void update() {
-		Model model = ConstructionSafetyPlugin.getInstance().getConceptModel();
+		Model model = ConstructionSafetyPlugin.getInstance().getThisModel();
 		root.setUserObject(model);
 		root.applyFilter(null, getSafetyTreeTableModel());
 		getSafetyTreeScrollPane().repaint();
@@ -411,7 +400,6 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 			}
 			return buildings;
 		}
-		
 	}
 	
 	private class BuildingTreeTableNode extends ThreeDParentNode {
@@ -432,8 +420,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 		protected Collection getChildren() {
 			SBuilding building = (SBuilding) userObject;
 			return building.getRelated(SContains.class, true, SBuildingStorey.class);
-		}
-				
+		}	
 	}
 	
 	private class StoreyTreeTableNode extends ThreeDParentNode {
@@ -444,14 +431,44 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 		}
 
 		protected IObjectTreeTableNode create(Object item) {
+			return new SlabTreeTableNode((SSlab) item);
+		}
+		
+		protected Collection getChildren() {
+			SBuildingStorey storey = (SBuildingStorey) userObject;
+			return storey.getRelated(SContains.class, true, SSlab.class);
+		}
+	}
+	
+	private class SlabTreeTableNode extends ThreeDParentNode {
+		public SlabTreeTableNode(SSlab slab) {
+			super(slab);
+		}
+
+		protected IObjectTreeTableNode create(Object arg0) {
 			return null;
 		}
 
 		protected Collection getChildren() {
 			return null;
 		}
-
 	}
+	
+	private class OpeningTreeTableNode extends ThreeDParentNode {
+		public OpeningTreeTableNode(SOpening opening) {
+			super(opening);
+		}
+
+		protected IObjectTreeTableNode create(Object arg0) {
+			return null;
+		}
+
+		protected Collection getChildren() {
+			return null;
+		}
+	}
+	
+	
 	
 	private abstract class ThreeDParentNode extends ThreeDBoundsNode {
 
