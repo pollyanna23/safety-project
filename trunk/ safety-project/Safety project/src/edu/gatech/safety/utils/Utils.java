@@ -7,7 +7,23 @@ public class Utils {
 
 	
 	
-	
+	/**
+     * Getting two strings a, b and compare whether a contains b or not. Return Boolean.
+	 */
+	public static boolean contStr(String s1, String s2) {
+		boolean bool = false;
+		// s1 will be a standard name, and s2 is IFC instance name for determining what s2 means.
+		// lower cases without dots & double spaces: e.g) U.S.  Attorney -> us attorney, U.S.M.S -> usms
+		try {
+		s1 = s1.toLowerCase().trim().replace(".", "").replace("  ", " ");
+		s2 = s2.toLowerCase().trim().replace(".", "").replace("  ", " ");
+		if (s1.indexOf(s2)>=0) {
+			bool = true;
+		}		
+		} catch (Exception e) {}
+		
+		return bool;
+	}
 	
 	public static double sm2sf(double in) {
 		in = AreaUnitType.SQUARE_FEET.getExternalValue(in);

@@ -67,6 +67,7 @@ import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
 import edu.gatech.safety.construction.SafetyFense;
+import edu.gatech.safety.rules.ConstructionProcess;
 import edu.gatech.safety.rules.SlabRules;
 
 
@@ -79,9 +80,10 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	private static final long serialVersionUID = 1L;
 	
 	private JTabbedPane tabbedPane;
-	private JPanel safetyPanel, topPanel, bottomPanel;
+	private JPanel objectTab, processTab, topPanel, bottomPanel;
 	
     private JButton S_open, S_run, S_run2, S_slab, Btn_others;
+    private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
     public static JTextArea statusView = new JTextArea();
     
     private JFileChooser fc;    
@@ -98,7 +100,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	private IObjectTreeTableModel treeTableModel;
 	private RootNode root = new RootNode(null);
 	
-	
+	private ConstructionProcess cp = new ConstructionProcess();
 		
 	
 	
@@ -136,13 +138,13 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	}
 	
 	private JPanel drawTab1() {
-		if (safetyPanel == null) {
-			safetyPanel = new JPanel(new BorderLayout());
-			safetyPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-			safetyPanel.add(getTopPanel(), BorderLayout.NORTH);
-			safetyPanel.add(getBottomPanel(), BorderLayout.CENTER);
+		if (objectTab == null) {
+			objectTab = new JPanel(new BorderLayout());
+			objectTab.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			objectTab.add(getTopPanel(), BorderLayout.NORTH);
+			objectTab.add(getBottomPanel(), BorderLayout.CENTER);
 		}
-		return safetyPanel;
+		return objectTab;
 	}
 	
 	private JPanel getTopPanel() {
@@ -229,26 +231,47 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	
 	// status tab
 	private JPanel drawTab2() {
-		JPanel statusPanel = new JPanel();
-		//Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);		
+		if (processTab == null) {
+			b1 = new JButton("1");			b2 = new JButton("2");
+			b3 = new JButton("3");			b4 = new JButton("4");
+			b5 = new JButton("5");			b6 = new JButton("6");
+			b7 = new JButton("7");			b8 = new JButton("8");
+			b9 = new JButton("9");			b10 = new JButton("10");
+			b1.addActionListener(this);			b2.addActionListener(this);
+			b3.addActionListener(this);			b4.addActionListener(this);
+			b5.addActionListener(this);			b6.addActionListener(this);
+			b7.addActionListener(this);			b8.addActionListener(this);
+			b9.addActionListener(this);			b10.addActionListener(this);
+			processTab = new JPanel(new FlowLayout());
+			processTab.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			processTab.add(b1);			processTab.add(b2);
+			processTab.add(b3);			processTab.add(b4);
+			processTab.add(b5);			processTab.add(b6);
+			processTab.add(b7);			processTab.add(b8);
+			processTab.add(b9);			processTab.add(b10);
+		}
+		return processTab;
 		
-		statusView = new JTextArea(8,30);
-	    statusView.setMargin(new Insets(5,5,5,5));
-	    statusView.setEditable(false);
-	    statusView.setOpaque(false); // transparent textarea
-	    statusView.setFont(font);
-	    JScrollPane statusScrollPane = new JScrollPane(statusView); // status view panel  
-	    
-	    statusView.append("Status view is ready..\n" +
-	    		"----------------------------------------------" + newline);
-
-	    statusScrollPane.setPreferredSize(new Dimension(400, 200));
-	    statusScrollPane.setOpaque(false); //transparent
-	    statusScrollPane.setBorder(loweredetched);
-	    statusPanel.add(statusScrollPane);
-	    return statusPanel;
-	    
+		
+//		JPanel statusPanel = new JPanel();
+//		//Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
+//		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);		
+//		
+//		statusView = new JTextArea(8,30);
+//	    statusView.setMargin(new Insets(5,5,5,5));
+//	    statusView.setEditable(false);
+//	    statusView.setOpaque(false); // transparent textarea
+//	    statusView.setFont(font);
+//	    JScrollPane statusScrollPane = new JScrollPane(statusView); // status view panel  
+//	    
+//	    statusView.append("Status view is ready..\n" +
+//	    		"----------------------------------------------" + newline);
+//
+//	    statusScrollPane.setPreferredSize(new Dimension(400, 200));
+//	    statusScrollPane.setOpaque(false); //transparent
+//	    statusScrollPane.setBorder(loweredetched);
+//	    statusPanel.add(statusScrollPane);
+//	    return statusPanel;	    
 	}
 	
 	// others tab
@@ -299,10 +322,9 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 	}
     
 	public void actionPerformed(ActionEvent e) {
-
 		
 		//  ----------------------------------------- 
-        if (e.getSource() == S_open) { 
+        if (e.getSource() == S_open) {
         	int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
             	File file = fc.getSelectedFile();
@@ -332,8 +354,31 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements ActionList
 			"Message",
 		    JOptionPane.INFORMATION_MESSAGE,
 		    null);
+          
+          
+          
+        //  ----------------------------------------- 
+        } else if (e.getSource() == b1) { cp.getProcess(1);
+        	
+        } else if (e.getSource() == b2) { cp.getProcess(2);
+        	
+        } else if (e.getSource() == b3) { cp.getProcess(3);
+        	
+        } else if (e.getSource() == b4) { cp.getProcess(4);
+        	
+        } else if (e.getSource() == b5) { cp.getProcess(5);
+        	
+        } else if (e.getSource() == b6) { cp.getProcess(6);
+        	
+        } else if (e.getSource() == b7) { cp.getProcess(7);
+        	
+        } else if (e.getSource() == b8) { cp.getProcess(8);
+        	
+        } else if (e.getSource() == b9) { cp.getProcess(9);
+        	
+        } else if (e.getSource() == b10) { cp.getProcess(10);
+          
         }
-        
 	}
 	
 	

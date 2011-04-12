@@ -37,7 +37,7 @@ public class SlabRules {
 	
 	public static ArrayList visualizeObject = new ArrayList();
 	
-	public SlabRules() {		
+	public SlabRules() {
 	}
 	
 	public void getSlabs(){
