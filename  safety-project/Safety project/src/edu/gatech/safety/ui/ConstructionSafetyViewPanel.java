@@ -446,6 +446,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			treeTable.getSelectionModel().addListSelectionListener(this);
 			treeTable.getSelectionModel().setSelectionMode(
 					ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
 			treeTable.setTreeCellRenderer(new ItemTreeCellRenderer());
 			treeTable.hideHeader();
 			safetyTreeScrollPane = Ui.createScrollPane(treeTable);
@@ -463,19 +464,17 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			// treeTable.hideHeader();
 			openingScrollPane = Ui.createScrollPane(openingTable);
 
-			openingTable.setPreferredScrollableViewportSize(new Dimension(500,
-					70));
+			openingTable.setPreferredScrollableViewportSize(new Dimension(500,150));
 			// openingTable.setFillsViewportHeight(true);
 
 			// Create the scroll pane and add the table to it.
 			// JScrollPane scrollPane = new JScrollPane(openingTable);
 
 			// Set up column sizes.
-			// initColumnSizes(openingTable);
+			 initColumnSizes(openingTable);
 
 			// Fiddle with the Sport column's cell editors/renderers.
-			setUpSportColumn(openingTable, openingTable.getColumnModel()
-					.getColumn(5));
+			setUpSportColumn(openingTable, openingTable.getColumnModel().getColumn(5));
 
 			// Add the scroll pane to this panel.
 			// add(scrollPane);
@@ -493,7 +492,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		TableCellRenderer headerRenderer = table.getTableHeader()
 				.getDefaultRenderer();
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 7; i++) {
 			column = table.getColumnModel().getColumn(i);
 
 			comp = headerRenderer.getTableCellRendererComponent(null,
@@ -510,7 +509,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	}
 
 	public void setUpSportColumn(JTable table, TableColumn sportColumn) {
-		// Set up the editor for the sport cells.
+		// Set up the editor
 		JComboBox comboBox = new JComboBox();
 		comboBox.addItem("Cover");
 		comboBox.addItem("Guardrail System");
@@ -519,7 +518,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		comboBox.addItem("...");
 		sportColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
-		// Set up tool tips for the sport cells.
+		// Set up tool tips
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setToolTipText("Click for combo box");
 		sportColumn.setCellRenderer(renderer);
@@ -538,8 +537,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 				{ "04", "Level4", "2.5", "1.0", "2.5", "Guardrail System",
 						new Boolean(false) } };
 
-		public final Object[] longValues = { "Jane", "Kathy",
-				"None of the above", new Integer(20), Boolean.TRUE };
+		public final Object[] longValues = { "01", "Level2", "Width", "Height",
+				"Area", "Personal Fall Arrest System", Boolean.TRUE };
 
 		public int getColumnCount() {
 			return columnNames.length;
@@ -557,21 +556,11 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			return data[row][col];
 		}
 
-		/*
-		 * JTable uses this method to determine the default renderer/ editor for
-		 * each cell. If we didn't implement this method, then the last column
-		 * would contain text ("true"/"false"), rather than a check box.
-		 */
 		public Class getColumnClass(int c) {
 			return getValueAt(0, c).getClass();
 		}
 
-		/*
-		 * Don't need to implement this method unless your table's editable.
-		 */
 		public boolean isCellEditable(int row, int col) {
-			// Note that the data/cell address is constant,
-			// no matter where the cell appears onscreen.
 			if (col < 2) {
 				return false;
 			} else {
@@ -581,20 +570,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public void setValueAt(Object value, int row, int col) {
-			// if (DEBUG) {
-			// System.out.println("Setting value at " + row + "," + col
-			// + " to " + value
-			// + " (an instance of "
-			// + value.getClass() + ")");
-			// }
-
 			data[row][col] = value;
 			fireTableCellUpdated(row, col);
-
-			// if (DEBUG) {
-			// System.out.println("New value of data:");
-			// printDebugData();
-			// }
 		}
 	}
 
