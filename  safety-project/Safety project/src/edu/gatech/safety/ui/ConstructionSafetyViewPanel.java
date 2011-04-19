@@ -530,6 +530,9 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		private String[] columnNames = { "No.", "Name", "Level",
 				"DisToLowerLevel", "Width", "Height", "Area", "Prevention",
 				"Check" };
+		//int n=SlabRules.openings.length;
+		//private Object[][] data1 = new Object[n][9];
+
 		private Object[][] data = {
 				{ "01", "Slab 1", "Level2", "2.0", "1.0", "1.0", "1.0",
 						"Guardrail System", new Boolean(false) },
@@ -540,6 +543,34 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 				{ "04", "Slab 4", "Level4", "2.0", "2.5", "1.0", "2.5",
 						"Guardrail System", new Boolean(false) } };
 
+//		private Object[][] getData() {
+//			for (int i = 0; i < SlabRules.openings.length; i++) {
+//				for (int j = 0; j < 8; j++) {
+//					if (j == 0) {
+//						data1[i][j] = SlabRules.no.get(i);
+//					} else if (j == 1) {
+//						data1[i][j] = SlabRules.name.get(i);
+//					} else if (j == 2) {
+//						data1[i][j] = SlabRules.level.get(i);
+//					} else if (j == 3) {
+//						data1[i][j] = SlabRules.disToLower.get(i);
+//					} else if (j == 4) {
+//						data1[i][j] = SlabRules.width.get(i);
+//					} else if (j == 5) {
+//						data1[i][j] = SlabRules.height.get(i);
+//					} else if (j == 6) {
+//						data1[i][j] = SlabRules.area.get(i);
+//					} else if (j == 7) {
+//						data1[i][j] = SlabRules.prevention.get(i);
+//					} else if (j == 8) {
+//						data1[i][j] = SlabRules.name.get(i);
+//					}
+//				}
+//			}
+//			return data1;
+
+//		}
+
 		public final Object[] longValues = { "01", "Slab 1", "Level2", "2.0",
 				"Width", "Height", "Area", "Personal Fall Arrest System",
 				Boolean.TRUE };
@@ -549,6 +580,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public int getRowCount() {
+			//getData();
 			return data.length;
 		}
 
@@ -557,6 +589,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public Object getValueAt(int row, int col) {
+			//getData();
 			return data[row][col];
 		}
 
@@ -574,6 +607,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public void setValueAt(Object value, int row, int col) {
+			//getData();
 			data[row][col] = value;
 			fireTableCellUpdated(row, col);
 		}
@@ -657,12 +691,12 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 		protected Collection getChildren() {
 			SBuildingStorey storey = (SBuildingStorey) userObject;
-			System.out.println("~"
-					+ storey.getRelated(SContains.class, true, SSlab.class)
-							.size());
-			System.out.println("!"
-					+ storey.getRelated(SContains.class, true, SOpening.class)
-							.size());
+//			System.out.println("~"
+//					+ storey.getRelated(SContains.class, true, SSlab.class)
+//							.size());
+//			System.out.println("!"
+//					+ storey.getRelated(SContains.class, true, SOpening.class)
+//							.size());
 			return storey.getRelated(SContains.class, true, SSlab.class);
 		}
 	}
