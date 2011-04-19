@@ -464,17 +464,19 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			// treeTable.hideHeader();
 			openingScrollPane = Ui.createScrollPane(openingTable);
 
-			openingTable.setPreferredScrollableViewportSize(new Dimension(500,150));
+			openingTable.setPreferredScrollableViewportSize(new Dimension(500,
+					150));
 			// openingTable.setFillsViewportHeight(true);
 
 			// Create the scroll pane and add the table to it.
 			// JScrollPane scrollPane = new JScrollPane(openingTable);
 
 			// Set up column sizes.
-			 initColumnSizes(openingTable);
+			initColumnSizes(openingTable);
 
 			// Fiddle with the Sport column's cell editors/renderers.
-			setUpSportColumn(openingTable, openingTable.getColumnModel().getColumn(5));
+			setUpSportColumn(openingTable, openingTable.getColumnModel()
+					.getColumn(7));
 
 			// Add the scroll pane to this panel.
 			// add(scrollPane);
@@ -492,7 +494,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		TableCellRenderer headerRenderer = table.getTableHeader()
 				.getDefaultRenderer();
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 9; i++) {
 			column = table.getColumnModel().getColumn(i);
 
 			comp = headerRenderer.getTableCellRendererComponent(null,
@@ -525,20 +527,22 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	}
 
 	public class openingTableModel extends AbstractTableModel {
-		private String[] columnNames = { "No.", "Level", "Width", "Height",
-				"Area", "Prevention", "Check" };
+		private String[] columnNames = { "No.", "Name", "Level",
+				"DisToLowerLevel", "Width", "Height", "Area", "Prevention",
+				"Check" };
 		private Object[][] data = {
-				{ "01", "Level2", "1.0", "1.0", "1.0", "Guardrail System",
-						new Boolean(false) },
-				{ "02", "Level3", "1.5", "1.0", "1.5", "Guardrail System",
-						new Boolean(true) },
-				{ "03", "Level4", "2.0", "1.0", "2.0", "Guardrail System",
-						new Boolean(false) },
-				{ "04", "Level4", "2.5", "1.0", "2.5", "Guardrail System",
-						new Boolean(false) } };
+				{ "01", "Slab 1", "Level2", "2.0", "1.0", "1.0", "1.0",
+						"Guardrail System", new Boolean(false) },
+				{ "02", "Slab 2", "Level3", "2.0", "1.5", "1.0", "1.5",
+						"Guardrail System", new Boolean(true) },
+				{ "03", "Slab 3", "Level4", "2.0", "2.0", "1.0", "2.0",
+						"Guardrail System", new Boolean(false) },
+				{ "04", "Slab 4", "Level4", "2.0", "2.5", "1.0", "2.5",
+						"Guardrail System", new Boolean(false) } };
 
-		public final Object[] longValues = { "01", "Level2", "Width", "Height",
-				"Area", "Personal Fall Arrest System", Boolean.TRUE };
+		public final Object[] longValues = { "01", "Slab 1", "Level2", "2.0",
+				"Width", "Height", "Area", "Personal Fall Arrest System",
+				Boolean.TRUE };
 
 		public int getColumnCount() {
 			return columnNames.length;
