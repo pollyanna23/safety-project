@@ -35,14 +35,15 @@ public class SlabRules {
 	SSlab[] slabs;
 	SWall[] walls;
 	SRoof[] roofs;
-	SOpening[] openings;
-	ArrayList no = new ArrayList();
-	ArrayList name = new ArrayList();
-	ArrayList level = new ArrayList();
-	ArrayList width = new ArrayList();
-	ArrayList height = new ArrayList();
-	ArrayList area = new ArrayList();
-	ArrayList disToLower = new ArrayList();
+	public static SOpening[] openings;
+	public static ArrayList data=new ArrayList();
+	public static ArrayList no = new ArrayList();
+	public static ArrayList name = new ArrayList();
+	public static ArrayList level = new ArrayList();
+	public static ArrayList width = new ArrayList();
+	public static ArrayList height = new ArrayList();
+	public static ArrayList area = new ArrayList();
+	public static ArrayList disToLower = new ArrayList();
 
 	public static ArrayList visualizeObject = new ArrayList();
 	public static int p = 0;
@@ -171,6 +172,7 @@ public class SlabRules {
 			}
 
 		}
+		
 		// System.out.println("Slabs *****");
 		// for (int i =0; i < slabs.length; i++) {
 		// visualizeObject.add(slabs[i]);
