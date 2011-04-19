@@ -79,7 +79,7 @@ import com.solibri.saf.plugins.checkingplugin.ui.RuleTreeTableMouseAdapter;
 import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
-import edu.gatech.safety.construction.SafetyFense;
+import edu.gatech.safety.construction.SafetyFence;
 import edu.gatech.safety.rules.ConstructionProcess;
 import edu.gatech.safety.rules.SlabRules;
 
@@ -230,15 +230,15 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		S_slab.addActionListener(this);
 		S_slab.setToolTipText("Collect all slabs and more +");
 
-		S_run = new JButton("Safety Fenses",
+		S_run = new JButton("Safety Fences",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_run.addActionListener(this);
-		S_run.setToolTipText("Safety Fense for Perimeter");
+		S_run.setToolTipText("Safety Fence for Perimeter");
 
-		S_run2 = new JButton("Safety Fense: Holes",
+		S_run2 = new JButton("Safety Fence: Holes",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_run2.addActionListener(this);
-		S_run2.setToolTipText("Safety Fense for Holes");
+		S_run2.setToolTipText("Safety Fence for Holes");
 
 		JPanel panelTop = new JPanel(); // button panel
 		panelTop.add(S_open);
@@ -384,7 +384,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run) {
-			SafetyFense sf = new SafetyFense();
+			SafetyFence sf = new SafetyFence();
 			sf.run();
 
 			// -----------------------------------------
