@@ -97,7 +97,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JTabbedPane tabbedPane;
 	private JPanel objectTab, processTab, topPanel, bottomPanel, openingPanel;
 
-	private JButton S_open, S_run, S_run2, S_slab, Btn_others;
+	private JButton S_open, S_run, S_opening, S_slab, Btn_others;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	public static JTextArea statusView = new JTextArea();
 
@@ -161,7 +161,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			objectTab.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 			objectTab.add(getTopPanel(), BorderLayout.NORTH);
 			objectTab.add(getBottomPanel(), BorderLayout.CENTER);
-			objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
+			// objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
 		}
 		return objectTab;
 	}
@@ -235,10 +235,10 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		S_run.addActionListener(this);
 		S_run.setToolTipText("Safety Fence for Perimeter");
 
-		S_run2 = new JButton("Safety Fence: Holes",
+		S_opening = new JButton("Holes",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_run2.addActionListener(this);
-		S_run2.setToolTipText("Safety Fence for Holes");
+		S_opening.addActionListener(this);
+		S_opening.setToolTipText("Collect all Holes");
 
 		JPanel panelTop = new JPanel(); // button panel
 		panelTop.add(S_open);
@@ -246,8 +246,10 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		// panelTop.add(floorList);
 
 		panelTop.add(S_slab);
+		panelTop.add(S_opening);
+
 		panelTop.add(S_run);
-		// panelTop.add(S_run2);
+
 		// panelTop.setPreferredSize(new Dimension(320, 30));
 
 		// Add the buttons and the status view to the panel.
@@ -383,6 +385,13 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			sr.getSlabs();
 
 			// -----------------------------------------
+		} else if (e.getSource() == S_opening) {
+			SlabRules sr = new SlabRules();
+			sr.getOpenings();
+			objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
+			this.repaint();
+
+			// -----------------------------------------
 		} else if (e.getSource() == S_run) {
 			SafetyFence sf = new SafetyFence();
 			sf.run();
@@ -472,14 +481,11 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			// JScrollPane scrollPane = new JScrollPane(openingTable);
 
 			// Set up column sizes.
-			initColumnSizes(openingTable);
+			// initColumnSizes(openingTable);
 
 			// Fiddle with the Sport column's cell editors/renderers.
 			setUpSportColumn(openingTable, openingTable.getColumnModel()
 					.getColumn(7));
-
-			// Add the scroll pane to this panel.
-			// add(scrollPane);
 		}
 		return openingScrollPane;
 	}
@@ -530,46 +536,47 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		private String[] columnNames = { "No.", "Name", "Level",
 				"DisToLowerLevel", "Width", "Height", "Area", "Prevention",
 				"Check" };
-		//int n=SlabRules.openings.length;
-		//private Object[][] data1 = new Object[n][9];
+		int n = SlabRules.name.size();
+		private Object[][] data1 = new Object[n][9];
 
-		private Object[][] data = {
-				{ "01", "Slab 1", "Level2", "2.0", "1.0", "1.0", "1.0",
-						"Guardrail System", new Boolean(false) },
-				{ "02", "Slab 2", "Level3", "2.0", "1.5", "1.0", "1.5",
-						"Guardrail System", new Boolean(true) },
-				{ "03", "Slab 3", "Level4", "2.0", "2.0", "1.0", "2.0",
-						"Guardrail System", new Boolean(false) },
-				{ "04", "Slab 4", "Level4", "2.0", "2.5", "1.0", "2.5",
-						"Guardrail System", new Boolean(false) } };
+		// private Object[][] data = {
+		// { "01", "Slab 1", "Level2", "2.0", "1.0", "1.0", "1.0",
+		// "Guardrail System", new Boolean(false) },
+		// { "02", "Slab 2", "Level3", "2.0", "1.5", "1.0", "1.5",
+		// "Guardrail System", new Boolean(true) },
+		// { "03", "Slab 3", "Level4", "2.0", "2.0", "1.0", "2.0",
+		// "Guardrail System", new Boolean(false) },
+		// { "04", "Slab 4", "Level4", "2.0", "2.5", "1.0", "2.5",
+		// "Guardrail System", new Boolean(false) } };
 
-//		private Object[][] getData() {
-//			for (int i = 0; i < SlabRules.openings.length; i++) {
-//				for (int j = 0; j < 8; j++) {
-//					if (j == 0) {
-//						data1[i][j] = SlabRules.no.get(i);
-//					} else if (j == 1) {
-//						data1[i][j] = SlabRules.name.get(i);
-//					} else if (j == 2) {
-//						data1[i][j] = SlabRules.level.get(i);
-//					} else if (j == 3) {
-//						data1[i][j] = SlabRules.disToLower.get(i);
-//					} else if (j == 4) {
-//						data1[i][j] = SlabRules.width.get(i);
-//					} else if (j == 5) {
-//						data1[i][j] = SlabRules.height.get(i);
-//					} else if (j == 6) {
-//						data1[i][j] = SlabRules.area.get(i);
-//					} else if (j == 7) {
-//						data1[i][j] = SlabRules.prevention.get(i);
-//					} else if (j == 8) {
-//						data1[i][j] = SlabRules.name.get(i);
-//					}
-//				}
-//			}
-//			return data1;
+		private Object[][] getData() {
 
-//		}
+			for (int i = 0; i < SlabRules.no.size(); i++) 
+				for (int j = 0; j < 9; j++) {
+					if (j == 0) {
+						data1[i][j] = SlabRules.no.get(i);
+					} else if (j == 1) {
+						data1[i][j] = SlabRules.name.get(i);
+					} else if (j == 2) {
+						data1[i][j] = SlabRules.level.get(i);
+					} else if (j == 3) {
+						data1[i][j] = SlabRules.disToLower.get(i);
+					} else if (j == 4) {
+						data1[i][j] = SlabRules.width.get(i);
+					} else if (j == 5) {
+						data1[i][j] = SlabRules.height.get(i);
+					} else if (j == 6) {
+						data1[i][j] = SlabRules.area.get(i);
+					} else if (j == 7) {
+						data1[i][j] = SlabRules.prevention.get(i);
+					} else if (j == 8) {
+						data1[i][j] = SlabRules.check.get(i);
+					}
+				
+			}
+			return data1;
+
+		}
 
 		public final Object[] longValues = { "01", "Slab 1", "Level2", "2.0",
 				"Width", "Height", "Area", "Personal Fall Arrest System",
@@ -580,8 +587,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public int getRowCount() {
-			//getData();
-			return data.length;
+			getData();
+			return data1.length;
 		}
 
 		public String getColumnName(int col) {
@@ -589,8 +596,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public Object getValueAt(int row, int col) {
-			//getData();
-			return data[row][col];
+			getData();
+			return data1[row][col];
 		}
 
 		public Class getColumnClass(int c) {
@@ -607,8 +614,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public void setValueAt(Object value, int row, int col) {
-			//getData();
-			data[row][col] = value;
+			getData();
+			data1[row][col] = value;
 			fireTableCellUpdated(row, col);
 		}
 	}
@@ -691,12 +698,12 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 		protected Collection getChildren() {
 			SBuildingStorey storey = (SBuildingStorey) userObject;
-//			System.out.println("~"
-//					+ storey.getRelated(SContains.class, true, SSlab.class)
-//							.size());
-//			System.out.println("!"
-//					+ storey.getRelated(SContains.class, true, SOpening.class)
-//							.size());
+			// System.out.println("~"
+			// + storey.getRelated(SContains.class, true, SSlab.class)
+			// .size());
+			// System.out.println("!"
+			// + storey.getRelated(SContains.class, true, SOpening.class)
+			// .size());
 			return storey.getRelated(SContains.class, true, SSlab.class);
 		}
 	}
