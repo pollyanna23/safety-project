@@ -44,7 +44,7 @@ import com.solibri.sai.pmi.IComponent;
 import edu.gatech.safety.utils.Utils;
 
 /**
- * This is for visualizing building skins and fenses
+ * This is for visualizing building skins and fences
  * 
  * @author Jin-Kook Lee
  */
@@ -60,33 +60,45 @@ public class SafetyFence {
 	SWall[] walls;
 	SRoof[] roofs;
 
-	private final VisualizationTask task = new FenseVisulizationTask();
-
+	
 	public SafetyFence() {
 	}
 
 	public void run() {
-		VisualizationPlugin.getInstance().getVisualizer().visualize(task);
+		VisualizationPlugin.getInstance().getVisualizer().visualize(new FenceVisulizationTask(null));
 	}
-
+	
+	public void runByStoreys(SBuildingStorey[] storeys) {
+		VisualizationPlugin.getInstance().getVisualizer().visualize(new FenceVisulizationTask(storeys));
+	}
+	
+	
+	
 	/*
-	 * visualize exterior perimeter polygons and points
+	 * visualize exterior all perimeter polygons and points
 	 */
-	private class FenseVisulizationTask extends VisualizationTask {
+	private class FenceVisulizationTask extends VisualizationTask {
 
+		SBuildingStorey[] storeys;		
+		
+		public FenceVisulizationTask(SBuildingStorey[] storeys) {
+			if (storeys==null) {
+				SModel model = (SModel) ProductModelHandlingPlugin.getInstance().getCurrentModel();
+				this.storeys = (SBuildingStorey[]) model.findAll(SBuildingStorey.class);
+			} else {
+				this.storeys = storeys;
+			}
+		}
+		
 		public void visualize(VisualizationInterface v) {
-
+			
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
 			ArrayList<Point> pointsHoles = new ArrayList<Point>();
 			double fenseHeight = 400.0; // 1m height of fense
 			double fenseLength = 0.0;
 			double holeLength = 0.0;
 			String holeNums = "";
-
-			SModel model = (SModel) ProductModelHandlingPlugin.getInstance()
-					.getCurrentModel();
-			SBuildingStorey[] storeys = (SBuildingStorey[]) model
-					.findAll(SBuildingStorey.class);
+			
 
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
@@ -191,10 +203,10 @@ public class SafetyFence {
 						Color.black), 0.0f, 2.0f));
 				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 						Color.blue), 0.0f, 2.0f));
-				// v.visualize(new PointArrayEntity(pointsBoundary, new
-				// Color3f(Color.red), 0.0f, 6.0f));
-				// v.visualize(new PointArrayEntity(pointsHoles, new
-				// Color3f(Color.red), 0.0f, 6.0f));
+//				 v.visualize(new PointArrayEntity(pointsBoundary, new
+//				 Color3f(Color.red), 0.0f, 6.0f));
+//				 v.visualize(new PointArrayEntity(pointsHoles, new
+//				 Color3f(Color.red), 0.0f, 6.0f));
 
 				
 			}
@@ -216,7 +228,12 @@ public class SafetyFence {
 			System.out.println("Holes length is = " + holeNums);
 
 		}
+
+		
 	}
+	
+	
+	
 
 	/*
 	 * FenseCalculator
@@ -258,22 +275,22 @@ public class SafetyFence {
 					zMin = Math.min(zMin, lower.z);
 					zMax = Math.max(zMax, upper.z);
 					Area componentArea = null;
-					if (component instanceof SSpace) {
-						componentArea = LayoutPlugin.getAreaCopy(component);
-						// Increase the space area by 10cm to fill possible
-						// gaps:
-						LayoutPlugin.resizeArea(componentArea, 200);
-					} else if (component instanceof SWall) {
-						componentArea = LayoutPlugin.getAreaCopy(component);
-						// Increase the space area by 10cm to fill possible
-						// gaps:
-						LayoutPlugin.resizeArea(componentArea, 200);
-					} else if (component instanceof SColumn) {
-						componentArea = LayoutPlugin.getAreaCopy(component);
-						// Increase the space area by 10cm to fill possible
-						// gaps:
-						LayoutPlugin.resizeArea(componentArea, 200);
-					} else if (component instanceof SSlab) {
+//					if (component instanceof SSpace) {
+//						componentArea = LayoutPlugin.getAreaCopy(component);
+//						// Increase the space area by 10cm to fill possible
+//						// gaps:
+//						LayoutPlugin.resizeArea(componentArea, 200);
+//					} else if (component instanceof SWall) {
+//						componentArea = LayoutPlugin.getAreaCopy(component);
+//						// Increase the space area by 10cm to fill possible
+//						// gaps:
+//						LayoutPlugin.resizeArea(componentArea, 200);
+//					} else if (component instanceof SColumn) {
+//						componentArea = LayoutPlugin.getAreaCopy(component);
+//						// Increase the space area by 10cm to fill possible
+//						// gaps:
+//						LayoutPlugin.resizeArea(componentArea, 200);
+					if (component instanceof SSlab) {
 						componentArea = LayoutPlugin.getAreaCopy(component);
 						// Increase the space area by 10cm to fill possible
 						// gaps:

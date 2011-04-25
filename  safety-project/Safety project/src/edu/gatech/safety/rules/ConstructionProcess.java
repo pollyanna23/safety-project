@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.SortedSet;
 
 import com.solibri.sae.solibri.SContains;
@@ -17,6 +18,7 @@ import com.solibri.sae.solibri.construction.SSpace;
 import com.solibri.sae.solibri.construction.SWall;
 import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
+import edu.gatech.safety.construction.SafetyFence;
 import edu.gatech.safety.utils.Utils;
 import edu.gatech.safety.utils.Visualizer;
 
@@ -36,6 +38,7 @@ public class ConstructionProcess {
 	
 	public ConstructionProcess() {
 	}
+	
 	
 	
 	public void buildFloor() {
@@ -69,20 +72,36 @@ public class ConstructionProcess {
 		if (model == null) {
 			buildFloor();
 		}
+
+		visualizeObject.clear();
 		
-//		try {
-			visualizeObject.clear();
+		visualizeObject.addAll(getSlab(p));
+		visualizeObject.addAll(getWall(p-2));
+		
+		Visualizer.visualizeNothing(); // clear current model view
+		Visualizer.visualizeCol(visualizeObject); // visualize collected objects
+		
+		getFencesByFloor(p);
 			
-			visualizeObject.addAll(getSlab(p));
-			visualizeObject.addAll(getWall(p-2));
-			
-			Visualizer.visualizeNothing(); // clear current model view
-			Visualizer.visualizeCol(visualizeObject); // visualize collected objects
-			
-//		} catch (Exception e) {
-//			System.err.println(e);
-//		}
 	}
+	
+	
+	public void getFencesByFloor(int p) {
+		ArrayList<SBuildingStorey> st = new ArrayList<SBuildingStorey>();
+		SafetyFence sf = new SafetyFence();
+		
+		for(Object key: f.keySet()) {
+			if ((Integer)key == p || (Integer)key == p+1) {
+				st.add((SBuildingStorey) f.get(key));
+			}
+		}
+		
+		SBuildingStorey[] storeys = new SBuildingStorey[st.size()];
+		sf.runByStoreys(st.toArray(storeys));
+		
+	}
+	
+	
 	
 	public ArrayList<SSlab> getSlab(int p) {
 		ArrayList<SSlab> ob = new ArrayList<SSlab>();
