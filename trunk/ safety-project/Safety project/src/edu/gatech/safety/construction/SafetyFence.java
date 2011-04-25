@@ -24,6 +24,7 @@ import com.solibri.sae.solibri.SEntity;
 import com.solibri.sae.solibri.construction.SBuildingStorey;
 import com.solibri.sae.solibri.construction.SColumn;
 import com.solibri.sae.solibri.construction.SModel;
+import com.solibri.sae.solibri.construction.SOpening;
 import com.solibri.sae.solibri.construction.SSpace;
 import com.solibri.sae.solibri.construction.SSlab;
 import com.solibri.sae.solibri.construction.SWall;
@@ -80,6 +81,14 @@ public class SafetyFence {
 	private class FenceVisulizationTask extends VisualizationTask {
 
 		SBuildingStorey[] storeys;		
+		SSlab[] slabs;
+		SWall[] walls;
+		SOpening[] openings;
+		
+		
+		public FenceVisulizationTask(String process, int proc) {
+			
+		}
 		
 		public FenceVisulizationTask(SBuildingStorey[] storeys) {
 			if (storeys==null) {
@@ -327,8 +336,8 @@ public class SafetyFence {
 					.hasNext();) {
 				Point[] polygon = (Point[]) iterator.next();
 				Vector<Point> vector = new Vector<Point>(Arrays.asList(polygon));
-				GeomUtils.toClosedPolygon(vector, 10);
-				double angleEpsilon = Math.toRadians(10);
+				GeomUtils.toClosedPolygon(vector, 50);
+				double angleEpsilon = Math.toRadians(5);
 				Point3d[] filtered = GeomUtils.filterPolyline(
 						vector.toArray(new Point[vector.size()]), 100,
 						angleEpsilon);
