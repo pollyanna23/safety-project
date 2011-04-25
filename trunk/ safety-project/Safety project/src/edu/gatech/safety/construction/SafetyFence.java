@@ -103,7 +103,7 @@ public class SafetyFence {
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
 				
-				if (storeys[i].bottomElevation.getDoubleValue() > 2000) { // 2m
+//				if (storeys[i].bottomElevation.getDoubleValue() > 2000) { // 2m
 																			// height
 					FenseCalculator calculator = new FenseCalculator(storeys[i]);
 
@@ -194,7 +194,7 @@ public class SafetyFence {
 						}
 					}
 
-				}
+//				}
 				
 				
 
