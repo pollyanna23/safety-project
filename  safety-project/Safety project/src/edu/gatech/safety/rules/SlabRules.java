@@ -48,13 +48,14 @@ public class SlabRules {
 	public static ArrayList check = new ArrayList();
 
 	public static ArrayList visualizeObject = new ArrayList();
-	//public static int p = 0;
+
+	// public static int p = 0;
 
 	public SlabRules() {
 	}
 
 	public void getOpenings() {
-		int p=0;
+		int p = 0;
 		no.clear();
 		name.clear();
 		level.clear();
@@ -112,7 +113,7 @@ public class SlabRules {
 				visualizeObject.add(ss);
 
 				System.out.print("- " + ss.getDisplayName() + " : ");
-				System.out.print("Bottom Area= "
+				System.out.println("Bottom Area= "
 						+ Utils.sm2sf(ss.bottomArea.getDoubleValue(), 2)
 						+ " SF | ");
 				// System.out.println("\tThickness= " +
@@ -250,7 +251,7 @@ public class SlabRules {
 
 				Iterator itOpening = sOpening.iterator();
 				while (itOpening.hasNext()) {
-					//p++;
+					// p++;
 					Object oo2 = itOpening.next();
 					SOpening so = (SOpening) oo2;
 
