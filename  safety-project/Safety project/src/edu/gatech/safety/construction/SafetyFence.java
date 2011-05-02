@@ -224,10 +224,10 @@ public class SafetyFence {
 						Color.black), 0.0f, 2.0f));
 				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 						Color.blue), 0.0f, 2.0f));
-				v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
-						Color.red), 0.0f, 6.0f));
-				v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
-						Color.red), 0.0f, 6.0f));
+//				v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
+//						Color.red), 0.0f, 6.0f));
+//				v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
+//						Color.red), 0.0f, 6.0f));
 
 			}
 
