@@ -32,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -96,6 +97,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 	private JTabbedPane tabbedPane;
 	private JPanel objectTab, processTab, topPanel, bottomPanel, openingPanel;
+	private JSplitPane splitPane;
 
 	private JButton S_open, S_run, S_opening, S_slab, Btn_others;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
@@ -155,15 +157,18 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		this.add(tabbedPane);
 	}
 
-	private JPanel drawTab1() {
+	private JSplitPane drawTab1() {
 		if (objectTab == null) {
-			objectTab = new JPanel(new BorderLayout());
-			objectTab.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-			objectTab.add(getTopPanel(), BorderLayout.NORTH);
-			objectTab.add(getBottomPanel(), BorderLayout.CENTER);
+			JPanel objectTab2 = new JPanel(new BorderLayout());
+			objectTab2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			objectTab2.add(getTopPanel(), BorderLayout.NORTH);
+			objectTab2.add(getBottomPanel(), BorderLayout.CENTER);
 			// objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
+			splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+			splitPane.setOneTouchExpandable(false);
+			splitPane.setTopComponent(objectTab2);
 		}
-		return objectTab;
+		return splitPane;
 	}
 
 	private JPanel getTopPanel() {
@@ -388,8 +393,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		} else if (e.getSource() == S_opening) {
 			SlabRules sr = new SlabRules();
 			sr.getOpenings();
-			objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
-			this.repaint();
+			splitPane.setBottomComponent(getOpeningPanel());
+			splitPane.setDividerLocation(150);
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run) {
