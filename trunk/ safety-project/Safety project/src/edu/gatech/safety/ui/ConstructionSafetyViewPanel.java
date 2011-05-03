@@ -83,8 +83,10 @@ import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
 import edu.gatech.safety.construction.SafetyFence;
+import edu.gatech.safety.construction.WallFence;
 import edu.gatech.safety.rules.ConstructionProcess;
 import edu.gatech.safety.rules.SlabRules;
+import edu.gatech.safety.rules.WallRules;
 
 /**
  * This ViewPanel generates some Safety related module's user interfaces using
@@ -98,15 +100,16 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private static final long serialVersionUID = 1L;
 
 	private JTabbedPane tabbedPane;
-	
-	private JPanel objectTabTopPanel, processButtons, processTabPanel1, processTabPanel, processBar,
-		topPanel, bottomPanel, openingPanel;
+
+	private JPanel objectTabTopPanel, processButtons, processTabPanel1,
+			processTabPanel, processBar, topPanel, bottomPanel, openingPanel;
 	private JSplitPane splitPane1, splitPane2;
 
-	private JButton S_open, S_run, S_opening, S_slab, P_open, P_generate, Btn_others;
+	private JButton S_open, S_run, S_run1, S_opening, S_wOpening, S_slab,
+			S_wall, Btn_others, P_open, P_generate;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	public static JTextArea statusView = new JTextArea();
-	
+
 	private JSlider processSlider;
 
 	private JFileChooser fc;
@@ -128,6 +131,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private RootNode root = new RootNode(null);
 
 	private ConstructionProcess cp = new ConstructionProcess();
+	private int sw = 0;
 
 	/**
 	 * Constructor
@@ -166,7 +170,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JSplitPane drawTab1() {
 		if (splitPane1 == null) {
 			objectTabTopPanel = new JPanel(new BorderLayout());
-			objectTabTopPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			objectTabTopPanel.setBorder(BorderFactory.createEmptyBorder(0, 0,
+					0, 0));
 			objectTabTopPanel.add(drawObjectPanel1(), BorderLayout.NORTH);
 			objectTabTopPanel.add(drawObjectPanel2(), BorderLayout.CENTER);
 			// objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
@@ -212,7 +217,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JPanel drawButtons1() {
 
 		fc = new JFileChooser(); // Create a file chooser
-		fc.addChoosableFileFilter(new RequirementFileFilter()); 
+		fc.addChoosableFileFilter(new RequirementFileFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 
 		// Selection - Floors
@@ -223,24 +228,39 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		floorList.addActionListener(this);
 
 		S_open = new JButton("Open Safety Data",
-				createImageIcon("/edu/gatech/safety/res/images/table.gif")); 
+				createImageIcon("/edu/gatech/safety/res/images/table.gif"));
 		S_open.addActionListener(this);
 		S_open.setToolTipText("Open safety data test.");
 
-		S_slab = new JButton("Safety Objects",
+		S_slab = new JButton("Slab Objects",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_slab.addActionListener(this);
 		S_slab.setToolTipText("Collect all slabs and more +");
 
-		S_run = new JButton("Safety Fences",
+		S_wall = new JButton("Wall Objects",
+				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_wall.addActionListener(this);
+		S_wall.setToolTipText("Collect all walls and more +");
+
+		S_run = new JButton("Slab Fences",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_run.addActionListener(this);
-		S_run.setToolTipText("Safety Fence for Perimeter");
+		S_run.setToolTipText("Safety Fence for Perimeter and slab opening");
 
-		S_opening = new JButton("Holes",
+		S_run1 = new JButton("Wall Fences",
+				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_run1.addActionListener(this);
+		S_run1.setToolTipText("Safety Fence for wall openings");
+
+		S_opening = new JButton("Slab openings",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_opening.addActionListener(this);
-		S_opening.setToolTipText("Collect all Holes");
+		S_opening.setToolTipText("Collect all Holes on Slab");
+
+		S_wOpening = new JButton("Wall openings",
+				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_wOpening.addActionListener(this);
+		S_wOpening.setToolTipText("Collect all Holes on Wall");
 
 		JPanel panelTop = new JPanel(); // button panel
 		panelTop.add(S_open);
@@ -248,9 +268,11 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		// panelTop.add(floorList);
 
 		panelTop.add(S_slab);
+		panelTop.add(S_wall);
 		panelTop.add(S_opening);
-
+		panelTop.add(S_wOpening);
 		panelTop.add(S_run);
+		panelTop.add(S_run1);
 
 		// panelTop.setPreferredSize(new Dimension(320, 30));
 
@@ -266,7 +288,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JSplitPane drawTab2() {
 		if (splitPane2 == null) {
 			processTabPanel = new JPanel(new BorderLayout());
-			processTabPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			processTabPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0,
+					0));
 			processTabPanel.add(drawProcessTabPanel1(), BorderLayout.NORTH);
 			processTabPanel.add(drawProcessTabPanel2(), BorderLayout.CENTER);
 			splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -275,23 +298,24 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 		return splitPane2;
 	}
-	
+
 	private JPanel drawProcessTabPanel1() {
 		if (processTabPanel1 == null) {
 			processTabPanel1 = new JPanel(new BorderLayout());
-			processTabPanel1.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+			processTabPanel1.setBorder(BorderFactory.createEmptyBorder(5, 5, 0,
+					5));
 			processTabPanel1.add(drawButtons2(), BorderLayout.CENTER);
 		}
 		return processTabPanel1;
 	}
-	
+
 	private JPanel drawButtons2() {
 		fc = new JFileChooser(); // Create a file chooser
-		fc.addChoosableFileFilter(new RequirementFileFilter()); 
+		fc.addChoosableFileFilter(new RequirementFileFilter());
 		fc.setAcceptAllFileFilterUsed(false);
-		
+
 		P_open = new JButton("Open 4D-BIM Schedule Data",
-				createImageIcon("/edu/gatech/safety/res/images/table.gif")); 
+				createImageIcon("/edu/gatech/safety/res/images/table.gif"));
 		P_open.addActionListener(this);
 		P_open.setToolTipText("Open safety data test.");
 
@@ -310,7 +334,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 		return panelProcessTab;
 	}
-	
+
 	private JPanel drawProcessTabPanel2() {
 		if (processButtons == null) {
 			b1 = new JButton("1");
@@ -334,8 +358,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			b9.addActionListener(this);
 			b10.addActionListener(this);
 			processButtons = new JPanel(new FlowLayout());
-			processButtons.setBorder(BorderFactory
-					.createEmptyBorder(10, 10, 10, 10));
+			processButtons.setBorder(BorderFactory.createEmptyBorder(10, 10,
+					10, 10));
 			processButtons.add(b1);
 			processButtons.add(b2);
 			processButtons.add(b3);
@@ -346,23 +370,21 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			processButtons.add(b8);
 			processButtons.add(b9);
 			processButtons.add(b10);
-			
+
 		}
 		return processButtons;
 	}
-	
+
 	private JPanel drawProcessBottomPanel() {
 		if (processBar == null) {
 			processSlider = new JSlider();
 			processSlider.setValue(0);
-			
+
 			processBar = new JPanel();
 			processBar.add(processSlider);
 		}
 		return processBar;
 	}
-	
-	
 
 	// others tab
 	private JPanel drawTab3() {
@@ -425,13 +447,29 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		} else if (e.getSource() == S_slab) {
 			SlabRules sr = new SlabRules();
 			sr.getSlabs();
-
+			// -----------------------------------------
+		} else if (e.getSource() == S_wall) {
+			WallRules sr = new WallRules();
+			sr.getWalls();
 			// -----------------------------------------
 		} else if (e.getSource() == S_opening) {
 			SlabRules sr = new SlabRules();
 			sr.getOpenings();
+			sw = 1;
 			splitPane1.setBottomComponent(drawObjectTabBottomPanel());
 			splitPane1.setDividerLocation(150);
+
+			this.repaint();
+
+			// -----------------------------------------
+		} else if (e.getSource() == S_wOpening) {
+			WallRules sr = new WallRules();
+			sr.getOpenings();
+			sw = 2;
+			splitPane1.setBottomComponent(drawObjectTabBottomPanel());
+			splitPane1.setDividerLocation(150);
+
+			this.repaint();
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run) {
@@ -439,30 +477,30 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			sf.run();
 
 			// -----------------------------------------
+		} else if (e.getSource() == S_run1) {
+			WallFence sf = new WallFence();
+			sf.run();
+
+			// -----------------------------------------
 		} else if (e.getSource() == Btn_others) {
 			JOptionPane.showMessageDialog(null,
 					"This is another test tab for different category.",
 					"Message", JOptionPane.INFORMATION_MESSAGE, null);
-			
-		
-			
+
 			// -----------------------------------------
 		} else if (e.getSource() == P_open) {
-				int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
-					
-				} else {
-				}
-		
-				
-				// -----------------------------------------
-		} else if (e.getSource() == P_generate) {		
+			int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+
+			} else {
+			}
+
+			// -----------------------------------------
+		} else if (e.getSource() == P_generate) {
 			splitPane2.setBottomComponent(drawProcessBottomPanel());
 			splitPane2.setDividerLocation(150);
-			
-			
-			
+
 			// -----------------------------------------
 		} else if (e.getSource() == b1) {
 			cp.getProcess(1);
@@ -597,43 +635,97 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		private String[] columnNames = { "No.", "Name", "Level",
 				"DisToLowerLevel", "Width", "Height", "Area", "Prevention",
 				"Check" };
-		int n = SlabRules.name.size();
-		private Object[][] data1 = new Object[n][9];
+		int n;
 
-		// private Object[][] data = {
-		// { "01", "Slab 1", "Level2", "2.0", "1.0", "1.0", "1.0",
-		// "Guardrail System", new Boolean(false) },
-		// { "02", "Slab 2", "Level3", "2.0", "1.5", "1.0", "1.5",
-		// "Guardrail System", new Boolean(true) },
-		// { "03", "Slab 3", "Level4", "2.0", "2.0", "1.0", "2.0",
-		// "Guardrail System", new Boolean(false) },
-		// { "04", "Slab 4", "Level4", "2.0", "2.5", "1.0", "2.5",
-		// "Guardrail System", new Boolean(false) } };
+		private int getSize() {
+			if (sw == 1) {
+				n = SlabRules.name.size();
+			} else if (sw == 2) {
+				n = WallRules.name.size();
+			}
+
+			return n;
+
+		}
+
+		private Object resizeArray(Object oldArray, int newSize) {
+			int oldSize = java.lang.reflect.Array.getLength(oldArray);
+			Class elementType = oldArray.getClass().getComponentType();
+			Object newArray = java.lang.reflect.Array.newInstance(elementType,
+					newSize);
+			int preserveLength = Math.min(oldSize, newSize);
+			if (preserveLength > 0)
+				System.arraycopy(oldArray, 0, newArray, 0, preserveLength);
+			return newArray;
+		}
+
+		private Object[][] data1 = new Object[getSize()][9];
 
 		private Object[][] getData() {
+			data1 = (Object[][]) resizeArray(data1, getSize());
 
-			for (int i = 0; i < SlabRules.no.size(); i++) 
-				for (int j = 0; j < 9; j++) {
-					if (j == 0) {
-						data1[i][j] = SlabRules.no.get(i);
-					} else if (j == 1) {
-						data1[i][j] = SlabRules.name.get(i);
-					} else if (j == 2) {
-						data1[i][j] = SlabRules.level.get(i);
-					} else if (j == 3) {
-						data1[i][j] = SlabRules.disToLower.get(i);
-					} else if (j == 4) {
-						data1[i][j] = SlabRules.width.get(i);
-					} else if (j == 5) {
-						data1[i][j] = SlabRules.height.get(i);
-					} else if (j == 6) {
-						data1[i][j] = SlabRules.area.get(i);
-					} else if (j == 7) {
-						data1[i][j] = SlabRules.prevention.get(i);
-					} else if (j == 8) {
-						data1[i][j] = SlabRules.check.get(i);
+			for (int i = 0; i < data1.length; i++) {
+				if (data1[i] == null)
+					data1[i] = new Object[9];
+				else
+					data1[i] = (Object[]) resizeArray(data1[i], 9);
+			}
+
+			if (sw == 1) {
+				// for (int i = 0; i < data1.length; i++)
+				// for (int j = 0; j < 9; j++) {
+				// data1[i][j]=null;
+				// }
+				// data1 = (Object[][]) resizeArray(data1, getSize());
+				for (int i = 0; i < SlabRules.no.size(); i++)
+					for (int j = 0; j < 9; j++) {
+						if (j == 0) {
+							data1[i][j] = SlabRules.no.get(i);
+						} else if (j == 1) {
+							data1[i][j] = SlabRules.name.get(i);
+						} else if (j == 2) {
+							data1[i][j] = SlabRules.level.get(i);
+						} else if (j == 3) {
+							data1[i][j] = SlabRules.disToLower.get(i);
+						} else if (j == 4) {
+							data1[i][j] = SlabRules.width.get(i);
+						} else if (j == 5) {
+							data1[i][j] = SlabRules.height.get(i);
+						} else if (j == 6) {
+							data1[i][j] = SlabRules.area.get(i);
+						} else if (j == 7) {
+							data1[i][j] = SlabRules.prevention.get(i);
+						} else if (j == 8) {
+							data1[i][j] = SlabRules.check.get(i);
+						}
 					}
-				
+			}
+
+			else if (sw == 2) {
+
+				for (int i = 0; i < WallRules.no.size(); i++)
+					for (int j = 0; j < 9; j++) {
+						if (j == 0) {
+							data1[i][j] = WallRules.no.get(i);
+						} else if (j == 1) {
+							data1[i][j] = WallRules.name.get(i);
+						} else if (j == 2) {
+							data1[i][j] = WallRules.level.get(i);
+						} else if (j == 3) {
+							data1[i][j] = WallRules.disToLower.get(i);
+						} else if (j == 4) {
+							data1[i][j] = WallRules.width.get(i);
+						} else if (j == 5) {
+							data1[i][j] = WallRules.height.get(i);
+						} else if (j == 6) {
+							data1[i][j] = WallRules.area.get(i);
+						} else if (j == 7) {
+							data1[i][j] = WallRules.prevention.get(i);
+						} else if (j == 8) {
+							data1[i][j] = WallRules.check.get(i);
+						}
+
+					}
 			}
 			return data1;
 
