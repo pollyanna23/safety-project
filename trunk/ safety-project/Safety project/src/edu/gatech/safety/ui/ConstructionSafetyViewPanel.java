@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -97,6 +98,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private static final long serialVersionUID = 1L;
 
 	private JTabbedPane tabbedPane;
+	
 	private JPanel objectTabTopPanel, processButtons, processTabPanel1, processTabPanel, 
 		topPanel, bottomPanel, openingPanel;
 	private JSplitPane splitPane1, splitPane2;
@@ -104,6 +106,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JButton S_open, S_run, S_opening, S_slab, P_open, P_generate, Btn_others;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	public static JTextArea statusView = new JTextArea();
+	
+	private JSlider processSlider;
 
 	private JFileChooser fc;
 	private JComboBox floorList;
@@ -342,6 +346,11 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			processButtons.add(b8);
 			processButtons.add(b9);
 			processButtons.add(b10);
+			
+			processSlider = new JSlider();
+			processSlider.setValue(10);
+			processButtons.add(processSlider);
+			
 		}
 		return processButtons;
 	}
