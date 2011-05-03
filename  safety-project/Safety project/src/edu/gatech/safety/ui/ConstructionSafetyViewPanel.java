@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -96,10 +97,11 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private static final long serialVersionUID = 1L;
 
 	private JTabbedPane tabbedPane;
-	private JPanel objectTab, processTab, topPanel, bottomPanel, openingPanel;
-	private JSplitPane splitPane;
+	private JPanel objectTabTopPanel, processButtons, processTabPanel1, processTabPanel, 
+		topPanel, bottomPanel, openingPanel;
+	private JSplitPane splitPane1, splitPane2;
 
-	private JButton S_open, S_run, S_opening, S_slab, Btn_others;
+	private JButton S_open, S_run, S_opening, S_slab, P_open, P_generate, Btn_others;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	public static JTextArea statusView = new JTextArea();
 
@@ -158,29 +160,29 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	}
 
 	private JSplitPane drawTab1() {
-		if (objectTab == null) {
-			JPanel objectTab2 = new JPanel(new BorderLayout());
-			objectTab2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-			objectTab2.add(getTopPanel(), BorderLayout.NORTH);
-			objectTab2.add(getBottomPanel(), BorderLayout.CENTER);
+		if (splitPane1 == null) {
+			objectTabTopPanel = new JPanel(new BorderLayout());
+			objectTabTopPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			objectTabTopPanel.add(drawObjectPanel1(), BorderLayout.NORTH);
+			objectTabTopPanel.add(drawObjectPanel2(), BorderLayout.CENTER);
 			// objectTab.add(getOpeningPanel(), BorderLayout.SOUTH);
-			splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-			splitPane.setOneTouchExpandable(false);
-			splitPane.setTopComponent(objectTab2);
+			splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+			splitPane1.setOneTouchExpandable(false);
+			splitPane1.setTopComponent(objectTabTopPanel);
 		}
-		return splitPane;
+		return splitPane1;
 	}
 
-	private JPanel getTopPanel() {
+	private JPanel drawObjectPanel1() {
 		if (topPanel == null) {
 			topPanel = new JPanel(new BorderLayout());
 			topPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-			topPanel.add(drawSafetyButtons(), BorderLayout.CENTER);
+			topPanel.add(drawButtons1(), BorderLayout.CENTER);
 		}
 		return topPanel;
 	}
 
-	private JPanel getBottomPanel() {
+	private JPanel drawObjectPanel2() {
 		if (bottomPanel == null) {
 			bottomPanel = new JPanel(new BorderLayout());
 			bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -189,7 +191,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		return bottomPanel;
 	}
 
-	private JPanel getOpeningPanel() {
+	private JPanel drawObjectTabBottomPanel() {
 		if (openingPanel == null) {
 			openingPanel = new JPanel(new BorderLayout());
 			openingPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -203,13 +205,10 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	 * 
 	 * @return JPanel
 	 */
-	private JPanel drawSafetyButtons() {
+	private JPanel drawButtons1() {
 
 		fc = new JFileChooser(); // Create a file chooser
-		fc.addChoosableFileFilter(new RequirementFileFilter()); // Filter for
-																// the
-																// appropriate
-																// file chooser
+		fc.addChoosableFileFilter(new RequirementFileFilter()); 
 		fc.setAcceptAllFileFilterUsed(false);
 
 		// Selection - Floors
@@ -220,13 +219,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		floorList.addActionListener(this);
 
 		S_open = new JButton("Open Safety Data",
-				createImageIcon("/edu/gatech/safety/res/images/table.gif")); // images
-																				// update
-																				// later,
-																				// or
-																				// just
-																				// use
-																				// JButtons
+				createImageIcon("/edu/gatech/safety/res/images/table.gif")); 
 		S_open.addActionListener(this);
 		S_open.setToolTipText("Open safety data test.");
 
@@ -266,8 +259,56 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	}
 
 	// status tab
-	private JPanel drawTab2() {
-		if (processTab == null) {
+	private JSplitPane drawTab2() {
+		if (splitPane2 == null) {
+			processTabPanel = new JPanel(new BorderLayout());
+			processTabPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			processTabPanel.add(drawProcessTabPanel1(), BorderLayout.NORTH);
+			processTabPanel.add(drawProcessTabPanel2(), BorderLayout.CENTER);
+			splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+			splitPane2.setOneTouchExpandable(false);
+			splitPane2.setTopComponent(processTabPanel);
+		}
+		return splitPane2;
+	}
+	
+	private JPanel drawProcessTabPanel1() {
+		if (processTabPanel1 == null) {
+			processTabPanel1 = new JPanel(new BorderLayout());
+			processTabPanel1.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+			processTabPanel1.add(drawButtons2(), BorderLayout.CENTER);
+		}
+		return processTabPanel1;
+	}
+	
+	private JPanel drawButtons2() {
+		fc = new JFileChooser(); // Create a file chooser
+		fc.addChoosableFileFilter(new RequirementFileFilter()); 
+		fc.setAcceptAllFileFilterUsed(false);
+		
+		P_open = new JButton("Open 4D-BIM Schedule Data",
+				createImageIcon("/edu/gatech/safety/res/images/table.gif")); 
+		P_open.addActionListener(this);
+		P_open.setToolTipText("Open safety data test.");
+
+		P_generate = new JButton("Generate 4D View",
+				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		P_generate.addActionListener(this);
+		P_generate.setToolTipText("Generate Safety Objects in current 4D View");
+
+		JPanel panelTop2 = new JPanel(); // button panel
+		panelTop2.add(P_open);
+		panelTop2.add(P_generate);
+
+		JPanel panelProcessTab = new JPanel(); // main panel
+		panelProcessTab.setLayout(new FlowLayout()); // border layout
+		panelProcessTab.add(panelTop2);
+
+		return panelProcessTab;
+	}
+	
+	private JPanel drawProcessTabPanel2() {
+		if (processButtons == null) {
 			b1 = new JButton("1");
 			b2 = new JButton("2");
 			b3 = new JButton("3");
@@ -288,43 +329,21 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			b8.addActionListener(this);
 			b9.addActionListener(this);
 			b10.addActionListener(this);
-			processTab = new JPanel(new FlowLayout());
-			processTab.setBorder(BorderFactory
+			processButtons = new JPanel(new FlowLayout());
+			processButtons.setBorder(BorderFactory
 					.createEmptyBorder(10, 10, 10, 10));
-			processTab.add(b1);
-			processTab.add(b2);
-			processTab.add(b3);
-			processTab.add(b4);
-			processTab.add(b5);
-			processTab.add(b6);
-			processTab.add(b7);
-			processTab.add(b8);
-			processTab.add(b9);
-			processTab.add(b10);
+			processButtons.add(b1);
+			processButtons.add(b2);
+			processButtons.add(b3);
+			processButtons.add(b4);
+			processButtons.add(b5);
+			processButtons.add(b6);
+			processButtons.add(b7);
+			processButtons.add(b8);
+			processButtons.add(b9);
+			processButtons.add(b10);
 		}
-		return processTab;
-
-		// JPanel statusPanel = new JPanel();
-		// //Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-		// Border loweredetched =
-		// BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		//
-		// statusView = new JTextArea(8,30);
-		// statusView.setMargin(new Insets(5,5,5,5));
-		// statusView.setEditable(false);
-		// statusView.setOpaque(false); // transparent textarea
-		// statusView.setFont(font);
-		// JScrollPane statusScrollPane = new JScrollPane(statusView); // status
-		// view panel
-		//
-		// statusView.append("Status view is ready..\n" +
-		// "----------------------------------------------" + newline);
-		//
-		// statusScrollPane.setPreferredSize(new Dimension(400, 200));
-		// statusScrollPane.setOpaque(false); //transparent
-		// statusScrollPane.setBorder(loweredetched);
-		// statusPanel.add(statusScrollPane);
-		// return statusPanel;
+		return processButtons;
 	}
 
 	// others tab
@@ -393,8 +412,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		} else if (e.getSource() == S_opening) {
 			SlabRules sr = new SlabRules();
 			sr.getOpenings();
-			splitPane.setBottomComponent(getOpeningPanel());
-			splitPane.setDividerLocation(150);
+			splitPane1.setBottomComponent(drawObjectTabBottomPanel());
+			splitPane1.setDividerLocation(150);
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run) {
@@ -406,7 +425,26 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			JOptionPane.showMessageDialog(null,
 					"This is another test tab for different category.",
 					"Message", JOptionPane.INFORMATION_MESSAGE, null);
-
+			
+		
+			
+			// -----------------------------------------
+		} else if (e.getSource() == P_open) {
+				int returnVal = fc.showOpenDialog(ConstructionSafetyViewPanel.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					
+				} else {
+				}
+		
+				
+				// -----------------------------------------
+		} else if (e.getSource() == P_generate) {		
+			splitPane2.setBottomComponent(new JLabel("4D-BIM Schedule Specific View "));
+			splitPane2.setDividerLocation(150);
+			
+			
+			
 			// -----------------------------------------
 		} else if (e.getSource() == b1) {
 			cp.getProcess(1);
