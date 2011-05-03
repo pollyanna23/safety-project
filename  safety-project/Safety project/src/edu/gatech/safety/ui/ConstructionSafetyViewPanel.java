@@ -99,7 +99,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 	private JTabbedPane tabbedPane;
 	
-	private JPanel objectTabTopPanel, processButtons, processTabPanel1, processTabPanel, 
+	private JPanel objectTabTopPanel, processButtons, processTabPanel1, processTabPanel, processBar,
 		topPanel, bottomPanel, openingPanel;
 	private JSplitPane splitPane1, splitPane2;
 
@@ -347,13 +347,22 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			processButtons.add(b9);
 			processButtons.add(b10);
 			
-			processSlider = new JSlider();
-			processSlider.setValue(10);
-			processButtons.add(processSlider);
-			
 		}
 		return processButtons;
 	}
+	
+	private JPanel drawProcessBottomPanel() {
+		if (processBar == null) {
+			processSlider = new JSlider();
+			processSlider.setValue(0);
+			
+			processBar = new JPanel();
+			processBar.add(processSlider);
+		}
+		return processBar;
+	}
+	
+	
 
 	// others tab
 	private JPanel drawTab3() {
@@ -449,7 +458,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 				
 				// -----------------------------------------
 		} else if (e.getSource() == P_generate) {		
-			splitPane2.setBottomComponent(new JLabel("4D-BIM Schedule Specific View "));
+			splitPane2.setBottomComponent(drawProcessBottomPanel());
 			splitPane2.setDividerLocation(150);
 			
 			
