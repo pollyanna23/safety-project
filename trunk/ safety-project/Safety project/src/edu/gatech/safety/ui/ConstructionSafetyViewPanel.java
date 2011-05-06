@@ -85,6 +85,7 @@ import edu.gatech.safety.construction.ConstructionSafetyPlugin;
 import edu.gatech.safety.construction.SafetyFence;
 import edu.gatech.safety.construction.WallFence;
 import edu.gatech.safety.rules.ConstructionProcess;
+import edu.gatech.safety.rules.OpeningTest;
 import edu.gatech.safety.rules.SlabRules;
 import edu.gatech.safety.rules.WallRules;
 
@@ -483,9 +484,12 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 			// -----------------------------------------
 		} else if (e.getSource() == Btn_others) {
-			JOptionPane.showMessageDialog(null,
-					"This is another test tab for different category.",
-					"Message", JOptionPane.INFORMATION_MESSAGE, null);
+//			JOptionPane.showMessageDialog(null,
+//					"This is another test tab for different category.",
+//					"Message", JOptionPane.INFORMATION_MESSAGE, null);
+			OpeningTest ot = new OpeningTest();
+			ot.run();
+			System.out.println("Test--------------------------------");
 
 			// -----------------------------------------
 		} else if (e.getSource() == P_open) {
