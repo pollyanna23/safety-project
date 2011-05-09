@@ -82,6 +82,7 @@ import com.solibri.saf.plugins.checkingplugin.ui.RuleTreeTableMouseAdapter;
 import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
+import edu.gatech.safety.construction.OpeningFense;
 import edu.gatech.safety.construction.SafetyFence;
 import edu.gatech.safety.construction.WallFence;
 import edu.gatech.safety.rules.ConstructionProcess;
@@ -152,15 +153,15 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Construction Objects", null, drawTab1(), null);
 		tabbedPane.addTab("Construction Process", null, drawTab2(), null);
-		tabbedPane.addTab("Others", null, drawTab3(), null);
+//		tabbedPane.addTab("Others", null, drawTab3(), null);
 
 		tabbedPane.setSelectedIndex(0);
 		tabbedPane.setToolTipTextAt(0, new String(
 				"<html>Construction Safety Plugin</html>"));
 		tabbedPane.setToolTipTextAt(1, new String(
 				"<html>Construction Safety Plugin</html>"));
-		tabbedPane.setToolTipTextAt(2, new String(
-				"<html>This module is under development.</html>"));
+//		tabbedPane.setToolTipTextAt(2, new String(
+//				"<html>This module is under development.</html>"));
 
 		// Disable tabs
 		// tabbedPane.setEnabledAt(1, false);
@@ -479,8 +480,12 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run1) {
-			WallFence sf = new WallFence();
-			sf.run();
+//			WallFence sf = new WallFence();
+//			sf.run();
+			
+			OpeningFense of = new OpeningFense();
+			of.run();
+			
 
 			// -----------------------------------------
 		} else if (e.getSource() == Btn_others) {
