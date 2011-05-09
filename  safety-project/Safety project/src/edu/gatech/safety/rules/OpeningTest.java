@@ -79,7 +79,7 @@ public class OpeningTest {
 	/*
 	 * visualize exterior all perimeter polygons and points
 	 */
-	private class FenceVisulizationTask extends VisualizationTask{
+	private class FenceVisulizationTask extends VisualizationTask {
 
 		SBuildingStorey[] storeys;
 		SSlab[] slabs;
@@ -100,7 +100,7 @@ public class OpeningTest {
 				this.storeys = storeys;
 			}
 		}
-		
+
 		public void visualize(VisualizationInterface v) {
 
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
@@ -182,7 +182,7 @@ public class OpeningTest {
 					// GeomUtils.filterPolyline(vector.toArray(new
 					// Point[vector.size()]), 100, angleEpsilon);
 					int pointCount = 0;
-
+					// ## Create railing for big holes
 					if (polygon.length == 4) {
 						Point p1 = new Point(polygon[0]);
 						Point p2 = new Point(polygon[1]);
@@ -209,9 +209,40 @@ public class OpeningTest {
 							pointsHoles.add(p3);
 							pointsHoles.add(p4);
 							pointsHoles.add(p1);
-							
+							if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
+								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
+							} else {
+								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
+							}
+							holeLength += GeomUtils2D.length(p1, p2) * 0.001;
+							// System.out.println(postNum2);
+
+							if (GeomUtils2D.length(p2, p3) * 0.001 % 2.4 > 0) {
+								postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 2);
+							} else {
+								postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 1);
+							}
+							holeLength += GeomUtils2D.length(p2, p3) * 0.001;
+							// System.out.println(postNum2);
+
+							if (GeomUtils2D.length(p3, p4) * 0.001 % 2.4 > 0) {
+								postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 2);
+							} else {
+								postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 1);
+							}
+							holeLength += GeomUtils2D.length(p3, p4) * 0.001;
+							// System.out.println(postNum2);
+
+							if (GeomUtils2D.length(p4, p1) * 0.001 % 2.4 > 0) {
+								postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 2);
+							} else {
+								postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 1);
+							}
+							holeLength += GeomUtils2D.length(p4, p1) * 0.001;
+							// System.out.println(postNum2);
+
 							p5.z = p6.z = p7.z = p8.z = storeys[i].bottomElevation
-							.getDoubleValue()+fenseHeight;
+									.getDoubleValue() + fenseHeight;
 
 							pointsHoles.add(p5);
 							pointsHoles.add(p6);
@@ -221,9 +252,9 @@ public class OpeningTest {
 							pointsHoles.add(p7);
 							pointsHoles.add(p8);
 							pointsHoles.add(p5);
-							
+
 							p9.z = p10.z = p11.z = p12.z = storeys[i].bottomElevation
-							.getDoubleValue()+fenseHeight*2;
+									.getDoubleValue() + fenseHeight * 2;
 
 							pointsHoles.add(p9);
 							pointsHoles.add(p10);
@@ -233,24 +264,24 @@ public class OpeningTest {
 							pointsHoles.add(p11);
 							pointsHoles.add(p12);
 							pointsHoles.add(p9);
+
+							// ## Make cover for small hole
+						} else {
 							
-						}
-						else{
-							
-						}
 						}
 					}
-
+					postNum2 = postNum2 - polygon.length;
+				}
 
 				v.visualize(new LineArrayEntity(pointsBoundary, new Color3f(
 						Color.black), 0.0f, 2.0f));
 				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 						Color.blue), 0.0f, 2.0f));
-				
-				// v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
-				// Color.red), 0.0f, 6.0f));
-				// v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
-				// Color.red), 0.0f, 6.0f));
+
+				v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
+						Color.red), 0.0f, 6.0f));
+				v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
+						Color.red), 0.0f, 6.0f));
 
 			}
 
