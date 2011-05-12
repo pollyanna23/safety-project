@@ -36,16 +36,16 @@ public class WallRules extends OpeningRules {
 	SWall[] walls;
 	SRoof[] roofs;
 	public static SOpening[] openings;
-	// public static ArrayList data = new ArrayList();
-	// public static ArrayList no = new ArrayList();
-	// public static ArrayList name = new ArrayList();
-	// public static ArrayList level = new ArrayList();
-	// public static ArrayList width = new ArrayList();
-	// public static ArrayList height = new ArrayList();
-	// public static ArrayList area = new ArrayList();
-	// public static ArrayList disToLower = new ArrayList();
-	// public static ArrayList prevention = new ArrayList();
-	// public static ArrayList check = new ArrayList();
+	public static ArrayList data = new ArrayList();
+	public static ArrayList no = new ArrayList();
+	public static ArrayList name = new ArrayList();
+	public static ArrayList level = new ArrayList();
+	public static ArrayList width = new ArrayList();
+	public static ArrayList height = new ArrayList();
+	public static ArrayList area = new ArrayList();
+	public static ArrayList disToLower = new ArrayList();
+	public static ArrayList prevention = new ArrayList();
+	public static ArrayList check = new ArrayList();
 
 	public static ArrayList visualizeObject = new ArrayList();
 
@@ -54,15 +54,15 @@ public class WallRules extends OpeningRules {
 
 	public void getOpenings() {
 		int p = 0;
-		no.clear();
-		name.clear();
-		level.clear();
-		width.clear();
-		height.clear();
-		area.clear();
-		disToLower.clear();
-		prevention.clear();
-		check.clear();
+		// no.clear();
+		// name.clear();
+		// level.clear();
+		// width.clear();
+		// height.clear();
+		// area.clear();
+		// disToLower.clear();
+		// prevention.clear();
+		// check.clear();
 		model = (SModel) ProductModelHandlingPlugin.getInstance()
 				.getCurrentModel();
 		stories = (SBuildingStorey[]) model.findAll(SBuildingStorey.class);
@@ -139,29 +139,31 @@ public class WallRules extends OpeningRules {
 					// System.out.print(p);
 					Object oo2 = itOpening.next();
 					SOpening so = (SOpening) oo2;
+					if (no.size() == 0) {
+						no.add(p);
+						// System.out.print("\t- " + so.getDisplayName() +
+						// " : ");
+						name.add(so.getDisplayName());
+						// System.out.print(so.getContainer().getDisplayName() +
+						// " | ");
+						level.add(so.getContainer().getDisplayName());
+						// System.out.print("Area= "
+						// + Utils.sm2sf(so.area.getDoubleValue(), 2)
+						// + " SF | ");
+						area.add(Utils.sm2sf(so.area.getDoubleValue(), 2));
+						// System.out.print("Width= "
+						// + Utils.round(so.width.getDoubleValue(), 2) + " mm"
+						// + " | ");
+						width.add(Utils.m2f(so.width.getDoubleValue(), 2));
 
-					no.add(p);
-					// System.out.print("\t- " + so.getDisplayName() + " : ");
-					name.add(so.getDisplayName());
-					// System.out.print(so.getContainer().getDisplayName() +
-					// " | ");
-					level.add(so.getContainer().getDisplayName());
-					// System.out.print("Area= "
-					// + Utils.sm2sf(so.area.getDoubleValue(), 2)
-					// + " SF | ");
-					area.add(Utils.sm2sf(so.area.getDoubleValue(), 2));
-					// System.out.print("Width= "
-					// + Utils.round(so.width.getDoubleValue(), 2) + " mm"
-					// + " | ");
-					width.add(Utils.m2f(so.width.getDoubleValue(), 2));
-					
-					// System.out.println("Height= "
-					// + Utils.round(so.height.getDoubleValue(), 2)
-					// + " mm");
-					height.add(Utils.m2f(so.height.getDoubleValue(), 2));
-					disToLower.add(disToL);
-					prevention.add("Guardrail System");
-					check.add(new Boolean(false));
+						// System.out.println("Height= "
+						// + Utils.round(so.height.getDoubleValue(), 2)
+						// + " mm");
+						height.add(Utils.m2f(so.height.getDoubleValue(), 2));
+						disToLower.add(disToL);
+						prevention.add("Guardrail System");
+						check.add(new Boolean(false));
+					}
 				}
 			}
 		}

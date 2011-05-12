@@ -183,7 +183,7 @@ public class OpeningTest {
 					// Point[vector.size()]), 100, angleEpsilon);
 					int pointCount = 0;
 					// ## Create railing for big holes
-					if (polygon.length == 4) {
+					//if (polygon.length == 4) {
 						Point p1 = new Point(polygon[0]);
 						Point p2 = new Point(polygon[1]);
 						Point p3 = new Point(polygon[2]);
@@ -268,7 +268,7 @@ public class OpeningTest {
 							// ## Make cover for small hole
 						} else {
 							
-						}
+					//	}
 					}
 					postNum2 = postNum2 - polygon.length;
 				}
