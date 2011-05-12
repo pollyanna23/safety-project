@@ -253,15 +253,15 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		S_run1.addActionListener(this);
 		S_run1.setToolTipText("Safety Fence for wall openings");
 
-		S_opening = new JButton("Slab openings",
-				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_opening.addActionListener(this);
-		S_opening.setToolTipText("Collect all Holes on Slab");
-
-		S_wOpening = new JButton("Wall openings",
-				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		S_wOpening.addActionListener(this);
-		S_wOpening.setToolTipText("Collect all Holes on Wall");
+		// S_opening = new JButton("Slab openings",
+		// createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		// S_opening.addActionListener(this);
+		// S_opening.setToolTipText("Collect all Holes on Slab");
+		//
+		// S_wOpening = new JButton("Wall openings",
+		// createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		// S_wOpening.addActionListener(this);
+		// S_wOpening.setToolTipText("Collect all Holes on Wall");
 
 		JPanel panelTop = new JPanel(); // button panel
 		panelTop.add(S_open);
@@ -270,8 +270,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 		panelTop.add(S_slab);
 		panelTop.add(S_wall);
-		panelTop.add(S_opening);
-		panelTop.add(S_wOpening);
+		// panelTop.add(S_opening);
+		// panelTop.add(S_wOpening);
 		panelTop.add(S_run);
 		panelTop.add(S_run1);
 
@@ -447,30 +447,40 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			// -----------------------------------------
 		} else if (e.getSource() == S_slab) {
 			SlabRules sr = new SlabRules();
-			sr.getSlabs();
-			// -----------------------------------------
-		} else if (e.getSource() == S_wall) {
-			WallRules sr = new WallRules();
-			sr.getWalls();
-			// -----------------------------------------
-		} else if (e.getSource() == S_opening) {
-			SlabRules sr = new SlabRules();
+			// sr.getSlabs();
 			sr.getOpenings();
 			sw = 1;
 			splitPane1.setBottomComponent(drawObjectTabBottomPanel());
 			splitPane1.setDividerLocation(150);
 
 			this.repaint();
-
 			// -----------------------------------------
-		} else if (e.getSource() == S_wOpening) {
+		} else if (e.getSource() == S_wall) {
 			WallRules sr = new WallRules();
+			// sr.getWalls();
 			sr.getOpenings();
 			sw = 2;
 			splitPane1.setBottomComponent(drawObjectTabBottomPanel());
 			splitPane1.setDividerLocation(150);
-
-			this.repaint();
+			// -----------------------------------------
+			// } else if (e.getSource() == S_opening) {
+			// SlabRules sr = new SlabRules();
+			// sr.getOpenings();
+			// sw = 1;
+			// splitPane1.setBottomComponent(drawObjectTabBottomPanel());
+			// splitPane1.setDividerLocation(150);
+			//
+			// this.repaint();
+			//
+			// // -----------------------------------------
+			// } else if (e.getSource() == S_wOpening) {
+			// WallRules sr = new WallRules();
+			// sr.getOpenings();
+			// sw = 2;
+			// splitPane1.setBottomComponent(drawObjectTabBottomPanel());
+			// splitPane1.setDividerLocation(150);
+			//
+			// this.repaint();
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run) {
@@ -569,30 +579,30 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JScrollPane getOpeningScrollPane() {
 		if (openingScrollPane == null) {
 			openingTable = new JTable(new openingTableModel());
-			 openingTable.getSelectionModel().addListSelectionListener(this);
-			//openingTable.getSelectionModel().addListSelectionListener(
-			//		new ListSelectionListener() {
-//						public void viewFocus(ListSelectionEvent event) {
-//							int viewRow = openingTable.getSelectedRow();
-//							if (viewRow < 0) {
-//								// Selection got filtered away.
-//								// statusText.setText("");
-//							} else {
-//								int modelRow = openingTable
-//										.convertRowIndexToModel(viewRow);
-//								System.out.println(String.format(
-//										"Selected Row in view: %d. "
-//												+ "Selected Row in model: %d.",
-//										viewRow, modelRow));
-//							}
-//						}
-//
-//						@Override
-//						public void valueChanged(ListSelectionEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//					});
+			// openingTable.getSelectionModel().addListSelectionListener(this);
+			openingTable.getSelectionModel().addListSelectionListener(
+					new ListSelectionListener() {
+						public void valueChanged(ListSelectionEvent event) {
+							int viewRow = openingTable.getSelectedRow();
+							if (viewRow < 0) {
+								// Selection got filtered away.
+								System.out.println(String.format("null"));
+							} else {
+								int modelRow = openingTable
+										.convertRowIndexToModel(viewRow);
+								System.out.println(String.format(
+										"Selected Row in view: %d. "
+												+ "Selected Row in model: %d.",
+										viewRow, modelRow));
+							}
+						}
+
+						// @Override
+						// public void valueChanged(ListSelectionEvent e) {
+						// // TODO Auto-generated method stub
+						//
+						// }
+					});
 			openingTable.getSelectionModel().setSelectionMode(
 					ListSelectionModel.SINGLE_SELECTION);
 			// treeTable.setTreeCellRenderer(new ItemTreeCellRenderer());
@@ -687,7 +697,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			return newArray;
 		}
 
-		public Object[][] data1 = new Object[getSize()-1][9];
+		public Object[][] data1 = new Object[getSize() - 1][9];
 
 		private Object[][] getData() {
 			data1 = (Object[][]) resizeArray(data1, getSize());
@@ -848,7 +858,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			}
 
 			fireTableCellUpdated(row, col);
-			
+
 		}
 	}
 
