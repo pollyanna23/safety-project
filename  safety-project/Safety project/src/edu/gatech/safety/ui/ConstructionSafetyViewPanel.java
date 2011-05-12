@@ -569,9 +569,32 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private JScrollPane getOpeningScrollPane() {
 		if (openingScrollPane == null) {
 			openingTable = new JTable(new openingTableModel());
-			openingTable.getSelectionModel().addListSelectionListener(this);
+			 openingTable.getSelectionModel().addListSelectionListener(this);
+			//openingTable.getSelectionModel().addListSelectionListener(
+			//		new ListSelectionListener() {
+//						public void viewFocus(ListSelectionEvent event) {
+//							int viewRow = openingTable.getSelectedRow();
+//							if (viewRow < 0) {
+//								// Selection got filtered away.
+//								// statusText.setText("");
+//							} else {
+//								int modelRow = openingTable
+//										.convertRowIndexToModel(viewRow);
+//								System.out.println(String.format(
+//										"Selected Row in view: %d. "
+//												+ "Selected Row in model: %d.",
+//										viewRow, modelRow));
+//							}
+//						}
+//
+//						@Override
+//						public void valueChanged(ListSelectionEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//					});
 			openingTable.getSelectionModel().setSelectionMode(
-					ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+					ListSelectionModel.SINGLE_SELECTION);
 			// treeTable.setTreeCellRenderer(new ItemTreeCellRenderer());
 			// treeTable.hideHeader();
 			openingScrollPane = Ui.createScrollPane(openingTable);
@@ -589,6 +612,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			// Fiddle with the Sport column's cell editors/renderers.
 			setUpSportColumn(openingTable, openingTable.getColumnModel()
 					.getColumn(7));
+			this.repaint();
 		}
 		return openingScrollPane;
 	}
@@ -663,7 +687,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			return newArray;
 		}
 
-		public Object[][] data1 = new Object[getSize()][9];
+		public Object[][] data1 = new Object[getSize()-1][9];
 
 		private Object[][] getData() {
 			data1 = (Object[][]) resizeArray(data1, getSize());
@@ -824,7 +848,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			}
 
 			fireTableCellUpdated(row, col);
-
+			
 		}
 	}
 
