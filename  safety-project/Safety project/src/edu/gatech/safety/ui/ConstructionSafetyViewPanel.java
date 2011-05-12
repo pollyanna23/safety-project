@@ -82,7 +82,6 @@ import com.solibri.saf.plugins.checkingplugin.ui.RuleTreeTableMouseAdapter;
 import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
-import edu.gatech.safety.construction.OpeningFense;
 import edu.gatech.safety.construction.SafetyFence;
 import edu.gatech.safety.construction.WallFence;
 import edu.gatech.safety.rules.ConstructionProcess;
@@ -153,15 +152,15 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Construction Objects", null, drawTab1(), null);
 		tabbedPane.addTab("Construction Process", null, drawTab2(), null);
-//		tabbedPane.addTab("Others", null, drawTab3(), null);
+		tabbedPane.addTab("Others", null, drawTab3(), null);
 
 		tabbedPane.setSelectedIndex(0);
 		tabbedPane.setToolTipTextAt(0, new String(
 				"<html>Construction Safety Plugin</html>"));
 		tabbedPane.setToolTipTextAt(1, new String(
 				"<html>Construction Safety Plugin</html>"));
-//		tabbedPane.setToolTipTextAt(2, new String(
-//				"<html>This module is under development.</html>"));
+		tabbedPane.setToolTipTextAt(2, new String(
+				"<html>This module is under development.</html>"));
 
 		// Disable tabs
 		// tabbedPane.setEnabledAt(1, false);
@@ -480,18 +479,14 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 			// -----------------------------------------
 		} else if (e.getSource() == S_run1) {
-//			WallFence sf = new WallFence();
-//			sf.run();
-			
-			OpeningFense of = new OpeningFense();
-			of.run();
-			
+			WallFence sf = new WallFence();
+			sf.run();
 
 			// -----------------------------------------
 		} else if (e.getSource() == Btn_others) {
-//			JOptionPane.showMessageDialog(null,
-//					"This is another test tab for different category.",
-//					"Message", JOptionPane.INFORMATION_MESSAGE, null);
+			// JOptionPane.showMessageDialog(null,
+			// "This is another test tab for different category.",
+			// "Message", JOptionPane.INFORMATION_MESSAGE, null);
 			OpeningTest ot = new OpeningTest();
 			ot.run();
 			System.out.println("Test--------------------------------");
@@ -668,7 +663,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			return newArray;
 		}
 
-		private Object[][] data1 = new Object[getSize()][9];
+		public Object[][] data1 = new Object[getSize()][9];
 
 		private Object[][] getData() {
 			data1 = (Object[][]) resizeArray(data1, getSize());
@@ -751,6 +746,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		public int getRowCount() {
 			getData();
 			return data1.length;
+			// return n;
 		}
 
 		public String getColumnName(int col) {
@@ -758,7 +754,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public Object getValueAt(int row, int col) {
-			getData();
+			// getData();
 			return data1[row][col];
 		}
 
@@ -776,9 +772,59 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		}
 
 		public void setValueAt(Object value, int row, int col) {
-			getData();
+			// getData();
 			data1[row][col] = value;
+			if (sw == 1) {
+				// for (int i = 0; i < SlabRules.no.size(); i++)
+				// for (int j = 0; j < 9; j++) {
+				if (col == 0) {
+					SlabRules.no.set(row, value);
+				} else if (col == 1) {
+					SlabRules.name.set(row, value);
+				} else if (col == 2) {
+					SlabRules.level.set(row, value);
+				} else if (col == 3) {
+					SlabRules.disToLower.set(row, value);
+				} else if (col == 4) {
+					SlabRules.width.set(row, value);
+				} else if (col == 5) {
+					SlabRules.height.set(row, value);
+				} else if (col == 6) {
+					SlabRules.area.set(row, value);
+				} else if (col == 7) {
+					SlabRules.prevention.set(row, value);
+				} else if (col == 8) {
+					SlabRules.check.set(row, value);
+				}
+				// }
+			}
+
+			else if (sw == 2) {
+
+				if (col == 0) {
+					WallRules.no.set(row, value);
+				} else if (col == 1) {
+					WallRules.name.set(row, value);
+				} else if (col == 2) {
+					WallRules.level.set(row, value);
+				} else if (col == 3) {
+					WallRules.disToLower.set(row, value);
+				} else if (col == 4) {
+					WallRules.width.set(row, value);
+				} else if (col == 5) {
+					WallRules.height.set(row, value);
+				} else if (col == 6) {
+					WallRules.area.set(row, value);
+				} else if (col == 7) {
+					WallRules.prevention.set(row, value);
+				} else if (col == 8) {
+					WallRules.check.set(row, value);
+				}
+
+			}
+
 			fireTableCellUpdated(row, col);
+
 		}
 	}
 
