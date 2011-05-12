@@ -64,78 +64,79 @@ public class SlabRules {
 		// area.clear();
 		// disToLower.clear();
 		// prevention.clear();
-		// check.clear();
-		model = (SModel) ProductModelHandlingPlugin.getInstance()
-				.getCurrentModel();
-		stories = (SBuildingStorey[]) model.findAll(SBuildingStorey.class);
-		slabs = (SSlab[]) model.findAll(SSlab.class);
-		// for (int i = 0; i < stories.length; i++) {
-		// System.out.println(stories[i].name.getStringValue() );
-		// }
-		for (int i = 0; i < stories.length; i++) {
-			int minIndex = i;
-			Comparable min = stories[i].bottomElevation.getDoubleValue();
-			for (int j = i + 1; j < stories.length; j++) {
-				if (min.compareTo(stories[j].bottomElevation.getDoubleValue()) > 0) // list[j].compareTo(min)
-																					// <
-																					// 0
-				{
-					min = stories[j].bottomElevation.getDoubleValue();
-					minIndex = j;
+		if (no.size() == 0) {
+			model = (SModel) ProductModelHandlingPlugin.getInstance()
+					.getCurrentModel();
+			stories = (SBuildingStorey[]) model.findAll(SBuildingStorey.class);
+			slabs = (SSlab[]) model.findAll(SSlab.class);
+			// for (int i = 0; i < stories.length; i++) {
+			// System.out.println(stories[i].name.getStringValue() );
+			// }
+			for (int i = 0; i < stories.length; i++) {
+				int minIndex = i;
+				Comparable min = stories[i].bottomElevation.getDoubleValue();
+				for (int j = i + 1; j < stories.length; j++) {
+					if (min.compareTo(stories[j].bottomElevation
+							.getDoubleValue()) > 0) // list[j].compareTo(min)
+													// <
+													// 0
+					{
+						min = stories[j].bottomElevation.getDoubleValue();
+						minIndex = j;
+					}
 				}
-			}
-			swap(stories, i, minIndex);
-		}
-
-		for (int i = 0; i < stories.length; i++) {
-			// // print ==========
-			double disToL;
-			if (i != 0) {
-				disToL = Utils
-						.round((stories[i].bottomElevation.getDoubleValue() - stories[i - 1].bottomElevation
-								.getDoubleValue()), 2);
-			} else {
-				disToL = 0.0;
+				swap(stories, i, minIndex);
 			}
 
-			System.out.print(stories[i].name.getStringValue() + " : ");
-			System.out.print("DisToLower: " + disToL + "mm");
-			SortedSet sSlab = stories[i].getRelated(SContains.class, true,
-					SSlab.class);
-			System.out.println("  has " + sSlab.size() + " Slab objects.");
+			for (int i = 0; i < stories.length; i++) {
+				// // print ==========
+				double disToL;
+				if (i != 0) {
+					disToL = Utils
+							.round((stories[i].bottomElevation.getDoubleValue() - stories[i - 1].bottomElevation
+									.getDoubleValue()), 2);
+				} else {
+					disToL = 0.0;
+				}
 
-			Iterator itSlab = sSlab.iterator();
-			while (itSlab.hasNext()) {
-				Object oo = itSlab.next();
-				SSlab ss = (SSlab) oo;
+				System.out.print(stories[i].name.getStringValue() + " : ");
+				System.out.print("DisToLower: " + disToL + "mm");
+				SortedSet sSlab = stories[i].getRelated(SContains.class, true,
+						SSlab.class);
+				System.out.println("  has " + sSlab.size() + " Slab objects.");
 
-				// ****** ADD
-				visualizeObject.add(ss);
+				Iterator itSlab = sSlab.iterator();
+				while (itSlab.hasNext()) {
+					Object oo = itSlab.next();
+					SSlab ss = (SSlab) oo;
 
-				System.out.print("- " + ss.getDisplayName() + " : ");
-				System.out.println("Bottom Area= "
-						+ Utils.sm2sf(ss.bottomArea.getDoubleValue(), 2)
-						+ " SF | ");
-				// System.out.println("\tThickness= " +
-				// Utils.m2f(ss.thickness.getDoubleValue()/1000, 2) + " F");
-				// System.out.println("\tBottom Height= " +
-				// Utils.m2f(ss.bottomElevation.getDoubleValue()/1000, 2) +
-				// " F");
-				// System.out.println("Area of Openings= "
-				// + Utils.sm2sf(ss.areaOfOpenings.getDoubleValue(), 2)
-				// + " SF");
+					// ****** ADD
+					visualizeObject.add(ss);
 
-				SortedSet sOpening = ss.getRelated(SVoids.class, false,
-						SOpening.class);
-				// System.out.println("- " + ss.getDisplayName() + " has "
-				// + sOpening.size() + " Opening objects.");
+					System.out.print("- " + ss.getDisplayName() + " : ");
+					System.out.println("Bottom Area= "
+							+ Utils.sm2sf(ss.bottomArea.getDoubleValue(), 2)
+							+ " SF | ");
+					// System.out.println("\tThickness= " +
+					// Utils.m2f(ss.thickness.getDoubleValue()/1000, 2) + " F");
+					// System.out.println("\tBottom Height= " +
+					// Utils.m2f(ss.bottomElevation.getDoubleValue()/1000, 2) +
+					// " F");
+					// System.out.println("Area of Openings= "
+					// + Utils.sm2sf(ss.areaOfOpenings.getDoubleValue(), 2)
+					// + " SF");
 
-				Iterator itOpening = sOpening.iterator();
-				while (itOpening.hasNext()) {
-					p++;
-					Object oo2 = itOpening.next();
-					SOpening so = (SOpening) oo2;
-					if (no.size() == 0) {
+					SortedSet sOpening = ss.getRelated(SVoids.class, false,
+							SOpening.class);
+					// System.out.println("- " + ss.getDisplayName() + " has "
+					// + sOpening.size() + " Opening objects.");
+
+					Iterator itOpening = sOpening.iterator();
+					while (itOpening.hasNext()) {
+						p++;
+						Object oo2 = itOpening.next();
+						SOpening so = (SOpening) oo2;
+						// if (no.size() == 0) {
 						no.add(p);
 						// System.out.print("\t- " + so.getDisplayName() +
 						// " : ");
@@ -159,6 +160,7 @@ public class SlabRules {
 						disToLower.add(disToL);
 						prevention.add("Guardrail System");
 						check.add(new Boolean(false));
+						// }
 					}
 				}
 			}
