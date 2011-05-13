@@ -31,6 +31,8 @@ public class ConstructionProcess {
 	SWall[] walls;
 	SRoof[] roofs;
 	
+	public static int floorNum = 0;
+	
 	public HashMap<Double, SBuildingStorey> fh = new HashMap<Double, SBuildingStorey>();	
 	public HashMap<Integer, SBuildingStorey> f = new HashMap<Integer, SBuildingStorey>();
 	
@@ -44,6 +46,7 @@ public class ConstructionProcess {
 	public void buildFloor() {
 		model = (SModel)ProductModelHandlingPlugin.getInstance().getCurrentModel();
 		stories = (SBuildingStorey[]) model.findAll(SBuildingStorey.class);
+		floorNum = stories.length;
 		
 		fh.clear();
 		f.clear();
@@ -108,15 +111,19 @@ public class ConstructionProcess {
 		if (p>0) {
 			SortedSet<SSlab> st = null;
 			for (int i=0; i<=p; i++) {
-				SBuildingStorey sb = f.get(i+1);
-				st = sb.getRelated(SContains.class, true, SSlab.class);
-				if (st.size() > 0) {
-					Iterator<SSlab> it = st.iterator();
-					while (it.hasNext()) {
-						Object oo = it.next();
-						ob.add((SSlab) oo);
+				try {
+					SBuildingStorey sb = f.get(i+1);
+					st = sb.getRelated(SContains.class, true, SSlab.class);
+					if (st.size() > 0) {
+						Iterator<SSlab> it = st.iterator();
+						while (it.hasNext()) {
+							Object oo = it.next();
+							ob.add((SSlab) oo);
+						}
 					}
+				} catch (Exception ex) {
 				}
+				
 			}
 		}
 		return ob;
@@ -128,14 +135,18 @@ public class ConstructionProcess {
 			SortedSet<SWall> st = null;
 			for (int i=0; i<=p; i++) {
 				SBuildingStorey sb = f.get(i+1);
-				st = sb.getRelated(SContains.class, true, SWall.class);
-				if (st.size() > 0) {
-					Iterator<SWall> it = st.iterator();
-					while (it.hasNext()) {
-						Object oo = it.next();
-						ob.add((SWall) oo);
+				try {
+					st = sb.getRelated(SContains.class, true, SWall.class);
+					if (st.size() > 0) {
+						Iterator<SWall> it = st.iterator();
+						while (it.hasNext()) {
+							Object oo = it.next();
+							ob.add((SWall) oo);
+						}
 					}
+				} catch (Exception ex) {
 				}
+				
 			}
 		}
 		return ob;
