@@ -115,7 +115,7 @@ public class OpeningTest {
 			int postNum2 = 0;
 
 			// ## Visualize floor boundary
-			for (int i = 0; i < storeys.length; i++) {
+			for (int i = 0; i < storeys.length ; i++) {
 
 				// if (storeys[i].bottomElevation.getDoubleValue() > 2000) { //
 				// 2m
@@ -275,14 +275,14 @@ public class OpeningTest {
 				// }
 
 				v.visualize(new LineArrayEntity(pointsBoundary, new Color3f(
-						Color.black), 0.0f, 2.0f));
-				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 						Color.blue), 0.0f, 2.0f));
+//				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
+//						Color.blue), 0.0f, 2.0f));
 
 				v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
 						Color.red), 0.0f, 6.0f));
-				v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
-						Color.red), 0.0f, 6.0f));
+//				v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
+//						Color.red), 0.0f, 6.0f));
 
 			}
 
@@ -328,77 +328,76 @@ public class OpeningTest {
 				Point3d lower = new Point3d();
 				// collect walls and spaces
 
-				model = (SModel) ProductModelHandlingPlugin.getInstance()
-						.getCurrentModel();
-				stories = (SBuildingStorey[]) model
-						.findAll(SBuildingStorey.class);
-				slabs = (SSlab[]) model.findAll(SSlab.class);
-				for (int i = 0; i < stories.length; i++) {
-					SortedSet sSlab = stories[i].getRelated(SContains.class,
-							true, SSlab.class);
-					Iterator itSlab = sSlab.iterator();
-					while (itSlab.hasNext()) {
-						Object oo = itSlab.next();
-						SSlab ss = (SSlab) oo;
-						SortedSet sOpening = ss.getRelated(SVoids.class, false,
-								SOpening.class);
-						Collection<Area> areas = new ArrayList<Area>(
-								sOpening.size());
+				// model = (SModel) ProductModelHandlingPlugin.getInstance()
+				// .getCurrentModel();
+				// stories = (SBuildingStorey[]) model
+				// .findAll(SBuildingStorey.class);
+				// slabs = (SSlab[]) model.findAll(SSlab.class);
+				// for (int i = 0; i < stories.length; i++) {
+				SortedSet sSlab = storey.getRelated(SContains.class, true,
+						SSlab.class);
+				Iterator itSlab = sSlab.iterator();
+				while (itSlab.hasNext()) {
+					Object oo = itSlab.next();
+					SSlab ss = (SSlab) oo;
+					SortedSet sOpening = ss.getRelated(SVoids.class, false,
+							SOpening.class);
+					Collection<Area> areas = new ArrayList<Area>(
+							sOpening.size());
 
-						Iterator itOpening = sOpening.iterator();
-						while (itOpening.hasNext()) {
-							Object oo2 = itOpening.next();
-							SOpening so = (SOpening) oo2;
+					Iterator itOpening = sOpening.iterator();
+					while (itOpening.hasNext()) {
+						Object oo2 = itOpening.next();
+						SOpening so = (SOpening) oo2;
 
-							componentArea = LayoutPlugin.getAreaCopy(so);
-							// LayoutPlugin.resizeArea(componentArea, 350);
-							if (componentArea != null) {
-								areas.add(componentArea);
-							}
+						componentArea = LayoutPlugin.getAreaCopy(so);
+						// LayoutPlugin.resizeArea(componentArea, 350);
+						if (componentArea != null) {
+							areas.add(componentArea);
 						}
-
-						// }
-						// SortedSet components =
-						// storey.getRelated(SContains.class, true,
-						// SEntity.class, Item.ANY_DEPTH);
-						//
-						// //Collection<Area> areas = new
-						// ArrayList<Area>(components.size());
-						// for (Iterator iterator = components.iterator();
-						// iterator
-						// .hasNext();) {
-						// IComponent component = (IComponent) iterator.next();
-						// ModelSearchTreePlugin.getInstance().getBounds(component,
-						// lower, upper);
-						// zMin = Math.min(zMin, lower.z);
-						// zMax = Math.max(zMax, upper.z);
-						// //Area componentArea = null;
-						//
-						// if (component instanceof SOpening) {
-						// componentArea = LayoutPlugin.getAreaCopy(component);
-						// // Increase the space area by 10cm to fill possible
-						// // gaps:
-						// LayoutPlugin.resizeArea(componentArea, 200);
-						// }
-						//
-						// if (componentArea != null) {
-						// areas.add(componentArea);
-						// }
-						// }
-
-						LayoutPlugin.areaUnion(storeyArea, areas);
-
-						// LayoutPlugin.resizeArea(storeyArea, -200);
-
-						ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
-						ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
-						LayoutPlugin
-								.areaToPolygons(storeyArea, polygons, holes);
-						perimeter = getCleanPolygons(polygons);
-						// this.holes = getCleanPolygons(holes);
 					}
 
+					// }
+					// SortedSet components =
+					// storey.getRelated(SContains.class, true,
+					// SEntity.class, Item.ANY_DEPTH);
+					//
+					// //Collection<Area> areas = new
+					// ArrayList<Area>(components.size());
+					// for (Iterator iterator = components.iterator();
+					// iterator
+					// .hasNext();) {
+					// IComponent component = (IComponent) iterator.next();
+					// ModelSearchTreePlugin.getInstance().getBounds(component,
+					// lower, upper);
+					// zMin = Math.min(zMin, lower.z);
+					// zMax = Math.max(zMax, upper.z);
+					// //Area componentArea = null;
+					//
+					// if (component instanceof SOpening) {
+					// componentArea = LayoutPlugin.getAreaCopy(component);
+					// // Increase the space area by 10cm to fill possible
+					// // gaps:
+					// LayoutPlugin.resizeArea(componentArea, 200);
+					// }
+					//
+					// if (componentArea != null) {
+					// areas.add(componentArea);
+					// }
+					// }
+
+					LayoutPlugin.areaUnion(storeyArea, areas);
+
+					// LayoutPlugin.resizeArea(storeyArea, -200);
+
+					ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
+					ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
+					LayoutPlugin.areaToPolygons(storeyArea, polygons, holes);
+					perimeter = getCleanPolygons(polygons);
+					// this.holes = getCleanPolygons(holes);
 				}
+
+				// }
 			}
 			return perimeter;
 		}
@@ -452,6 +451,7 @@ public class OpeningTest {
 		// Area area = LayoutPlugin.polygonToArea(perimeter[i], 0);
 		// totalArea.add(area);
 		// }
+
 		// holesArea = new ImmutableArea(totalArea);
 		// }
 		// return holesArea;
