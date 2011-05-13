@@ -21,6 +21,7 @@ import com.solibri.sae.geometry.Point;
 import com.solibri.sae.redox.Item;
 import com.solibri.sae.solibri.SContains;
 import com.solibri.sae.solibri.SEntity;
+import com.solibri.sae.solibri.SVoids;
 import com.solibri.sae.solibri.construction.SBuildingStorey;
 import com.solibri.sae.solibri.construction.SColumn;
 import com.solibri.sae.solibri.construction.SModel;
@@ -124,14 +125,14 @@ public class OpeningTest {
 				ImmutableArea aa = null;
 				aa = calculator.getPerimeterArea();
 
-				ImmutableArea bb = null;
-				bb = calculator.getHolesArea();
+				// ImmutableArea bb = null;
+				// bb = calculator.getHolesArea();
 
 				ArrayList polygons = new ArrayList();
 				LayoutPlugin.areaToPolygons(aa, polygons, null);
 
-				ArrayList polygons2 = new ArrayList();
-				LayoutPlugin.areaToPolygons(bb, polygons2, polygons2);
+				// ArrayList polygons2 = new ArrayList();
+				// LayoutPlugin.areaToPolygons(bb, polygons2, polygons2);
 
 				for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
 					Point[] polygon = (Point[]) iter2.next();
@@ -173,105 +174,105 @@ public class OpeningTest {
 					// System.out.println("Post for edge: " + postNum1);
 				}
 
-				for (Iterator iter2 = polygons2.iterator(); iter2.hasNext();) {
-					Point[] polygon = (Point[]) iter2.next();
-					// Vector<Point> vector = new
-					// Vector<Point>(Arrays.asList(polygon));
-					// double angleEpsilon = Math.toRadians(15);
-					// Point3d[] polygonFiltered =
-					// GeomUtils.filterPolyline(vector.toArray(new
-					// Point[vector.size()]), 100, angleEpsilon);
-					int pointCount = 0;
-					// ## Create railing for big holes
-					//if (polygon.length == 4) {
-						Point p1 = new Point(polygon[0]);
-						Point p2 = new Point(polygon[1]);
-						Point p3 = new Point(polygon[2]);
-						Point p4 = new Point(polygon[3]);
-						Point p5 = new Point(polygon[0]);
-						Point p6 = new Point(polygon[1]);
-						Point p7 = new Point(polygon[2]);
-						Point p8 = new Point(polygon[3]);
-						Point p9 = new Point(polygon[0]);
-						Point p10 = new Point(polygon[1]);
-						Point p11 = new Point(polygon[2]);
-						Point p12 = new Point(polygon[3]);
-
-						if (p1.distanceL1(p2) >= 1000
-								| p2.distanceL1(p3) >= 1000) {
-							p1.z = p2.z = p3.z = p4.z = storeys[i].bottomElevation
-									.getDoubleValue();
-							pointsHoles.add(p1);
-							pointsHoles.add(p2);
-							pointsHoles.add(p3);
-							pointsHoles.add(p4);
-							pointsHoles.add(p2);
-							pointsHoles.add(p3);
-							pointsHoles.add(p4);
-							pointsHoles.add(p1);
-							if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
-								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
-							} else {
-								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
-							}
-							holeLength += GeomUtils2D.length(p1, p2) * 0.001;
-							// System.out.println(postNum2);
-
-							if (GeomUtils2D.length(p2, p3) * 0.001 % 2.4 > 0) {
-								postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 2);
-							} else {
-								postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 1);
-							}
-							holeLength += GeomUtils2D.length(p2, p3) * 0.001;
-							// System.out.println(postNum2);
-
-							if (GeomUtils2D.length(p3, p4) * 0.001 % 2.4 > 0) {
-								postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 2);
-							} else {
-								postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 1);
-							}
-							holeLength += GeomUtils2D.length(p3, p4) * 0.001;
-							// System.out.println(postNum2);
-
-							if (GeomUtils2D.length(p4, p1) * 0.001 % 2.4 > 0) {
-								postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 2);
-							} else {
-								postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 1);
-							}
-							holeLength += GeomUtils2D.length(p4, p1) * 0.001;
-							// System.out.println(postNum2);
-
-							p5.z = p6.z = p7.z = p8.z = storeys[i].bottomElevation
-									.getDoubleValue() + fenseHeight;
-
-							pointsHoles.add(p5);
-							pointsHoles.add(p6);
-							pointsHoles.add(p7);
-							pointsHoles.add(p8);
-							pointsHoles.add(p6);
-							pointsHoles.add(p7);
-							pointsHoles.add(p8);
-							pointsHoles.add(p5);
-
-							p9.z = p10.z = p11.z = p12.z = storeys[i].bottomElevation
-									.getDoubleValue() + fenseHeight * 2;
-
-							pointsHoles.add(p9);
-							pointsHoles.add(p10);
-							pointsHoles.add(p11);
-							pointsHoles.add(p12);
-							pointsHoles.add(p10);
-							pointsHoles.add(p11);
-							pointsHoles.add(p12);
-							pointsHoles.add(p9);
-
-							// ## Make cover for small hole
-						} else {
-							
-					//	}
-					}
-					postNum2 = postNum2 - polygon.length;
-				}
+				// for (Iterator iter2 = polygons2.iterator(); iter2.hasNext();)
+				// {
+				// Point[] polygon = (Point[]) iter2.next();
+				// // Vector<Point> vector = new
+				// // Vector<Point>(Arrays.asList(polygon));
+				// // double angleEpsilon = Math.toRadians(15);
+				// // Point3d[] polygonFiltered =
+				// // GeomUtils.filterPolyline(vector.toArray(new
+				// // Point[vector.size()]), 100, angleEpsilon);
+				// int pointCount = 0;
+				// // ## Create railing for big holes
+				// // if (polygon.length == 4) {
+				// Point p1 = new Point(polygon[0]);
+				// Point p2 = new Point(polygon[1]);
+				// Point p3 = new Point(polygon[2]);
+				// Point p4 = new Point(polygon[3]);
+				// Point p5 = new Point(polygon[0]);
+				// Point p6 = new Point(polygon[1]);
+				// Point p7 = new Point(polygon[2]);
+				// Point p8 = new Point(polygon[3]);
+				// Point p9 = new Point(polygon[0]);
+				// Point p10 = new Point(polygon[1]);
+				// Point p11 = new Point(polygon[2]);
+				// Point p12 = new Point(polygon[3]);
+				//
+				// if (p1.distanceL1(p2) >= 1000 | p2.distanceL1(p3) >= 1000) {
+				// p1.z = p2.z = p3.z = p4.z = storeys[i].bottomElevation
+				// .getDoubleValue();
+				// pointsHoles.add(p1);
+				// pointsHoles.add(p2);
+				// pointsHoles.add(p3);
+				// pointsHoles.add(p4);
+				// pointsHoles.add(p2);
+				// pointsHoles.add(p3);
+				// pointsHoles.add(p4);
+				// pointsHoles.add(p1);
+				// if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
+				// postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
+				// } else {
+				// postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
+				// }
+				// holeLength += GeomUtils2D.length(p1, p2) * 0.001;
+				// // System.out.println(postNum2);
+				//
+				// if (GeomUtils2D.length(p2, p3) * 0.001 % 2.4 > 0) {
+				// postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 2);
+				// } else {
+				// postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 1);
+				// }
+				// holeLength += GeomUtils2D.length(p2, p3) * 0.001;
+				// // System.out.println(postNum2);
+				//
+				// if (GeomUtils2D.length(p3, p4) * 0.001 % 2.4 > 0) {
+				// postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 2);
+				// } else {
+				// postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 1);
+				// }
+				// holeLength += GeomUtils2D.length(p3, p4) * 0.001;
+				// // System.out.println(postNum2);
+				//
+				// if (GeomUtils2D.length(p4, p1) * 0.001 % 2.4 > 0) {
+				// postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 2);
+				// } else {
+				// postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 1);
+				// }
+				// holeLength += GeomUtils2D.length(p4, p1) * 0.001;
+				// // System.out.println(postNum2);
+				//
+				// p5.z = p6.z = p7.z = p8.z = storeys[i].bottomElevation
+				// .getDoubleValue() + fenseHeight;
+				//
+				// pointsHoles.add(p5);
+				// pointsHoles.add(p6);
+				// pointsHoles.add(p7);
+				// pointsHoles.add(p8);
+				// pointsHoles.add(p6);
+				// pointsHoles.add(p7);
+				// pointsHoles.add(p8);
+				// pointsHoles.add(p5);
+				//
+				// p9.z = p10.z = p11.z = p12.z = storeys[i].bottomElevation
+				// .getDoubleValue() + fenseHeight * 2;
+				//
+				// pointsHoles.add(p9);
+				// pointsHoles.add(p10);
+				// pointsHoles.add(p11);
+				// pointsHoles.add(p12);
+				// pointsHoles.add(p10);
+				// pointsHoles.add(p11);
+				// pointsHoles.add(p12);
+				// pointsHoles.add(p9);
+				//
+				// // ## Make cover for small hole
+				// } else {
+				//
+				// // }
+				// }
+				// postNum2 = postNum2 - polygon.length;
+				// }
 
 				v.visualize(new LineArrayEntity(pointsBoundary, new Color3f(
 						Color.black), 0.0f, 2.0f));
@@ -288,9 +289,9 @@ public class OpeningTest {
 			System.out.println("Post for edge: " + postNum1);
 			System.out.println("Handrail & Midrail & Toeboard for edge: "
 					+ Utils.round(fenseLength, 2) + " Meters");
-			System.out.println("Post for opening: " + postNum2);
-			System.out.println("Handrail & Midrail & Toeboard for opening: "
-					+ Utils.round(holeLength, 2) + " Meters");
+			// System.out.println("Post for opening: " + postNum2);
+			// System.out.println("Handrail & Midrail & Toeboard for opening: "
+			// + Utils.round(holeLength, 2) + " Meters");
 		}
 	}
 
@@ -300,13 +301,14 @@ public class OpeningTest {
 	public class FenseCalculator {
 		private final SBuildingStorey storey;
 		private Point[][] perimeter;
-		private Point[][] holes;
-		private Point[][] internalPerimeter;
+		// private Point[][] holes;
+		// private Point[][] internalPerimeter;
 		private double zMin = Double.MAX_VALUE;
 		private double zMax = -Double.MAX_VALUE;
 		private ImmutableArea perimeterArea;
-		private ImmutableArea holesArea;
-		private ImmutableArea internalPerimeterArea;
+
+		// private ImmutableArea holesArea;
+		// private ImmutableArea internalPerimeterArea;
 
 		public FenseCalculator(SBuildingStorey storey) {
 			this.storey = storey;
@@ -318,54 +320,95 @@ public class OpeningTest {
 		 * @return the perimeter
 		 */
 		public Point[][] getPerimeter() {
+			Area componentArea = null;
+			// Collection<Area> areas = new ArrayList<Area>(components.size());
 			if (perimeter == null) {
 				Area storeyArea = new Area();
 				Point3d upper = new Point3d();
 				Point3d lower = new Point3d();
 				// collect walls and spaces
-				SortedSet components = storey.getRelated(SContains.class, true,
-						SEntity.class, Item.ANY_DEPTH);
-				Collection<Area> areas = new ArrayList<Area>(components.size());
-				for (Iterator iterator = components.iterator(); iterator
-						.hasNext();) {
-					IComponent component = (IComponent) iterator.next();
-					ModelSearchTreePlugin.getInstance().getBounds(component,
-							lower, upper);
-					zMin = Math.min(zMin, lower.z);
-					zMax = Math.max(zMax, upper.z);
-					Area componentArea = null;
 
-					if (component instanceof SSlab) {
-						componentArea = LayoutPlugin.getAreaCopy(component);
-						// Increase the space area by 10cm to fill possible
-						// gaps:
-						LayoutPlugin.resizeArea(componentArea, 200);
+				model = (SModel) ProductModelHandlingPlugin.getInstance()
+						.getCurrentModel();
+				stories = (SBuildingStorey[]) model
+						.findAll(SBuildingStorey.class);
+				slabs = (SSlab[]) model.findAll(SSlab.class);
+				for (int i = 0; i < stories.length; i++) {
+					SortedSet sSlab = stories[i].getRelated(SContains.class,
+							true, SSlab.class);
+					Iterator itSlab = sSlab.iterator();
+					while (itSlab.hasNext()) {
+						Object oo = itSlab.next();
+						SSlab ss = (SSlab) oo;
+						SortedSet sOpening = ss.getRelated(SVoids.class, false,
+								SOpening.class);
+						Collection<Area> areas = new ArrayList<Area>(
+								sOpening.size());
+
+						Iterator itOpening = sOpening.iterator();
+						while (itOpening.hasNext()) {
+							Object oo2 = itOpening.next();
+							SOpening so = (SOpening) oo2;
+
+							componentArea = LayoutPlugin.getAreaCopy(so);
+							// LayoutPlugin.resizeArea(componentArea, 350);
+							if (componentArea != null) {
+								areas.add(componentArea);
+							}
+						}
+
+						// }
+						// SortedSet components =
+						// storey.getRelated(SContains.class, true,
+						// SEntity.class, Item.ANY_DEPTH);
+						//
+						// //Collection<Area> areas = new
+						// ArrayList<Area>(components.size());
+						// for (Iterator iterator = components.iterator();
+						// iterator
+						// .hasNext();) {
+						// IComponent component = (IComponent) iterator.next();
+						// ModelSearchTreePlugin.getInstance().getBounds(component,
+						// lower, upper);
+						// zMin = Math.min(zMin, lower.z);
+						// zMax = Math.max(zMax, upper.z);
+						// //Area componentArea = null;
+						//
+						// if (component instanceof SOpening) {
+						// componentArea = LayoutPlugin.getAreaCopy(component);
+						// // Increase the space area by 10cm to fill possible
+						// // gaps:
+						// LayoutPlugin.resizeArea(componentArea, 200);
+						// }
+						//
+						// if (componentArea != null) {
+						// areas.add(componentArea);
+						// }
+						// }
+
+						LayoutPlugin.areaUnion(storeyArea, areas);
+
+						// LayoutPlugin.resizeArea(storeyArea, -200);
+
+						ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
+						ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
+						LayoutPlugin
+								.areaToPolygons(storeyArea, polygons, holes);
+						perimeter = getCleanPolygons(polygons);
+						// this.holes = getCleanPolygons(holes);
 					}
 
-					if (componentArea != null) {
-						areas.add(componentArea);
-					}
 				}
-
-				LayoutPlugin.areaUnion(storeyArea, areas);
-
-				LayoutPlugin.resizeArea(storeyArea, -350);
-
-				ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
-				ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
-				LayoutPlugin.areaToPolygons(storeyArea, polygons, holes);
-				perimeter = getCleanPolygons(polygons);
-				this.holes = getCleanPolygons(holes);
 			}
 			return perimeter;
 		}
 
-		public Point[][] getHoles() {
-			if (holes == null) {
-				getPerimeter();
-			}
-			return holes;
-		}
+		// public Point[][] getHoles() {
+		// if (holes == null) {
+		// getPerimeter();
+		// }
+		// return holes;
+		// }
 
 		public Point[][] getCleanPolygons(ArrayList<Point3d[]> polygons) {
 			for (ListIterator<Point3d[]> iterator = polygons.listIterator(); iterator
@@ -401,18 +444,18 @@ public class OpeningTest {
 			return perimeterArea;
 		}
 
-		public ImmutableArea getHolesArea() {
-			if (holesArea == null) {
-				Area totalArea = new Area();
-				Point[][] perimeter = getHoles();
-				for (int i = 0; i < perimeter.length; i++) {
-					Area area = LayoutPlugin.polygonToArea(perimeter[i], 0);
-					totalArea.add(area);
-				}
-				holesArea = new ImmutableArea(totalArea);
-			}
-			return holesArea;
-		}
+		// public ImmutableArea getHolesArea() {
+		// if (holesArea == null) {
+		// Area totalArea = new Area();
+		// Point[][] perimeter = getHoles();
+		// for (int i = 0; i < perimeter.length; i++) {
+		// Area area = LayoutPlugin.polygonToArea(perimeter[i], 0);
+		// totalArea.add(area);
+		// }
+		// holesArea = new ImmutableArea(totalArea);
+		// }
+		// return holesArea;
+		// }
 
 		/**
 		 * Getter for the maximum Z value
