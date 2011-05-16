@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
+import javax.vecmath.Tuple3d;
 
 import com.solibri.sae.geometry.GeomUtils;
 import com.solibri.sae.geometry.GeomUtils2D;
@@ -101,13 +102,13 @@ public class OpeningTest {
 				this.storeys = storeys;
 			}
 		}
-		
+
 		private void swap(Comparable[] list, int a, int b) {
 			Comparable temp = storeys[a];
 			storeys[a] = storeys[b];
 			storeys[b] = (SBuildingStorey) temp;
 		}
-		
+
 		public void visualize(VisualizationInterface v) {
 
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
@@ -126,9 +127,10 @@ public class OpeningTest {
 				int minIndex = i;
 				Comparable min = storeys[i].bottomElevation.getDoubleValue();
 				for (int j = i + 1; j < storeys.length; j++) {
-					if (min.compareTo(storeys[j].bottomElevation.getDoubleValue()) > 0) // list[j].compareTo(min)
-																						// <
-																						// 0
+					if (min.compareTo(storeys[j].bottomElevation
+							.getDoubleValue()) > 0) // list[j].compareTo(min)
+													// <
+													// 0
 					{
 						min = storeys[j].bottomElevation.getDoubleValue();
 						minIndex = j;
@@ -136,7 +138,7 @@ public class OpeningTest {
 				}
 				swap(storeys, i, minIndex);
 			}
-			
+
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
 
@@ -175,7 +177,7 @@ public class OpeningTest {
 									+ Utils.round(
 											GeomUtils2D.length(p1, p2) * 0.001,
 											2);
-							//System.out.println(postNum2);
+							// System.out.println(postNum2);
 							if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
 								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
 								// System.out.println(GeomUtils2D.length(p1, p2)
@@ -207,18 +209,20 @@ public class OpeningTest {
 						// System.out.println("num: "+ (postNum2 -
 						// polygon.length));
 						postNum1.add(postNum2 - polygon.length);
-						System.out.print("Num " + num.get(n-1)+" :");
-						System.out.print("   Post:  " + postNum1.get(n-1));
-						//System.out.println("Length!:  " + fenseLength.get(n-1));
+						System.out.print("Num " + num.get(n - 1) + " :");
+						System.out.print("   Post:  " + postNum1.get(n - 1));
+						// System.out.println("Length!:  " +
+						// fenseLength.get(n-1));
 						fenseLength.add(fLength);
-						System.out.println("   Length:  " + fenseLength.get(n-1));
-						fLength=0.0;
-						postNum2=0;
+						System.out.println("   Length:  "
+								+ fenseLength.get(n - 1));
+						fLength = 0.0;
+						postNum2 = 0;
 					}
-					//fenseLength.add(fLength);
-					//System.out.println("Length!:  " + fenseLength.get(n-1));
-					//fLength=0.0;
-					//postNum2=0;
+					// fenseLength.add(fLength);
+					// System.out.println("Length!:  " + fenseLength.get(n-1));
+					// fLength=0.0;
+					// postNum2=0;
 				}
 
 				v.visualize(new LineArrayEntity(pointsBoundary, new Color3f(
@@ -240,7 +244,6 @@ public class OpeningTest {
 		}
 	}
 
-	
 	/*
 	 * FenseCalculator
 	 */
@@ -267,84 +270,44 @@ public class OpeningTest {
 		 */
 		public Point[][] getPerimeter() {
 			Area componentArea = null;
+			Area componentArea1 = null;
 			// Collection<Area> areas = new ArrayList<Area>(components.size());
 			if (perimeter == null) {
 				Area storeyArea = new Area();
 				Point3d upper = new Point3d();
 				Point3d lower = new Point3d();
-				// collect walls and spaces
 
-				// model = (SModel) ProductModelHandlingPlugin.getInstance()
-				// .getCurrentModel();
-				// stories = (SBuildingStorey[]) model
-				// .findAll(SBuildingStorey.class);
-				// slabs = (SSlab[]) model.findAll(SSlab.class);
-				// for (int i = 0; i < stories.length; i++) {
-				SortedSet sSlab = storey.getRelated(SContains.class, true,
-						SSlab.class);
-				Iterator itSlab = sSlab.iterator();
-				while (itSlab.hasNext()) {
-					Object oo = itSlab.next();
-					SSlab ss = (SSlab) oo;
-					SortedSet sOpening = ss.getRelated(SVoids.class, false,
-							SOpening.class);
-					Collection<Area> areas = new ArrayList<Area>(
-							sOpening.size());
+				ArrayList sOpening1 = SlabRules.openings;
+				Collection<Area> areas1 = new ArrayList<Area>(sOpening1.size());
+				Collection<Area> areas2 = new ArrayList<Area>(sOpening1.size());
+				// Iterator itOpening1 = sOpening1.iterator();
+				for (int i = 0; i <= sOpening1.size() - 1; i++) {
+					if (SlabRules.prevention.get(i) == "Guardrail System") {
+						componentArea = LayoutPlugin
+								.getAreaCopy((IComponent) sOpening1.get(i));
 
-					Iterator itOpening = sOpening.iterator();
-					while (itOpening.hasNext()) {
-						Object oo2 = itOpening.next();
-						SOpening so = (SOpening) oo2;
+					} else if (SlabRules.prevention.get(i) == "Cover") {
 
-						componentArea = LayoutPlugin.getAreaCopy(so);
-						// LayoutPlugin.resizeArea(componentArea, 350);
-						if (componentArea != null) {
-							areas.add(componentArea);
-						}
 					}
 
-					// }
-					// SortedSet components =
-					// storey.getRelated(SContains.class, true,
-					// SEntity.class, Item.ANY_DEPTH);
-					//
-					// //Collection<Area> areas = new
-					// ArrayList<Area>(components.size());
-					// for (Iterator iterator = components.iterator();
-					// iterator
-					// .hasNext();) {
-					// IComponent component = (IComponent) iterator.next();
-					// ModelSearchTreePlugin.getInstance().getBounds(component,
-					// lower, upper);
-					// zMin = Math.min(zMin, lower.z);
-					// zMax = Math.max(zMax, upper.z);
-					// //Area componentArea = null;
-					//
-					// if (component instanceof SOpening) {
-					// componentArea = LayoutPlugin.getAreaCopy(component);
-					// // Increase the space area by 10cm to fill possible
-					// // gaps:
-					// LayoutPlugin.resizeArea(componentArea, 130);
-					// }
-					//
-					// if (componentArea != null) {
-					// areas.add(componentArea);
-					// }
-					// }
+					if (componentArea != null) {
+						areas1.add(componentArea);
+					}
 
-					LayoutPlugin.areaUnion(storeyArea, areas);
-
-					// LayoutPlugin.resizeArea(storeyArea, -100);
-
-					ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
-					ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
-					LayoutPlugin.areaToPolygons(storeyArea, polygons, holes);
-					perimeter = getCleanPolygons(polygons);
-					// this.holes = getCleanPolygons(holes);
 				}
 
-				// }
+				LayoutPlugin.areaUnion(storeyArea, areas1);
+
+				// LayoutPlugin.resizeArea(storeyArea, -100);
+
+				ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
+				ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
+				LayoutPlugin.areaToPolygons(storeyArea, polygons, holes);
+				perimeter = getCleanPolygons(polygons);
+				// this.holes = getCleanPolygons(holes);
+
 			}
+
 			return perimeter;
 		}
 
