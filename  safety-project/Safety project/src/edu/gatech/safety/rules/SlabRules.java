@@ -35,7 +35,7 @@ public class SlabRules {
 	SSlab[] slabs;
 	SWall[] walls;
 	SRoof[] roofs;
-	public static SOpening[] openings;
+	public static ArrayList openings = new ArrayList();
 	public static ArrayList data = new ArrayList();
 	public static ArrayList no = new ArrayList();
 	public static ArrayList name = new ArrayList();
@@ -141,6 +141,7 @@ public class SlabRules {
 						Object oo2 = itOpening.next();
 						SOpening so = (SOpening) oo2;
 						// if (no.size() == 0) {
+						openings.add(so);
 						no.add(p);
 						System.out.print("\t- " + so.getDisplayName() + " : ");
 						name.add(so.getDisplayName());
@@ -161,7 +162,12 @@ public class SlabRules {
 								+ " mm");
 						height.add(Utils.m2f(so.height.getDoubleValue(), 2));
 						disToLower.add(disToL);
-						prevention.add("Guardrail System");
+						if (Utils.round(so.width.getDoubleValue(), 2) <= 1016.0
+								| Utils.round(so.height.getDoubleValue(), 2) <= 1016.0) {
+							prevention.add("Cover");
+						} else {
+							prevention.add("Guardrail System");
+						}
 						check.add(new Boolean(false));
 						// }
 					}
@@ -343,7 +349,6 @@ public class SlabRules {
 			}
 
 		}
-		
 
 		Visualizer.visualizeNothing(); // clear current model view
 		Visualizer.visualizeCol(visualizeObject); // visualize collected objects
