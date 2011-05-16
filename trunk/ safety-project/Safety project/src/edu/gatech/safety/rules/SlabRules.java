@@ -343,14 +343,7 @@ public class SlabRules {
 			}
 
 		}
-		// System.out.println(name.size());
-		// System.out.println("Slabs *****");
-		// for (int i =0; i < slabs.length; i++) {
-		// visualizeObject.add(slabs[i]);
-		// System.out.println(slabs[i].bottomArea.getDoubleValue() + " | "
-		// + slabs[i].areaOfOpenings.getDoubleValue() );
-		// }
-		// System.out.println("Slabs end *****");
+		
 
 		Visualizer.visualizeNothing(); // clear current model view
 		Visualizer.visualizeCol(visualizeObject); // visualize collected objects
