@@ -101,200 +101,146 @@ public class OpeningTest {
 				this.storeys = storeys;
 			}
 		}
-
+		
+		private void swap(Comparable[] list, int a, int b) {
+			Comparable temp = storeys[a];
+			storeys[a] = storeys[b];
+			storeys[b] = (SBuildingStorey) temp;
+		}
+		
 		public void visualize(VisualizationInterface v) {
 
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
-			ArrayList<Point> pointsHoles = new ArrayList<Point>();
+			// ArrayList<Point> pointsHoles = new ArrayList<Point>();
+			ArrayList num = new ArrayList();
+			int n = 0;
 			double fenseHeight = 400.0; // 1m height of fense
-			double fenseLength = 0.0;
-			double holeLength = 0.0;
+			ArrayList fenseLength = new ArrayList();
+			double fLength = 0.0;
 			String holeNums = "";
 			String edgeNums = "";
-			int postNum1 = 0;
+			ArrayList postNum1 = new ArrayList();
 			int postNum2 = 0;
 
-			// ## Visualize floor boundary
-			for (int i = 0; i < storeys.length ; i++) {
-
-				// if (storeys[i].bottomElevation.getDoubleValue() > 2000) { //
-				// 2m
-				// height
-				FenseCalculator calculator = new FenseCalculator(storeys[i]);
-
-				ImmutableArea aa = null;
-				aa = calculator.getPerimeterArea();
-
-				// ImmutableArea bb = null;
-				// bb = calculator.getHolesArea();
-
-				ArrayList polygons = new ArrayList();
-				LayoutPlugin.areaToPolygons(aa, polygons, null);
-
-				// ArrayList polygons2 = new ArrayList();
-				// LayoutPlugin.areaToPolygons(bb, polygons2, polygons2);
-
-				for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
-					Point[] polygon = (Point[]) iter2.next();
-					int pointCount = 0;
-					for (int j = 0; j < polygon.length; j++) {
-						Point p1 = new Point(polygon[j]);
-						Point p2 = new Point(polygon[(j + 1) % polygon.length]);
-						p1.z = p2.z = storeys[i].bottomElevation
-								.getDoubleValue() + fenseHeight;
-						pointsBoundary.add(p1);
-						pointsBoundary.add(p2);
-
-						edgeNums += ", "
-								+ Utils.round(
-										GeomUtils2D.length(p1, p2) * 0.001, 2);
-
-						if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
-							postNum1 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
-						} else {
-							postNum1 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
-						}
-						fenseLength += GeomUtils2D.length(p1, p2) * 0.001;
-
-						Point p3 = new Point(polygon[j]);
-						Point p4 = new Point(polygon[(j + 1) % polygon.length]);
-						p3.z = p4.z = storeys[i].bottomElevation
-								.getDoubleValue() + fenseHeight * 2;
-						pointsBoundary.add(p3);
-						pointsBoundary.add(p4);
-
-						Point p5 = new Point(polygon[j]);
-						Point p6 = new Point(polygon[(j + 1) % polygon.length]);
-						p5.z = p6.z = storeys[i].bottomElevation
-								.getDoubleValue();
-						pointsBoundary.add(p5);
-						pointsBoundary.add(p6);
+			for (int i = 0; i < storeys.length; i++) {
+				int minIndex = i;
+				Comparable min = storeys[i].bottomElevation.getDoubleValue();
+				for (int j = i + 1; j < storeys.length; j++) {
+					if (min.compareTo(storeys[j].bottomElevation.getDoubleValue()) > 0) // list[j].compareTo(min)
+																						// <
+																						// 0
+					{
+						min = storeys[j].bottomElevation.getDoubleValue();
+						minIndex = j;
 					}
-					postNum1 = postNum1 - polygon.length;
-					// System.out.println("Post for edge: " + postNum1);
 				}
+				swap(storeys, i, minIndex);
+			}
+			
+			// ## Visualize floor boundary
+			for (int i = 0; i < storeys.length; i++) {
 
-				// for (Iterator iter2 = polygons2.iterator(); iter2.hasNext();)
-				// {
-				// Point[] polygon = (Point[]) iter2.next();
-				// // Vector<Point> vector = new
-				// // Vector<Point>(Arrays.asList(polygon));
-				// // double angleEpsilon = Math.toRadians(15);
-				// // Point3d[] polygonFiltered =
-				// // GeomUtils.filterPolyline(vector.toArray(new
-				// // Point[vector.size()]), 100, angleEpsilon);
-				// int pointCount = 0;
-				// // ## Create railing for big holes
-				// // if (polygon.length == 4) {
-				// Point p1 = new Point(polygon[0]);
-				// Point p2 = new Point(polygon[1]);
-				// Point p3 = new Point(polygon[2]);
-				// Point p4 = new Point(polygon[3]);
-				// Point p5 = new Point(polygon[0]);
-				// Point p6 = new Point(polygon[1]);
-				// Point p7 = new Point(polygon[2]);
-				// Point p8 = new Point(polygon[3]);
-				// Point p9 = new Point(polygon[0]);
-				// Point p10 = new Point(polygon[1]);
-				// Point p11 = new Point(polygon[2]);
-				// Point p12 = new Point(polygon[3]);
-				//
-				// if (p1.distanceL1(p2) >= 1000 | p2.distanceL1(p3) >= 1000) {
-				// p1.z = p2.z = p3.z = p4.z = storeys[i].bottomElevation
-				// .getDoubleValue();
-				// pointsHoles.add(p1);
-				// pointsHoles.add(p2);
-				// pointsHoles.add(p3);
-				// pointsHoles.add(p4);
-				// pointsHoles.add(p2);
-				// pointsHoles.add(p3);
-				// pointsHoles.add(p4);
-				// pointsHoles.add(p1);
-				// if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
-				// postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
-				// } else {
-				// postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
-				// }
-				// holeLength += GeomUtils2D.length(p1, p2) * 0.001;
-				// // System.out.println(postNum2);
-				//
-				// if (GeomUtils2D.length(p2, p3) * 0.001 % 2.4 > 0) {
-				// postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 2);
-				// } else {
-				// postNum2 += (GeomUtils2D.length(p2, p3) * 0.001 / 2.4 + 1);
-				// }
-				// holeLength += GeomUtils2D.length(p2, p3) * 0.001;
-				// // System.out.println(postNum2);
-				//
-				// if (GeomUtils2D.length(p3, p4) * 0.001 % 2.4 > 0) {
-				// postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 2);
-				// } else {
-				// postNum2 += (GeomUtils2D.length(p3, p4) * 0.001 / 2.4 + 1);
-				// }
-				// holeLength += GeomUtils2D.length(p3, p4) * 0.001;
-				// // System.out.println(postNum2);
-				//
-				// if (GeomUtils2D.length(p4, p1) * 0.001 % 2.4 > 0) {
-				// postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 2);
-				// } else {
-				// postNum2 += (GeomUtils2D.length(p4, p1) * 0.001 / 2.4 + 1);
-				// }
-				// holeLength += GeomUtils2D.length(p4, p1) * 0.001;
-				// // System.out.println(postNum2);
-				//
-				// p5.z = p6.z = p7.z = p8.z = storeys[i].bottomElevation
-				// .getDoubleValue() + fenseHeight;
-				//
-				// pointsHoles.add(p5);
-				// pointsHoles.add(p6);
-				// pointsHoles.add(p7);
-				// pointsHoles.add(p8);
-				// pointsHoles.add(p6);
-				// pointsHoles.add(p7);
-				// pointsHoles.add(p8);
-				// pointsHoles.add(p5);
-				//
-				// p9.z = p10.z = p11.z = p12.z = storeys[i].bottomElevation
-				// .getDoubleValue() + fenseHeight * 2;
-				//
-				// pointsHoles.add(p9);
-				// pointsHoles.add(p10);
-				// pointsHoles.add(p11);
-				// pointsHoles.add(p12);
-				// pointsHoles.add(p10);
-				// pointsHoles.add(p11);
-				// pointsHoles.add(p12);
-				// pointsHoles.add(p9);
-				//
-				// // ## Make cover for small hole
-				// } else {
-				//
-				// // }
-				// }
-				// postNum2 = postNum2 - polygon.length;
-				// }
+				if (storeys[i].bottomElevation.getDoubleValue() > 2000) { //
+					// 2m
+					// height
+					FenseCalculator calculator = new FenseCalculator(storeys[i]);
+
+					ImmutableArea aa = null;
+					aa = calculator.getPerimeterArea();
+
+					// ImmutableArea bb = null;
+					// bb = calculator.getHolesArea();
+
+					ArrayList polygons = new ArrayList();
+					LayoutPlugin.areaToPolygons(aa, polygons, null);
+
+					// ArrayList polygons2 = new ArrayList();
+					// LayoutPlugin.areaToPolygons(bb, polygons2, polygons2);
+
+					for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
+						n++;
+						num.add(n);
+						Point[] polygon = (Point[]) iter2.next();
+						int pointCount = 0;
+						for (int j = 0; j < polygon.length; j++) {
+							Point p1 = new Point(polygon[j]);
+							Point p2 = new Point(polygon[(j + 1)
+									% polygon.length]);
+							p1.z = p2.z = storeys[i].bottomElevation
+									.getDoubleValue() + fenseHeight;
+							pointsBoundary.add(p1);
+							pointsBoundary.add(p2);
+
+							edgeNums += ", "
+									+ Utils.round(
+											GeomUtils2D.length(p1, p2) * 0.001,
+											2);
+							//System.out.println(postNum2);
+							if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
+								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
+								// System.out.println(GeomUtils2D.length(p1, p2)
+								// * 0.001 / 2.4 + 2);
+							} else {
+								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
+								// System.out.println(GeomUtils2D.length(p1, p2)
+								// * 0.001 / 2.4 + 1);
+							}
+							// System.out.println(postNum2);
+							fLength += GeomUtils2D.length(p1, p2) * 0.001;
+
+							Point p3 = new Point(polygon[j]);
+							Point p4 = new Point(polygon[(j + 1)
+									% polygon.length]);
+							p3.z = p4.z = storeys[i].bottomElevation
+									.getDoubleValue() + fenseHeight * 2;
+							pointsBoundary.add(p3);
+							pointsBoundary.add(p4);
+
+							Point p5 = new Point(polygon[j]);
+							Point p6 = new Point(polygon[(j + 1)
+									% polygon.length]);
+							p5.z = p6.z = storeys[i].bottomElevation
+									.getDoubleValue();
+							pointsBoundary.add(p5);
+							pointsBoundary.add(p6);
+						}
+						// System.out.println("num: "+ (postNum2 -
+						// polygon.length));
+						postNum1.add(postNum2 - polygon.length);
+						System.out.print("Num " + num.get(n-1)+" :");
+						System.out.print("   Post:  " + postNum1.get(n-1));
+						//System.out.println("Length!:  " + fenseLength.get(n-1));
+						fenseLength.add(fLength);
+						System.out.println("   Length:  " + fenseLength.get(n-1));
+						fLength=0.0;
+						postNum2=0;
+					}
+					//fenseLength.add(fLength);
+					//System.out.println("Length!:  " + fenseLength.get(n-1));
+					//fLength=0.0;
+					//postNum2=0;
+				}
 
 				v.visualize(new LineArrayEntity(pointsBoundary, new Color3f(
 						Color.blue), 0.0f, 2.0f));
-//				v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
-//						Color.blue), 0.0f, 2.0f));
+				// v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
+				// Color.blue), 0.0f, 2.0f));
 
 				v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
 						Color.red), 0.0f, 6.0f));
-//				v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
-//						Color.red), 0.0f, 6.0f));
+				// v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
+				// Color.red), 0.0f, 6.0f));
 
 			}
 
-			System.out.println("Post for edge: " + postNum1);
-			System.out.println("Handrail & Midrail & Toeboard for edge: "
-					+ Utils.round(fenseLength, 2) + " Meters");
-			// System.out.println("Post for opening: " + postNum2);
+			// System.out.println("Post for opening: " + postNum1);
 			// System.out.println("Handrail & Midrail & Toeboard for opening: "
-			// + Utils.round(holeLength, 2) + " Meters");
+			// + Utils.round(fenseLength, 2) + " Meters");
+
 		}
 	}
 
+	
 	/*
 	 * FenseCalculator
 	 */
@@ -378,7 +324,7 @@ public class OpeningTest {
 					// componentArea = LayoutPlugin.getAreaCopy(component);
 					// // Increase the space area by 10cm to fill possible
 					// // gaps:
-					// LayoutPlugin.resizeArea(componentArea, 200);
+					// LayoutPlugin.resizeArea(componentArea, 130);
 					// }
 					//
 					// if (componentArea != null) {
@@ -388,7 +334,7 @@ public class OpeningTest {
 
 					LayoutPlugin.areaUnion(storeyArea, areas);
 
-					// LayoutPlugin.resizeArea(storeyArea, -200);
+					// LayoutPlugin.resizeArea(storeyArea, -100);
 
 					ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
 					ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
