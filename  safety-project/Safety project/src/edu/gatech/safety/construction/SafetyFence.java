@@ -42,6 +42,7 @@ import com.solibri.saf.plugins.visualizationplugin.entities.LineArrayEntity;
 import com.solibri.saf.plugins.visualizationplugin.entities.PointArrayEntity;
 import com.solibri.sai.pmi.IComponent;
 
+import edu.gatech.safety.rules.OpeningTest;
 import edu.gatech.safety.utils.Utils;
 
 /**
@@ -67,6 +68,8 @@ public class SafetyFence {
 	public void run() {
 		VisualizationPlugin.getInstance().getVisualizer()
 				.visualize(new FenceVisulizationTask(null));
+		OpeningTest ot = new OpeningTest();
+		ot.run();
 	}
 
 	public void runByStoreys(SBuildingStorey[] storeys) {
