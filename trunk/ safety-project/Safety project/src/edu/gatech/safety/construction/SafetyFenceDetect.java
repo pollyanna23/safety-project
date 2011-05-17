@@ -141,6 +141,7 @@ public class SafetyFenceDetect {
 					for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
 						n++;
 						Point[] polygon = (Point[]) iter2.next();
+						Point intersection = new Point();
 						for (int j = 0; j < polygon.length; j++) {
 							Point p1 = new Point(polygon[j]);
 							Point p2 = new Point(polygon[(j + 1) % polygon.length]);
@@ -177,19 +178,20 @@ public class SafetyFenceDetect {
 					// intersection
 					Point intersection = new Point();
 					for (int k=0; k < pointsBoundary.size(); k++) {
-						Point vertexP1 = (Point) pointsBoundary.get(k);
+						Point p1 = (Point) pointsBoundary.get(k);
 						for (int j = k + 1; j < pointsBoundary.size();j++) {
-							Point vertexP2 = (Point) pointsBoundary.get(j);
+							Point p2 = (Point) pointsBoundary.get(j);
 							for (int m = 0; m < pointsWall.size();) {
-								 Point edgeP1 = (Point) pointsWall.get(m++);
-			                     Point edgeP2 = (Point) pointsWall.get(m++);
-			                     if (GeomUtils2D.segmentSegmentIntersection(vertexP1, vertexP2, edgeP1, edgeP2, intersection)) {
-			                    	 pointsIntersect.add(intersection);
-			                     }	                     
+								Point p3 = (Point) pointsWall.get(m++);
+			                    Point p4 = (Point) pointsWall.get(m++);
+			                    if (GeomUtils2D.segmentSegmentIntersection(p1, p2, p3, p4, intersection)) {
+			                    	pointsIntersect.add(intersection);
+			                    }	                     
 							}
 						}
 					}
 					
+										
 					
 					
 					
@@ -200,7 +202,7 @@ public class SafetyFenceDetect {
 					v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
 //					v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
 					
-//					v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
+					v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
 					
 				}
 			}
