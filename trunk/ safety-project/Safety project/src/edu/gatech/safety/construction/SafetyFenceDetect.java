@@ -121,7 +121,8 @@ public class SafetyFenceDetect {
 			}
 
 			
-			
+			Point[] perimeterPoly;
+			Point[] wallPoly;
 			for (int i = 0; i < storeys.length; i++) {
 
 				if (storeys[i].bottomElevation.getDoubleValue() >= 0) {
@@ -140,11 +141,11 @@ public class SafetyFenceDetect {
 					// points for boundary
 					for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
 						n++;
-						Point[] polygon = (Point[]) iter2.next();
+						perimeterPoly = (Point[]) iter2.next();
 						Point intersection = new Point();
-						for (int j = 0; j < polygon.length; j++) {
-							Point p1 = new Point(polygon[j]);
-							Point p2 = new Point(polygon[(j + 1) % polygon.length]);
+						for (int j = 0; j < perimeterPoly.length; j++) {
+							Point p1 = new Point(perimeterPoly[j]);
+							Point p2 = new Point(perimeterPoly[(j + 1) % perimeterPoly.length]);
 							p1.z = p2.z = storeys[i].bottomElevation.getDoubleValue();
 							pointsBoundary.add(p1);
 							pointsBoundary.add(p2);
@@ -159,20 +160,16 @@ public class SafetyFenceDetect {
 					// points for walls
 					for (Iterator iter2 = polygonsWall.iterator(); iter2.hasNext();) {
 						
-						Point[] polygon = (Point[]) iter2.next();
-						for (int j = 0; j < polygon.length; j++) {
-							Point p1 = new Point(polygon[j]);
-							Point p2 = new Point(polygon[(j + 1) % polygon.length]);
+						wallPoly = (Point[]) iter2.next();
+						for (int j = 0; j < wallPoly.length; j++) {
+							Point p1 = new Point(wallPoly[j]);
+							Point p2 = new Point(wallPoly[(j + 1) % wallPoly.length]);
 							p1.z = p2.z = storeys[i].bottomElevation.getDoubleValue();
 							pointsWall.add(p1);
 							pointsWall.add(p2);
 
 						}
-						
 					}
-					
-										
-					
 					
 					
 					// intersection
@@ -192,8 +189,6 @@ public class SafetyFenceDetect {
 					}
 					
 										
-					
-					
 					
 					// visualize perimeter polygon
 					v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
