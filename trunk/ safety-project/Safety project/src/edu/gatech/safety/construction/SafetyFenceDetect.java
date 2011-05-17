@@ -103,8 +103,8 @@ public class SafetyFenceDetect {
 			ArrayList<Point> pointsIntersect = new ArrayList<Point>();
 			
 			double fenseHeight = 400.0; // 1m height of fense
-			double fLength = 0.0;
-			// double fenseLength = 0.0;
+			double lengthBoundary = 0.0;
+			double lengthFence = 0.0;
 			
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
@@ -150,7 +150,7 @@ public class SafetyFenceDetect {
 							pointsBoundary.add(p1);
 							pointsBoundary.add(p2);
 
-							fLength += GeomUtils2D.length(p1, p2) * 0.001;
+							lengthBoundary += GeomUtils2D.length(p1, p2) * 0.001;
 
 						}
 						
@@ -173,6 +173,10 @@ public class SafetyFenceDetect {
 					
 					
 					// intersection between wall and perimeter polygons
+					Point[] wallPolygons = new Point[pointsWall.size()];
+					pointsWall.toArray(wallPolygons);
+					Point intersectionStart = new Point();
+					
 					for (int k = 0; k < pointsBoundary.size();) {
 						Point p1 = (Point) pointsBoundary.get(k++);
 						Point p2 = (Point) pointsBoundary.get(k++);
@@ -181,14 +185,26 @@ public class SafetyFenceDetect {
 		                    Point p4 = (Point) pointsWall.get(m++);
 		                    Point intersection = new Point();
 		                    if (GeomUtils2D.segmentSegmentIntersection(p1, p2, p3, p4, intersection)) {
-		                    	pointsIntersect.add(intersection);
-		                    }	                     
+		                    	if (! pointsIntersect.contains(intersection)) {
+		                    		pointsIntersect.add(intersection);
+		                    	}
+		                    }
+		                    if (! GeomUtils2D.pointInPolygon(p1, wallPolygons)) {
+		                    	pointsIntersect.add(p1);
+		                    }
+		                    if (! GeomUtils2D.pointInPolygon(p2, wallPolygons)) {
+		                    	pointsIntersect.add(p2);
+		                    }
+		                    
 						}
 						
 					}
 					
-					System.out.println(pointsIntersect.size());
+//					for (int r = 0; r < pointsIntersect)
 					
+					System.out.println(pointsIntersect.size());
+					System.out.println("lengthBoundary = " + lengthBoundary);
+					System.out.println("lengthFence = " + lengthFence);
 										
 					
 					// visualize perimeter polygon
@@ -198,6 +214,7 @@ public class SafetyFenceDetect {
 					v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
 //					v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
 					
+					v.visualize(new LineArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
 					v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
 					
 				}
@@ -264,7 +281,7 @@ public class SafetyFenceDetect {
 
 				LayoutPlugin.areaUnion(storeyArea, areas);
 
-				LayoutPlugin.resizeArea(storeyArea, -350);
+				LayoutPlugin.resizeArea(storeyArea, -200);
 
 				ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
 				ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
