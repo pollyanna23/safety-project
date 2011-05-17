@@ -175,7 +175,6 @@ public class SafetyFenceDetect {
 					// intersection between wall and perimeter polygons
 					Point[] wallPolygons = new Point[pointsWall.size()];
 					pointsWall.toArray(wallPolygons);
-					Point intersectionStart = new Point();
 					
 					for (int k = 0; k < pointsBoundary.size();) {
 						Point p1 = (Point) pointsBoundary.get(k++);
@@ -204,11 +203,14 @@ public class SafetyFenceDetect {
 					}
 					
 					// calculate fence's length
-					for (int r = 0; r < pointsIntersect.size();){
-						Point p1 = (Point) pointsIntersect.get(r++);
-						Point p2 = (Point) pointsIntersect.get(r++);
-						lengthFence += GeomUtils2D.length(p1, p2) * 0.001;
-					}
+					try {
+						for (int r = 0; r < pointsIntersect.size();){
+							Point p1 = (Point) pointsIntersect.get(r++);
+							Point p2 = (Point) pointsIntersect.get(r++);
+							lengthFence += GeomUtils2D.length(p1, p2) * 0.001;
+						}
+					} catch (Exception ex) {}
+					
 					
 					System.out.println("number of points for fences =" + pointsIntersect.size());
 					System.out.println("lengthBoundary = " + lengthBoundary);
@@ -216,14 +218,17 @@ public class SafetyFenceDetect {
 										
 					
 					// visualize perimeter polygon
-					v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
-//					v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
-					
-					v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
-//					v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
-					
-					v.visualize(new LineArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
-					v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
+					try {
+						v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
+//						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
+						
+						v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
+//						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
+						
+						v.visualize(new LineArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
+						v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
+					} catch (Exception ex) {}
+
 					
 				}
 			}
