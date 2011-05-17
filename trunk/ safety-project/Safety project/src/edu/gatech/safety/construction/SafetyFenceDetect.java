@@ -183,26 +183,34 @@ public class SafetyFenceDetect {
 						for (int m = 0; m < pointsWall.size();) {
 							Point p3 = (Point) pointsWall.get(m++);
 		                    Point p4 = (Point) pointsWall.get(m++);
+		                    
+		                    // detect intersection points 
 		                    Point intersection = new Point();
 		                    if (GeomUtils2D.segmentSegmentIntersection(p1, p2, p3, p4, intersection)) {
 		                    	if (! pointsIntersect.contains(intersection)) {
 		                    		pointsIntersect.add(intersection);
 		                    	}
 		                    }
-		                    if (! GeomUtils2D.pointInPolygon(p1, wallPolygons)) {
-		                    	pointsIntersect.add(p1);
-		                    }
-		                    if (! GeomUtils2D.pointInPolygon(p2, wallPolygons)) {
-		                    	pointsIntersect.add(p2);
-		                    }
-		                    
 						}
+						
+						// add boundary points that are located out of wall polygons (e.g. corners)
+	                    if (! GeomUtils2D.pointInPolygon(p1, wallPolygons)) {
+	                    		pointsIntersect.add(p1);
+	                    }
+	                    if (! GeomUtils2D.pointInPolygon(p2, wallPolygons)) {
+	                    		pointsIntersect.add(p2);
+	                    }
 						
 					}
 					
-//					for (int r = 0; r < pointsIntersect)
+					// calculate fence's length
+					for (int r = 0; r < pointsIntersect.size();){
+						Point p1 = (Point) pointsIntersect.get(r++);
+						Point p2 = (Point) pointsIntersect.get(r++);
+						lengthFence += GeomUtils2D.length(p1, p2) * 0.001;
+					}
 					
-					System.out.println(pointsIntersect.size());
+					System.out.println("number of points for fences =" + pointsIntersect.size());
 					System.out.println("lengthBoundary = " + lengthBoundary);
 					System.out.println("lengthFence = " + lengthFence);
 										
