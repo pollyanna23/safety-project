@@ -83,6 +83,7 @@ import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
 import edu.gatech.safety.construction.SafetyFence;
+import edu.gatech.safety.construction.SafetyFenceDetect;
 import edu.gatech.safety.construction.WallFence;
 import edu.gatech.safety.rules.ConstructionProcess;
 import edu.gatech.safety.rules.OpeningTest;
@@ -104,10 +105,10 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 	private JPanel objectTabTopPanel, processButtons, processTabPanel1,
 			processTabPanel, processBar, topPanel, bottomPanel, openingPanel;
-	private JSplitPane splitPane1, splitPane2;
+	private JSplitPane splitPane1, splitPane2, splitPane3;
 
 	private JButton S_open, S_run, S_run1, S_opening, S_wOpening, S_slab,
-			S_wall, Btn_others, P_open, P_generate;
+			S_wall, Btn_others, P_open, P_generate, detect;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	public static JTextArea statusView = new JTextArea();
 
@@ -152,7 +153,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Construction Objects", null, drawTab1(), null);
 		tabbedPane.addTab("Construction Process", null, drawTab2(), null);
-		tabbedPane.addTab("Others", null, drawTab3(), null);
+		tabbedPane.addTab("Safety Objects", null, drawTab3(), null);
 
 		tabbedPane.setSelectedIndex(0);
 		tabbedPane.setToolTipTextAt(0, new String(
@@ -388,46 +389,57 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	}
 
 	// others tab
-	private JPanel drawTab3() {
-
-		Border empty = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-		// Border loweredetched =
-		// BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-
-		Btn_others = new JButton("Test",
-				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
-		Btn_others.addActionListener(this);
-		Btn_others.setToolTipText("Test.");
-
-		JPanel panelButtons = new JPanel(); // button panel
-		panelButtons.add(Btn_others);
-		panelButtons.setLayout(new FlowLayout());
-
-		JTextArea co = new JTextArea(5, 20);
-		co.setMargin(new Insets(5, 5, 5, 5));
-		co.setEditable(false);
-		co.setFont(font);
-		co.setPreferredSize(new Dimension(320, 130));
-		co.setOpaque(false);
-		co.setBorder(empty);
-
-		co.append("This is a test panel for others." + newline);
-
-		JPanel panelOthers = new JPanel(); // use FlowLayout
-		panelOthers.add(panelButtons, BorderLayout.PAGE_START);
-		panelOthers.add(co, BorderLayout.PAGE_END);
-		panelOthers.setOpaque(true);
-
-		return panelOthers;
+	private JSplitPane drawTab3() {
+		if (splitPane3 == null) {
+			JPanel topPanel = new JPanel(new BorderLayout());
+			topPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			topPanel.add(drawThirdPanel1(), BorderLayout.NORTH);
+			topPanel.add(drawThirdPanel2(), BorderLayout.CENTER);
+			splitPane3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+			splitPane3.setOneTouchExpandable(false);
+			splitPane3.setTopComponent(topPanel);
+		}
+		return splitPane3;
 	}
+	
+	private JPanel drawThirdPanel1() {
+		JPanel p1 = new JPanel(new BorderLayout());
+		p1.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+		p1.add(drawButtons3(), BorderLayout.CENTER);
+		return p1;
+	}
+	
+	private JPanel drawButtons3() {
+		detect = new JButton("Detect Protection Railing Places",
+				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		detect.addActionListener(this);
+		detect.setToolTipText("Detect Protection Railing Places");
+		
+		JPanel panelTop2 = new JPanel(); // button panel
+		panelTop2.add(detect);
+		
+		JPanel pp = new JPanel(); // main panel
+		pp.setLayout(new FlowLayout()); // border layout
+		pp.add(panelTop2);
+
+		return pp;
+	}
+	
+	private JPanel drawThirdPanel2() {
+		JPanel p1 = new JPanel(new BorderLayout());
+		return p1;
+	}
+	
+	
+	
+	
+	
 
 	/**
 	 * Actions
 	 */
-	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -546,6 +558,14 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		} else if (e.getSource() == b10) {
 			cp.getProcess(10);
 
+			
+			
+		} else if (e.getSource() == detect) {	
+			SafetyFenceDetect sfd = new SafetyFenceDetect();
+			sfd.run();
+			
+			
+			
 		}
 	}
 
