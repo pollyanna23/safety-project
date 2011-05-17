@@ -172,21 +172,22 @@ public class SafetyFenceDetect {
 					}
 					
 					
-					// intersection
-					Point intersection = new Point();
-					for (int k=0; k < pointsBoundary.size(); k++) {
-						Point p1 = (Point) pointsBoundary.get(k);
-						for (int j = k + 1; j < pointsBoundary.size();j++) {
-							Point p2 = (Point) pointsBoundary.get(j);
-							for (int m = 0; m < pointsWall.size();) {
-								Point p3 = (Point) pointsWall.get(m++);
-			                    Point p4 = (Point) pointsWall.get(m++);
-			                    if (GeomUtils2D.segmentSegmentIntersection(p1, p2, p3, p4, intersection)) {
-			                    	pointsIntersect.add(intersection);
-			                    }	                     
-							}
+					// intersection between wall and perimeter polygons
+					for (int k = 0; k < pointsBoundary.size();) {
+						Point p1 = (Point) pointsBoundary.get(k++);
+						Point p2 = (Point) pointsBoundary.get(k++);
+						for (int m = 0; m < pointsWall.size();) {
+							Point p3 = (Point) pointsWall.get(m++);
+		                    Point p4 = (Point) pointsWall.get(m++);
+		                    Point intersection = new Point();
+		                    if (GeomUtils2D.segmentSegmentIntersection(p1, p2, p3, p4, intersection)) {
+		                    	pointsIntersect.add(intersection);
+		                    }	                     
 						}
+						
 					}
+					
+					System.out.println(pointsIntersect.size());
 					
 										
 					
