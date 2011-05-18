@@ -45,6 +45,9 @@ public class SlabRules {
 	public static ArrayList area = new ArrayList();
 	public static ArrayList disToLower = new ArrayList();
 	public static ArrayList prevention = new ArrayList();
+	public static ArrayList post = new ArrayList();
+	public static ArrayList rail = new ArrayList();
+	
 	public static ArrayList check = new ArrayList();
 
 	public static ArrayList visualizeObject = new ArrayList();
