@@ -208,6 +208,10 @@ public class SafetyFenceDetect {
 							Point p1 = (Point) pointsIntersect.get(r++);
 							Point p2 = (Point) pointsIntersect.get(r++);
 							lengthFence += GeomUtils2D.length(p1, p2) * 0.001;
+							
+							p1.z = p1.getZ() + 500.0;
+							p2.z = p2.getZ() + 500.0;
+							
 						}
 					} catch (Exception ex) {}
 					
@@ -219,14 +223,14 @@ public class SafetyFenceDetect {
 					
 					// visualize perimeter polygon
 					try {
-						v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
-						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
+//						v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
+//						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
 						
-						v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
-						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
+//						v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
+//						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
 						
 						v.visualize(new LineArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
-						v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
+//						v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
 					} catch (Exception ex) {}
 
 					
