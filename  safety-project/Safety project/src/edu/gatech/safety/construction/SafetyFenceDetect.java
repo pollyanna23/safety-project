@@ -212,7 +212,7 @@ public class SafetyFenceDetect {
 					} catch (Exception ex) {}
 					
 					
-					System.out.println("number of points for fences =" + pointsIntersect.size());
+					System.out.println("number of points for fences = " + pointsIntersect.size());
 					System.out.println("lengthBoundary = " + lengthBoundary);
 					System.out.println("lengthFence = " + lengthFence);
 										
@@ -220,10 +220,10 @@ public class SafetyFenceDetect {
 					// visualize perimeter polygon
 					try {
 						v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
-//						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
+						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
 						
 						v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
-//						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
+						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
 						
 						v.visualize(new LineArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
 						v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
