@@ -142,8 +142,8 @@ public class OpeningTest {
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
 
-				if (storeys[i].bottomElevation.getDoubleValue() > 2000) { //
-					// 2m
+				if (storeys[i].bottomElevation.getDoubleValue() > 1000) { //
+					// 1m
 					// height
 					FenseCalculator calculator = new FenseCalculator(storeys[i]);
 
@@ -272,6 +272,8 @@ public class OpeningTest {
 		 * @return the perimeter
 		 */
 		public Point[][] getPerimeter() {
+			ArrayList sOpeningSub = new ArrayList();
+			ArrayList sPreventionSub = new ArrayList();
 			Area componentArea = null;
 			Area componentArea1 = null;
 			// Collection<Area> areas = new ArrayList<Area>(components.size());
@@ -281,15 +283,30 @@ public class OpeningTest {
 				Point3d lower = new Point3d();
 
 				ArrayList sOpening1 = SlabRules.openings;
-				Collection<Area> areas1 = new ArrayList<Area>(sOpening1.size());
-				Collection<Area> areas2 = new ArrayList<Area>(sOpening1.size());
+				for (int i = 0; i < sOpening1.size(); i++) {
+					SOpening so = new SOpening();
+					so = (SOpening) sOpening1.get(i);
+					System.out.println("Opening level"
+							+ so.getContainer().getDisplayName());
+					System.out.println("Slab level" + storey.getDisplayName());
+					if (so.getContainer().getDisplayName()
+							.equals(storey.getDisplayName())) {
+						sOpeningSub.add(so);
+						sPreventionSub.add(SlabRules.prevention.get(i));
+					}
+				}
+				System.out.println("HOLE!" + sOpeningSub.size());
+				Collection<Area> areas1 = new ArrayList<Area>(
+						sOpeningSub.size());
+				// Collection<Area> areas2 = new
+				// ArrayList<Area>(sOpeningSub.size());
 				// Iterator itOpening1 = sOpening1.iterator();
-				for (int i = 0; i <= sOpening1.size() - 1; i++) {
-					if (SlabRules.prevention.get(i) == "Guardrail System") {
+				for (int i = 0; i < sOpeningSub.size(); i++) {
+					if (sPreventionSub.get(i) == "Guardrail System") {
 						componentArea = LayoutPlugin
-								.getAreaCopy((IComponent) sOpening1.get(i));
+								.getAreaCopy((IComponent) sOpeningSub.get(i));
 
-					} else if (SlabRules.prevention.get(i) == "Cover") {
+					} else if (sPreventionSub.get(i) == "Cover") {
 
 					}
 
