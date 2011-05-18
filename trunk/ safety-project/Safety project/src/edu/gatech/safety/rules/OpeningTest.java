@@ -209,7 +209,10 @@ public class OpeningTest {
 						// System.out.println("num: "+ (postNum2 -
 						// polygon.length));
 						postNum1.add(postNum2 - polygon.length);
-						System.out.print("Num " + num.get(n - 1) + " :");
+						// SlabRules.post.add(postNum1.get(n - 1));
+						// SlabRules.rail.add(fenseLength.get(n - 1));
+						System.out.print("Opening: Num " + num.get(n - 1)
+								+ " :");
 						System.out.print("   Post:  " + postNum1.get(n - 1));
 						// System.out.println("Length!:  " +
 						// fenseLength.get(n-1));
@@ -230,8 +233,8 @@ public class OpeningTest {
 				// v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 				// Color.blue), 0.0f, 2.0f));
 
-				v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
-						Color.red), 0.0f, 6.0f));
+				// v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(
+				// Color.red), 0.0f, 6.0f));
 				// v.visualize(new PointArrayEntity(pointsHoles, new Color3f(
 				// Color.red), 0.0f, 6.0f));
 

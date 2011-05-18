@@ -209,7 +209,8 @@ public class SafetyFence {
 							pointsBoundary.add(p6);
 						}
 						postNum1.add(postNum2 - polygon.length);
-						System.out.print(storeys[i].storeyName() + "  ");
+						System.out.println(storeys[i].storeyName() );
+						System.out.print("Edge: ");
 						System.out.print("Num " + num.get(n - 1) + " :");
 						System.out.print("   Post:  " + postNum1.get(n - 1));
 						// System.out.println("Length!:  " +
