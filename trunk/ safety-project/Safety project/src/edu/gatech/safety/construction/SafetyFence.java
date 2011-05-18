@@ -97,19 +97,18 @@ public class SafetyFence {
 						.getInstance().getCurrentModel();
 				this.storeys = (SBuildingStorey[]) model
 						.findAll(SBuildingStorey.class);
-				
-				
+
 			} else {
 				this.storeys = storeys;
 			}
 		}
-		
+
 		private void swap(Comparable[] list, int a, int b) {
 			Comparable temp = storeys[a];
 			storeys[a] = storeys[b];
 			storeys[b] = (SBuildingStorey) temp;
 		}
-		
+
 		public void visualize(VisualizationInterface v) {
 			int n = 0;
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
@@ -130,9 +129,10 @@ public class SafetyFence {
 				int minIndex = i;
 				Comparable min = storeys[i].bottomElevation.getDoubleValue();
 				for (int j = i + 1; j < storeys.length; j++) {
-					if (min.compareTo(storeys[j].bottomElevation.getDoubleValue()) > 0) // list[j].compareTo(min)
-																						// <
-																						// 0
+					if (min.compareTo(storeys[j].bottomElevation
+							.getDoubleValue()) > 0) // list[j].compareTo(min)
+													// <
+													// 0
 					{
 						min = storeys[j].bottomElevation.getDoubleValue();
 						minIndex = j;
@@ -141,11 +141,9 @@ public class SafetyFence {
 				swap(storeys, i, minIndex);
 			}
 
-			
-			
 			for (int i = 0; i < storeys.length; i++) {
 
-				if (storeys[i].bottomElevation.getDoubleValue() > 2000) { //
+				if (storeys[i].bottomElevation.getDoubleValue() > 1000) { //
 					// 2m
 					// height
 					FenseCalculator calculator = new FenseCalculator(storeys[i]);
@@ -209,7 +207,7 @@ public class SafetyFence {
 							pointsBoundary.add(p6);
 						}
 						postNum1.add(postNum2 - polygon.length);
-						System.out.println(storeys[i].storeyName() );
+						System.out.println(storeys[i].storeyName());
 						System.out.print("Edge: ");
 						System.out.print("Num " + num.get(n - 1) + " :");
 						System.out.print("   Post:  " + postNum1.get(n - 1));
