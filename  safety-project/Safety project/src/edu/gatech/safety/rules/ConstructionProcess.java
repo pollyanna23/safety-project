@@ -92,6 +92,7 @@ public class ConstructionProcess {
 	public void getFencesByFloor(int p) {
 		ArrayList<SBuildingStorey> st = new ArrayList<SBuildingStorey>();
 		SafetyFence sf = new SafetyFence();
+		OpeningTest ot = new OpeningTest();
 		
 		for(Object key: f.keySet()) {
 			if ((Integer)key == p || (Integer)key == p+1) {
@@ -101,6 +102,7 @@ public class ConstructionProcess {
 		
 		SBuildingStorey[] storeys = new SBuildingStorey[st.size()];
 		sf.runByStoreys(st.toArray(storeys));
+		ot.runByStoreys(st.toArray(storeys));
 		
 	}
 	

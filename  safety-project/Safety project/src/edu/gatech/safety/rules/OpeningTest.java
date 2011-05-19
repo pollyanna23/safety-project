@@ -286,16 +286,17 @@ public class OpeningTest {
 				for (int i = 0; i < sOpening1.size(); i++) {
 					SOpening so = new SOpening();
 					so = (SOpening) sOpening1.get(i);
-					System.out.println("Opening level"
-							+ so.getContainer().getDisplayName());
-					System.out.println("Slab level" + storey.getDisplayName());
+					// System.out.println("Opening level"
+					// + so.getContainer().getDisplayName());
+					// System.out.println("Slab level" +
+					// storey.getDisplayName());
 					if (so.getContainer().getDisplayName()
 							.equals(storey.getDisplayName())) {
 						sOpeningSub.add(so);
 						sPreventionSub.add(SlabRules.prevention.get(i));
 					}
 				}
-				System.out.println("HOLE!" + sOpeningSub.size());
+				// System.out.println("HOLE!" + sOpeningSub.size());
 				Collection<Area> areas1 = new ArrayList<Area>(
 						sOpeningSub.size());
 				// Collection<Area> areas2 = new
