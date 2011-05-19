@@ -40,6 +40,7 @@ import com.solibri.saf.plugins.visualizationplugin.VisualizationPlugin;
 import com.solibri.saf.plugins.visualizationplugin.VisualizationTask;
 import com.solibri.saf.plugins.visualizationplugin.entities.LineArrayEntity;
 import com.solibri.saf.plugins.visualizationplugin.entities.PointArrayEntity;
+import com.solibri.saf.plugins.visualizationplugin.entities.PolygonEntity;
 import com.solibri.sai.pmi.IComponent;
 
 import edu.gatech.safety.utils.Utils;
@@ -226,6 +227,7 @@ public class SafetyFenceDetect {
 //						v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
 //						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
 						
+//						v.visualize(new PolygonEntity(bb, new Color3f(Color.blue), 0.0f, 2.0f));
 //						v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
 //						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
 						
