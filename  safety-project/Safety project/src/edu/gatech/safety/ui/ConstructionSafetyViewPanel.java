@@ -84,10 +84,13 @@ import com.solibri.saf.plugins.modelhandling.ProductModelHandlingPlugin;
 import edu.gatech.safety.construction.ConstructionSafetyPlugin;
 import edu.gatech.safety.construction.SafetyFence;
 import edu.gatech.safety.construction.SafetyFenceDetect;
+import edu.gatech.safety.construction.SafetyFence_German;
 import edu.gatech.safety.construction.WallFence;
 import edu.gatech.safety.rules.ConstructionProcess;
+import edu.gatech.safety.rules.ConstructionProcess_German;
 import edu.gatech.safety.rules.OpeningTest;
 import edu.gatech.safety.rules.SlabRules;
+import edu.gatech.safety.rules.SlabRules_German;
 import edu.gatech.safety.rules.WallRules;
 
 /**
@@ -107,7 +110,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			processTabPanel, processBar, topPanel, bottomPanel, openingPanel;
 	private JSplitPane splitPane1, splitPane2, splitPane3;
 
-	private JButton S_open, S_run, S_run1, S_opening, S_wOpening, S_slab,
+	private JButton S_open, S_run, S_run1,S_run2, S_opening, S_wOpening, S_slab,
 			S_wall, Btn_others, P_open, P_generate, detect;
 	private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
 	public static JTextArea statusView = new JTextArea();
@@ -132,7 +135,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 	private IObjectTreeTableModel treeTableModel;
 	private RootNode root = new RootNode(null);
 
-	private ConstructionProcess cp = new ConstructionProcess();
+	private ConstructionProcess_German cp = new ConstructionProcess_German();
+	//private ConstructionProcess cp = new ConstructionProcess();
 	private int sw = 0;
 
 	/**
@@ -248,6 +252,11 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
 		S_run.addActionListener(this);
 		S_run.setToolTipText("Safety Fence for Perimeter and slab opening");
+		
+		S_run2 = new JButton("Slab Fences_German",
+				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
+		S_run2.addActionListener(this);
+		S_run2.setToolTipText("Safety Fence for Perimeter and slab opening according to German standard");
 
 		S_run1 = new JButton("Wall Fences",
 				createImageIcon("/edu/gatech/safety/res/images/open1.gif"));
@@ -274,6 +283,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		// panelTop.add(S_opening);
 		// panelTop.add(S_wOpening);
 		panelTop.add(S_run);
+		panelTop.add(S_run2);
 		panelTop.add(S_run1);
 
 		// panelTop.setPreferredSize(new Dimension(320, 30));
@@ -456,12 +466,14 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 			}
 			statusView.setCaretPosition(statusView.getDocument().getLength());
 
-			// -----------------------------------------
+			// -----------Change Rule---------------------
 		} else if (e.getSource() == S_slab) {
-			SlabRules sr = new SlabRules();
+			//SlabRules sr = new SlabRules();
+			SlabRules_German sr = new SlabRules_German();
 			// sr.getSlabs();
 			sr.getOpenings();
-			sw = 1;
+			//sw = 1; //sw==1 -->OSHA; sw==2 -->wall; sw==3 --> German
+			sw = 3;
 			splitPane1.setBottomComponent(drawObjectTabBottomPanel());
 			splitPane1.setDividerLocation(150);
 
@@ -498,7 +510,12 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 		} else if (e.getSource() == S_run) {
 			SafetyFence sf = new SafetyFence();
 			sf.run();
-
+			
+			// -----------------------------------------
+		} else if (e.getSource() == S_run2) {
+			SafetyFence_German sf = new SafetyFence_German();
+			sf.run();
+			
 			// -----------------------------------------
 		} else if (e.getSource() == S_run1) {
 			WallFence sf = new WallFence();
@@ -691,7 +708,7 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 
 	public class openingTableModel extends AbstractTableModel {
 		private String[] columnNames = { "No.", "Name", "Level",
-				"DisToLowerLevel", "Width", "Height", "Area", "Prevention",
+				"DisToLowerLevel(m)", "Width(m)", "Height(m)", "Area(m2)", "Prevention",
 				"Check" };
 		int n;
 
@@ -700,6 +717,8 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 				n = SlabRules.name.size();
 			} else if (sw == 2) {
 				n = WallRules.name.size();
+			} else if (sw == 3) {
+				n = SlabRules_German.name.size();
 			}
 
 			return n;
@@ -781,9 +800,33 @@ public class ConstructionSafetyViewPanel extends ViewPanel implements
 							data1[i][j] = WallRules.prevention.get(i);
 						} else if (j == 8) {
 							data1[i][j] = WallRules.check.get(i);
-						}
-
+						}	
 					}
+			}
+				else if (sw == 3) {
+
+					for (int i = 0; i < SlabRules_German.no.size(); i++)
+						for (int j = 0; j < 9; j++) {
+							if (j == 0) {
+								data1[i][j] = SlabRules_German.no.get(i);
+							} else if (j == 1) {
+								data1[i][j] = SlabRules_German.name.get(i);
+							} else if (j == 2) {
+								data1[i][j] = SlabRules_German.level.get(i);
+							} else if (j == 3) {
+								data1[i][j] = SlabRules_German.disToLower.get(i);
+							} else if (j == 4) {
+								data1[i][j] = SlabRules_German.width.get(i);
+							} else if (j == 5) {
+								data1[i][j] = SlabRules_German.height.get(i);
+							} else if (j == 6) {
+								data1[i][j] = SlabRules_German.area.get(i);
+							} else if (j == 7) {
+								data1[i][j] = SlabRules_German.prevention.get(i);
+							} else if (j == 8) {
+								data1[i][j] = SlabRules_German.check.get(i);
+							}
+						}
 			}
 			return data1;
 

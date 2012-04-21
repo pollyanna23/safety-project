@@ -40,9 +40,10 @@ import com.solibri.saf.plugins.visualizationplugin.VisualizationPlugin;
 import com.solibri.saf.plugins.visualizationplugin.VisualizationTask;
 import com.solibri.saf.plugins.visualizationplugin.entities.LineArrayEntity;
 import com.solibri.saf.plugins.visualizationplugin.entities.PointArrayEntity;
-import com.solibri.saf.plugins.visualizationplugin.entities.PolygonEntity;
 import com.solibri.sai.pmi.IComponent;
 
+import edu.gatech.safety.rules.OpeningTest;
+import edu.gatech.safety.rules.OpeningTest_German;
 import edu.gatech.safety.utils.Utils;
 
 /**
@@ -51,7 +52,7 @@ import edu.gatech.safety.utils.Utils;
  * @author Jin-Kook Lee
  */
 
-public class SafetyFenceDetect {
+public class SafetyFence_German {
 
 	double skinArea = 0.0;
 
@@ -62,14 +63,21 @@ public class SafetyFenceDetect {
 	SWall[] walls;
 	SRoof[] roofs;
 
-	public SafetyFenceDetect() {
+	public SafetyFence_German() {
 	}
 
 	public void run() {
-		VisualizationPlugin.getInstance().getVisualizer().visualize(new FenceVisulizationTask(null));
+		VisualizationPlugin.getInstance().getVisualizer()
+				.visualize(new FenceVisulizationTask(null));
+		OpeningTest_German ot = new OpeningTest_German();
+		ot.run();
 	}
 
-	
+	public void runByStoreys(SBuildingStorey[] storeys) {
+		VisualizationPlugin.getInstance().getVisualizer()
+				.visualize(new FenceVisulizationTask(storeys));
+	}
+
 	/*
 	 * visualize exterior all perimeter polygons and points
 	 */
@@ -80,39 +88,52 @@ public class SafetyFenceDetect {
 		SWall[] walls;
 		SOpening[] openings;
 
+		public FenceVisulizationTask(String process, int proc) {
+
+		}
+
 		public FenceVisulizationTask(SBuildingStorey[] storeys) {
 			if (storeys == null) {
-				SModel model = (SModel) ProductModelHandlingPlugin.getInstance().getCurrentModel();
-				this.storeys = (SBuildingStorey[]) model.findAll(SBuildingStorey.class);
-				
+				SModel model = (SModel) ProductModelHandlingPlugin
+						.getInstance().getCurrentModel();
+				this.storeys = (SBuildingStorey[]) model
+						.findAll(SBuildingStorey.class);
+
 			} else {
 				this.storeys = storeys;
 			}
 		}
-		
+
 		private void swap(Comparable[] list, int a, int b) {
 			Comparable temp = storeys[a];
 			storeys[a] = storeys[b];
 			storeys[b] = (SBuildingStorey) temp;
 		}
-		
+
 		public void visualize(VisualizationInterface v) {
 			int n = 0;
 			ArrayList<Point> pointsBoundary = new ArrayList<Point>();
 			ArrayList<Point> pointsHoles = new ArrayList<Point>();
-			ArrayList<Point> pointsWall = new ArrayList<Point>();
-			ArrayList<Point> pointsIntersect = new ArrayList<Point>();
-			
 			double fenseHeight = 400.0; // 1m height of fense
-			double lengthBoundary = 0.0;
-			double lengthFence = 0.0;
-			
+			ArrayList num = new ArrayList();
+			ArrayList fenseLength = new ArrayList();
+			double fLength = 0.0;
+			// double fenseLength = 0.0;
+			double holeLength = 0.0;
+			String holeNums = "";
+			String edgeNums = "";
+			ArrayList postNum1 = new ArrayList();
+			int postNum2 = 0;
+
 			// ## Visualize floor boundary
 			for (int i = 0; i < storeys.length; i++) {
 				int minIndex = i;
 				Comparable min = storeys[i].bottomElevation.getDoubleValue();
 				for (int j = i + 1; j < storeys.length; j++) {
-					if (min.compareTo(storeys[j].bottomElevation.getDoubleValue()) > 0) 
+					if (min.compareTo(storeys[j].bottomElevation
+							.getDoubleValue()) > 0) // list[j].compareTo(min)
+													// <
+													// 0
 					{
 						min = storeys[j].bottomElevation.getDoubleValue();
 						minIndex = j;
@@ -121,125 +142,174 @@ public class SafetyFenceDetect {
 				swap(storeys, i, minIndex);
 			}
 
-			
-			Point[] perimeterPoly;
-			Point[] wallPoly;
 			for (int i = 0; i < storeys.length; i++) {
 
-				if (storeys[i].bottomElevation.getDoubleValue() >= 0) {
+				if (storeys[i].bottomElevation.getDoubleValue() > 1000) { //
+					// 2m
+					// height
 					FenseCalculator calculator = new FenseCalculator(storeys[i]);
 
 					ImmutableArea aa = null;
-					ImmutableArea bb = null;
 					aa = calculator.getPerimeterArea();
-					bb = calculator.getWallsArea();
-					
+
+					// ImmutableArea bb = null;
+					// bb = calculator.getHolesArea();
+
 					ArrayList polygons = new ArrayList();
-					ArrayList polygonsWall = new ArrayList();
 					LayoutPlugin.areaToPolygons(aa, polygons, null);
-					LayoutPlugin.areaToPolygons(bb, polygonsWall, null);
-					
-					// points for boundary
+
+					// ArrayList polygons2 = new ArrayList();
+					// LayoutPlugin.areaToPolygons(bb, polygons2, polygons2);
+
 					for (Iterator iter2 = polygons.iterator(); iter2.hasNext();) {
 						n++;
-						perimeterPoly = (Point[]) iter2.next();
-						Point intersection = new Point();
-						for (int j = 0; j < perimeterPoly.length; j++) {
-							Point p1 = new Point(perimeterPoly[j]);
-							Point p2 = new Point(perimeterPoly[(j + 1) % perimeterPoly.length]);
-							p1.z = p2.z = storeys[i].bottomElevation.getDoubleValue()+3702;
+						num.add(n);
+						Point[] polygon = (Point[]) iter2.next();
+						int pointCount = 0;
+						for (int j = 0; j < polygon.length; j++) {
+							Point p1 = new Point(polygon[j]);
+							Point p2 = new Point(polygon[(j + 1)
+									% polygon.length]);
+							p1.z = p2.z = storeys[i].bottomElevation
+									.getDoubleValue() + fenseHeight + 3702;
 							pointsBoundary.add(p1);
 							pointsBoundary.add(p2);
 
-							lengthBoundary += GeomUtils2D.length(p1, p2) * 0.001;
+							edgeNums += ", "
+									+ Utils.round(
+											GeomUtils2D.length(p1, p2) * 0.001,
+											2);
 
-						}
-						
-					}
-					
-					
-					// points for walls
-					for (Iterator iter2 = polygonsWall.iterator(); iter2.hasNext();) {
-						
-						wallPoly = (Point[]) iter2.next();
-						for (int j = 0; j < wallPoly.length; j++) {
-							Point p1 = new Point(wallPoly[j]);
-							Point p2 = new Point(wallPoly[(j + 1) % wallPoly.length]);
-							p1.z = p2.z = storeys[i].bottomElevation.getDoubleValue();
-							pointsWall.add(p1);
-							pointsWall.add(p2);
+							if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
+								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 2);
+								// System.out.println(GeomUtils2D.length(p1, p2)
+								// * 0.001 / 2.4 + 2);
+							} else {
+								postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 + 1);
+								// System.out.println(GeomUtils2D.length(p1, p2)
+								// * 0.001 / 2.4 + 1);
+							}
+							fLength += GeomUtils2D.length(p1, p2) * 0.001;
 
+							Point p3 = new Point(polygon[j]);
+							Point p4 = new Point(polygon[(j + 1)
+									% polygon.length]);
+							p3.z = p4.z = storeys[i].bottomElevation
+									.getDoubleValue() + fenseHeight * 2 + 3702;
+							pointsBoundary.add(p3);
+							pointsBoundary.add(p4);
+
+							Point p5 = new Point(polygon[j]);
+							Point p6 = new Point(polygon[(j + 1)
+									% polygon.length]);
+							p5.z = p6.z = storeys[i].bottomElevation
+									.getDoubleValue() + 3702;
+							pointsBoundary.add(p5);
+							pointsBoundary.add(p6);
 						}
+						postNum1.add(postNum2 - polygon.length);
+						System.out.println(storeys[i].storeyName());
+						System.out.print("Edge: ");
+						System.out.print("Num " + num.get(n - 1) + " :");
+						System.out.print("   Post:  " + postNum1.get(n - 1));
+						// System.out.println("Length!:  " +
+						// fenseLength.get(n-1));
+						fenseLength.add(fLength);
+						System.out.println("   Length:  "
+								+ fenseLength.get(n - 1));
+						fLength = 0.0;
+						postNum2 = 0;
+						// System.out.println("Post for edge: " + postNum1);
 					}
-					
-					
-					// intersection between wall and perimeter polygons
-					Point[] wallPolygons = new Point[pointsWall.size()];
-					pointsWall.toArray(wallPolygons);
-					
-					for (int k = 0; k < pointsBoundary.size();) {
-						Point p1 = (Point) pointsBoundary.get(k++);
-						Point p2 = (Point) pointsBoundary.get(k++);
-						for (int m = 0; m < pointsWall.size();) {
-							Point p3 = (Point) pointsWall.get(m++);
-		                    Point p4 = (Point) pointsWall.get(m++);
-		                    
-		                    // detect intersection points 
-		                    Point intersection = new Point();
-		                    if (GeomUtils2D.segmentSegmentIntersection(p1, p2, p3, p4, intersection)) {
-		                    	if (! pointsIntersect.contains(intersection)) {
-		                    		pointsIntersect.add(intersection);
-		                    	}
-		                    }
-						}
-						
-						// add boundary points that are located out of wall polygons (e.g. corners)
-	                    if (! GeomUtils2D.pointInPolygon(p1, wallPolygons)) {
-	                    		pointsIntersect.add(p1);
-	                    }
-	                    if (! GeomUtils2D.pointInPolygon(p2, wallPolygons)) {
-	                    		pointsIntersect.add(p2);
-	                    }
-						
-					}
-					
-					// calculate fence's length
-					try {
-						for (int r = 0; r < pointsIntersect.size();){
-							Point p1 = (Point) pointsIntersect.get(r++);
-							Point p2 = (Point) pointsIntersect.get(r++);
-							lengthFence += GeomUtils2D.length(p1, p2) * 0.001;
-							
-							p1.z = p1.getZ() + 500.0;
-							p2.z = p2.getZ() + 500.0;
-							
-						}
-					} catch (Exception ex) {}
-					
-					
-					System.out.println("number of points for fences = " + pointsIntersect.size());
-					System.out.println("lengthBoundary = " + lengthBoundary);
-					System.out.println("lengthFence = " + lengthFence);
-										
-					
+					//
+					// for (Iterator iter2 = polygons2.iterator();
+					// iter2.hasNext();) {
+					// Point[] polygon = (Point[]) iter2.next();
+					// // Vector<Point> vector = new
+					// // Vector<Point>(Arrays.asList(polygon));
+					// // double angleEpsilon = Math.toRadians(15);
+					// // Point3d[] polygonFiltered =
+					// // GeomUtils.filterPolyline(vector.toArray(new
+					// // Point[vector.size()]), 100, angleEpsilon);
+					// int pointCount = 0;
+					//
+					// for (int j = 0; j < polygon.length; j++) {
+					// Point p1 = new Point(polygon[j]);
+					// Point p2 = new Point(polygon[(j + 1) % polygon.length]);
+					// p1.z = p2.z = storeys[i].bottomElevation
+					// .getDoubleValue() + fenseHeight;
+					// pointsHoles.add(p1);
+					// pointsHoles.add(p2);
+					//
+					// holeLength += GeomUtils2D.length(p1, p2) * 0.001;
+					// holeNums += ", "
+					// + Utils.round(
+					// GeomUtils2D.length(p1, p2) * 0.001, 2);
+					//
+					// if (GeomUtils2D.length(p1, p2) * 0.001 % 2.4 > 0) {
+					// postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 +
+					// 2);
+					// } else {
+					// postNum2 += (GeomUtils2D.length(p1, p2) * 0.001 / 2.4 +
+					// 1);
+					// }
+					// Point p3 = new Point(polygon[j]);
+					// Point p4 = new Point(polygon[(j + 1) % polygon.length]);
+					// p3.z = p4.z = storeys[i].bottomElevation
+					// .getDoubleValue() + fenseHeight * 2;
+					// pointsHoles.add(p3);
+					// pointsHoles.add(p4);
+					//
+					// Point p5 = new Point(polygon[j]);
+					// Point p6 = new Point(polygon[(j + 1) % polygon.length]);
+					// p5.z = p6.z = storeys[i].bottomElevation
+					// .getDoubleValue();
+					// pointsHoles.add(p5);
+					// pointsHoles.add(p6);
+					// }
+					// postNum2 = postNum2 - polygon.length;
+					// // System.out.println("Post for opening: " + postNum2);
+					// }
+
+					// }
+
 					// visualize perimeter polygon
-					try {
-//						v.visualize(new LineArrayEntity(pointsBoundary,	new Color3f(Color.black), 0.0f, 2.0f));
-//						v.visualize(new PointArrayEntity(pointsBoundary, new Color3f(Color.black), 0.0f, 6.0f));
-						
-//						v.visualize(new PolygonEntity(bb, new Color3f(Color.blue), 0.0f, 2.0f));
-//						v.visualize(new LineArrayEntity(pointsWall,	new Color3f(Color.blue), 0.0f, 2.0f));
-//						v.visualize(new PointArrayEntity(pointsWall, new Color3f(Color.blue), 0.0f, 6.0f));
-						
-						v.visualize(new LineArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
-//						v.visualize(new PointArrayEntity(pointsIntersect, new Color3f(Color.red), 0.0f, 6.0f));
-					} catch (Exception ex) {}
+					v.visualize(new LineArrayEntity(pointsBoundary,
+							new Color3f(Color.black), 0.0f, 2.0f));
+					v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
+							Color.blue), 0.0f, 2.0f));
+					// v.visualize(new PointArrayEntity(pointsBoundary, new
+					// Color3f(
+					// Color.red), 0.0f, 6.0f));
+					// v.visualize(new PointArrayEntity(pointsHoles, new
+					// Color3f(
+					// Color.red), 0.0f, 6.0f));
 
-					
 				}
 			}
 
-			
+			// String str = "Fense length is total = " +
+			// Utils.round(fenseLength, 2) + " M\n"
+			// + "Holes length is total = " + Utils.round(holeLength, 2) + " M";
+			// JOptionPane.showMessageDialog(null,
+			// str,
+			// "Message",
+			// JOptionPane.INFORMATION_MESSAGE,
+			// null);
+
+			// print ==========
+			// System.out.println("Fense length is total = "
+			// + Utils.round(fenseLength, 2) + " M");
+			// System.out.println("Edge length is = " + edgeNums);
+			// System.out.println("Holes length is total = "
+			// + Utils.round(holeLength, 2) + " M");
+			// System.out.println("Holes length is = " + holeNums);
+			// System.out.println("Post for edge: " + postNum1);
+			// System.out.println("Handrail & Midrail & Toeboard for edge: "
+			// + Utils.round(fenseLength, 2) + " Meters");
+			// System.out.println("Post for opening: " + postNum2);
+			// System.out.println("Handrail & Midrail & Toeboard for opening: "
+			// + Utils.round(holeLength, 2) + " Meters");
 		}
 
 	}
@@ -250,15 +320,11 @@ public class SafetyFenceDetect {
 	public class FenseCalculator {
 		private final SBuildingStorey storey;
 		private Point[][] perimeter;
-		private Point[][] walls;
-		private Point[][] wallsSlabs;
 		private Point[][] holes;
 		private Point[][] internalPerimeter;
 		private double zMin = Double.MAX_VALUE;
 		private double zMax = -Double.MAX_VALUE;
 		private ImmutableArea perimeterArea;
-		private ImmutableArea wallsArea;
-		private ImmutableArea wallsSlabsArea;
 		private ImmutableArea holesArea;
 		private ImmutableArea internalPerimeterArea;
 
@@ -277,15 +343,32 @@ public class SafetyFenceDetect {
 				Point3d upper = new Point3d();
 				Point3d lower = new Point3d();
 				// collect walls and spaces
-				SortedSet components = storey.getRelated(SContains.class, true, SEntity.class, Item.ANY_DEPTH);
+				SortedSet components = storey.getRelated(SContains.class, true,
+						SEntity.class, Item.ANY_DEPTH);
 				Collection<Area> areas = new ArrayList<Area>(components.size());
-				for (Iterator iterator = components.iterator(); iterator.hasNext();) {
+				for (Iterator iterator = components.iterator(); iterator
+						.hasNext();) {
 					IComponent component = (IComponent) iterator.next();
-					ModelSearchTreePlugin.getInstance().getBounds(component, lower, upper);
+					ModelSearchTreePlugin.getInstance().getBounds(component,
+							lower, upper);
 					zMin = Math.min(zMin, lower.z);
 					zMax = Math.max(zMax, upper.z);
 					Area componentArea = null;
-					
+					// if (component instanceof SSpace) {
+					// componentArea = LayoutPlugin.getAreaCopy(component);
+					// // Increase the space area by 10cm to fill possible
+					// // gaps:
+					// LayoutPlugin.resizeArea(componentArea, 200);
+					// } else if (component instanceof SWall) {
+					// componentArea = LayoutPlugin.getAreaCopy(component);
+					// // Increase the space area by 10cm to fill possible
+					// // gaps:
+					// LayoutPlugin.resizeArea(componentArea, 200);
+					// } else if (component instanceof SColumn) {
+					// componentArea = LayoutPlugin.getAreaCopy(component);
+					// // Increase the space area by 10cm to fill possible
+					// // gaps:
+					// LayoutPlugin.resizeArea(componentArea, 200);
 					if (component instanceof SSlab) {
 						componentArea = LayoutPlugin.getAreaCopy(component);
 						// Increase the space area by 10cm to fill possible
@@ -300,7 +383,7 @@ public class SafetyFenceDetect {
 
 				LayoutPlugin.areaUnion(storeyArea, areas);
 
-				LayoutPlugin.resizeArea(storeyArea, -200);
+				LayoutPlugin.resizeArea(storeyArea, -350);
 
 				ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
 				ArrayList<Point3d[]> holes = new ArrayList<Point3d[]>();
@@ -310,50 +393,6 @@ public class SafetyFenceDetect {
 			}
 			return perimeter;
 		}
-		
-		
-		public Point[][] getWalls() {
-			if (walls == null) {
-				Area storeyArea = new Area();
-				Point3d upper = new Point3d();
-				Point3d lower = new Point3d();
-				// collect walls and spaces
-				SortedSet components = storey.getRelated(SContains.class, true, SEntity.class, Item.ANY_DEPTH);
-				Collection<Area> areas = new ArrayList<Area>(components.size());
-				for (Iterator iterator = components.iterator(); iterator.hasNext();) {
-					IComponent component = (IComponent) iterator.next();
-					ModelSearchTreePlugin.getInstance().getBounds(component, lower, upper);
-					zMin = Math.min(zMin, lower.z);
-					zMax = Math.max(zMax, upper.z);
-					Area componentArea = null;
-					
-					if (component instanceof SWall) {
-						componentArea = LayoutPlugin.getAreaCopy(component);
-						// Increase the space area by 10cm to fill possible
-						// gaps:
-						LayoutPlugin.resizeArea(componentArea, 300);
-					}
-
-					if (componentArea != null) {
-						areas.add(componentArea);
-					}
-				}
-
-				LayoutPlugin.areaUnion(storeyArea, areas);
-
-				LayoutPlugin.resizeArea(storeyArea, -100);
-
-				ArrayList<Point3d[]> polygons = new ArrayList<Point3d[]>();
-				LayoutPlugin.areaToPolygons(storeyArea, polygons, null);
-				walls = getCleanPolygons(polygons);
-			}
-			return walls;
-		}
-		
-		
-		
-		
-		
 
 		public Point[][] getHoles() {
 			if (holes == null) {
@@ -403,6 +442,7 @@ public class SafetyFenceDetect {
 					if (componentArea != null) {
 						areas.add(componentArea);
 					}
+
 				}
 
 				LayoutPlugin.areaUnion(storeyArea, areas);
@@ -447,22 +487,7 @@ public class SafetyFenceDetect {
 			}
 			return perimeterArea;
 		}
-		
-		public ImmutableArea getWallsArea() {
-			if (wallsArea == null) {
-				Area totalArea = new Area();
-				Point[][] perimeter = getWalls();
-				for (int i = 0; i < perimeter.length; i++) {
-					Area area = LayoutPlugin.polygonToArea(perimeter[i], 0);
-					totalArea.add(area);
-					// System.out.println("P"+perimeter[i][0].toString());
-				}
-				wallsArea = new ImmutableArea(totalArea);
-			}
-			return wallsArea;
-		}
-		
-		
+
 		public ImmutableArea getHolesArea() {
 			if (holesArea == null) {
 				Area totalArea = new Area();
