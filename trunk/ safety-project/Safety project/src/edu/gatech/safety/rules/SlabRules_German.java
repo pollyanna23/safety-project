@@ -27,7 +27,7 @@ import com.solibri.saf.plugins.visualizationplugin.tasks.ComponentVisualizationT
 import edu.gatech.safety.utils.Utils;
 import edu.gatech.safety.utils.Visualizer;
 
-public class SlabRules {
+public class SlabRules_German {
 
 	SModel model;
 	SSpace[] spaces;
@@ -54,7 +54,7 @@ public class SlabRules {
 
 	// public static int p = 0;
 
-	public SlabRules() {
+	public SlabRules_German() {
 	}
 
 	public void getOpenings() {
@@ -98,13 +98,13 @@ public class SlabRules {
 				if (i != 0) {
 					disToL = Utils
 							.round((stories[i].bottomElevation.getDoubleValue() - stories[i - 1].bottomElevation
-									.getDoubleValue()), 2);
+									.getDoubleValue())/1000, 2);
 				} else {
 					disToL = 0.0;
 				}
 
 				System.out.print(stories[i].name.getStringValue() + " : ");
-				System.out.print("DisToLower: " + disToL + "mm");
+				System.out.print("DisToLower: " + disToL + "m");
 				SortedSet sSlab = stories[i].getRelated(SContains.class, true,
 						SSlab.class);
 				System.out.println("  has " + sSlab.size() + " Slab objects.");
@@ -162,12 +162,12 @@ public class SlabRules {
 
 						System.out.print("Height= "
 								+ Utils.round(so.area.getDoubleValue()/so.width.getDoubleValue()*1000, 2)
-								+ " m" + " | ");
+								+ " m"+ " | ");
 						height.add(Utils.round(so.area.getDoubleValue()/so.width.getDoubleValue()*1000, 2));
 						disToLower.add(disToL);
 						//Rule of opening on the slab
-						if (Utils.round(so.width.getDoubleValue()/1000, 2) <= 1.0
-								| Utils.round(so.area.getDoubleValue()/so.width.getDoubleValue()*1000, 2) <= 1.0) {
+						if (Utils.round(so.width.getDoubleValue()/1000, 2) <= 3.0
+								| Utils.round(so.area.getDoubleValue()/so.width.getDoubleValue()*1000, 2) <= 3.0) {
 							prevention.add("Cover");
 							System.out.println("Prevention= "+ "Cover");
 						} else {
@@ -332,7 +332,7 @@ public class SlabRules {
 					System.out.print("\t- " + so.getDisplayName() + " : ");
 					name.add(so.getDisplayName());
 					System.out
-							.print(so.getContainer().getDisplayName() + " | ");
+							.print(so.getContainer().getDisplayName() +  "|" );
 					// level.add(so.getContainer().getDisplayName());
 					System.out.print("Area= "
 							+ Utils.round(so.area.getDoubleValue(), 2)

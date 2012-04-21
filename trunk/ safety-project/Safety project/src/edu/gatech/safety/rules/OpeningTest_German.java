@@ -55,7 +55,7 @@ import edu.gatech.safety.utils.Utils;
  * @author Jin-Kook Lee
  */
 
-public class OpeningTest {
+public class OpeningTest_German {
 
 	double skinArea = 0.0;
 
@@ -66,7 +66,7 @@ public class OpeningTest {
 	SWall[] walls;
 	SRoof[] roofs;
 
-	public OpeningTest() {
+	public OpeningTest_German() {
 	}
 
 	public void run() {
@@ -212,10 +212,11 @@ public class OpeningTest {
 						// System.out.println("num: "+ (postNum2 -
 						// polygon.length));
 						postNum1.add(postNum2 - polygon.length);
-						// SlabRules.post.add(postNum1.get(n - 1));
-						// SlabRules.rail.add(fenseLength.get(n - 1));
-						System.out.print("Opening: Num " + num.get(n - 1)
+						// SlabRules_German.post.add(postNum1.get(n - 1));
+						// SlabRules_German.rail.add(fenseLength.get(n - 1));
+						System.out.print("Opening Num " + num.get(n - 1)
 								+ " :");
+						//System.out.print("Opening Name: " + num.get(n - 1));
 						System.out.print("   Post:  " + postNum1.get(n - 1));
 						// System.out.println("Length!:  " +
 						// fenseLength.get(n-1));
@@ -250,8 +251,10 @@ public class OpeningTest {
 							new Color3f(Color.blue), 0.0f, 2.0f));
 					// v.visualize(new LineArrayEntity(pointsHoles, new Color3f(
 					// Color.blue), 0.0f, 2.0f));
+					
 					//v.visualize(new PolygonEntity(bb, new Color3f(Color.blue),
 					//		0.0f, 2.0f));
+					
 					v.visualize(new LineArrayEntity(pointsBoundary2, new Color3f(Color.red),
 							0.0f, 2.0f));
 					// v.visualize(new PointArrayEntity(pointsBoundary, new
@@ -306,7 +309,7 @@ public class OpeningTest {
 				Point3d upper = new Point3d();
 				Point3d lower = new Point3d();
 
-				ArrayList sOpening1 = SlabRules.openings;
+				ArrayList sOpening1 = SlabRules_German.openings;
 				for (int i = 0; i < sOpening1.size(); i++) {
 					SOpening so = new SOpening();
 					so = (SOpening) sOpening1.get(i);
@@ -317,7 +320,7 @@ public class OpeningTest {
 					if (so.getContainer().getDisplayName()
 							.equals(storey.getDisplayName())) {
 						sOpeningSub.add(so);
-						sPreventionSub.add(SlabRules.prevention.get(i));
+						sPreventionSub.add(SlabRules_German.prevention.get(i));
 					}
 				}
 				// System.out.println("HOLE!" + sOpeningSub.size());
@@ -371,7 +374,7 @@ public class OpeningTest {
 				Point3d upper = new Point3d();
 				Point3d lower = new Point3d();
 
-				ArrayList sOpening1 = SlabRules.openings;
+				ArrayList sOpening1 = SlabRules_German.openings;
 				for (int i = 0; i < sOpening1.size(); i++) {
 					SOpening so = new SOpening();
 					so = (SOpening) sOpening1.get(i);
@@ -382,7 +385,7 @@ public class OpeningTest {
 					if (so.getContainer().getDisplayName()
 							.equals(storey.getDisplayName())) {
 						sOpeningSub.add(so);
-						sPreventionSub.add(SlabRules.prevention.get(i));
+						sPreventionSub.add(SlabRules_German.prevention.get(i));
 					}
 				}
 				// System.out.println("HOLE!" + sOpeningSub.size());

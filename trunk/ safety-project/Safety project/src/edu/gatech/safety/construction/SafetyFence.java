@@ -170,7 +170,7 @@ public class SafetyFence {
 							Point p2 = new Point(polygon[(j + 1)
 									% polygon.length]);
 							p1.z = p2.z = storeys[i].bottomElevation
-									.getDoubleValue() + fenseHeight;
+									.getDoubleValue() + fenseHeight + 3702;
 							pointsBoundary.add(p1);
 							pointsBoundary.add(p2);
 
@@ -194,7 +194,7 @@ public class SafetyFence {
 							Point p4 = new Point(polygon[(j + 1)
 									% polygon.length]);
 							p3.z = p4.z = storeys[i].bottomElevation
-									.getDoubleValue() + fenseHeight * 2;
+									.getDoubleValue() + fenseHeight * 2 + 3702;
 							pointsBoundary.add(p3);
 							pointsBoundary.add(p4);
 
@@ -202,7 +202,7 @@ public class SafetyFence {
 							Point p6 = new Point(polygon[(j + 1)
 									% polygon.length]);
 							p5.z = p6.z = storeys[i].bottomElevation
-									.getDoubleValue();
+									.getDoubleValue() + 3702;
 							pointsBoundary.add(p5);
 							pointsBoundary.add(p6);
 						}
@@ -441,6 +441,7 @@ public class SafetyFence {
 					if (componentArea != null) {
 						areas.add(componentArea);
 					}
+
 				}
 
 				LayoutPlugin.areaUnion(storeyArea, areas);
